@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Service Report — Kiên Thịnh Eco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ---- PWA: inline manifest + service worker (works from single file) ---- */
+(function(){
+  try{
+    const manifest = {
+      name:"Service Report", short_name:"Service Report", start_url:".", display:"standalone",
+      background_color:"#0B1F3A", theme_color:"#0B1F3A",
+      icons:[{ src:"data:image/svg+xml;base64,"+btoa('<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"><rect width="512" height="512" rx="96" fill="#0B1F3A"/><path d="M195 150l30 30-95 95a21 21 0 01-30-30l95-95z" fill="#0E7C66"/><circle cx="330" cy="180" r="70" fill="none" stroke="#0E7C66" stroke-width="30"/></svg>'), sizes:"512x512", type:"image/svg+xml", purpose:"any" }]
+    };
+    const mBlob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+    const link = document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(mBlob);
+    document.head.appendChild(link);
+    const meta = document.createElement('meta'); meta.name='theme-color'; meta.content='#0B1F3A'; document.head.appendChild(meta);
+    const aMeta = document.createElement('meta'); aMeta.name='apple-mobile-web-app-capable'; aMeta.content='yes'; document.head.appendChild(aMeta);
+
+    if('serviceWorker' in navigator){
+      const swCode = `
+        const CACHE='service-report-v1';
+        self.addEventListener('install', e=>{ self.skipWaiting(); });
+        self.addEventListener('activate', e=>{ e.waitUntil(clients.claim()); });
+        self.addEventListener('fetch', e=>{
+          if(e.request.method!=='GET') return;
+          e.respondWith(
+            caches.open(CACHE).then(cache=>
+              cache.match(e.request).then(hit=>{
+                const net = fetch(e.request).then(res=>{ try{ cache.put(e.request, res.clone()); }catch(_){}; return res; }).catch(()=>hit);
+                return hit || net;
+              })
+            )
+          );
+        });`;
+      const swBlob = new Blob([swCode], {type:'text/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+    }
+  }catch(e){}
+})();
+</script>
+<style>
+  :root{
+    --navy:#0B1F3A; --navy-2:#13294B; --navy-3:#1C3A63;
+    --steel:#5B7A9E; --ice:#E8EEF5; --paper:#F5F7FA;
+    --line:#E2E8F0; --line-strong:#CBD5E1;
+    --accent:#0E7C66; --accent-soft:#E4F3EF;
+    --amber:#C2790B; --amber-soft:#FBF0DD;
+    --red:#C0392B; --red-soft:#FBE9E7;
+    --blue:#1F6FB2; --blue-soft:#E5F0F9;
+    --ink:#0F1B2D; --ink-2:#3E4C61; --ink-3:#6B7A90;
+  }
+  *{-webkit-font-smoothing:antialiased;}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--paper);color:var(--ink);margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-thumb{background:#c3ccd8;border-radius:9px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  .fade-in{animation:fade .35s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .slide-in{animation:slide .3s cubic-bezier(.2,.7,.3,1) both;}
+  @keyframes slide{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:none;}}
+  [contenteditable]:focus{outline:none;}
+  .card-shadow{box-shadow:0 1px 2px rgba(15,27,45,.04),0 1px 3px rgba(15,27,45,.06);}
+  .card-shadow-lg{box-shadow:0 4px 16px rgba(15,27,45,.08),0 1px 3px rgba(15,27,45,.06);}
+  .no-print{}
+  @media print{.no-print{display:none!important;}}
+  .prose-report h3{font-size:11pt;font-weight:700;margin:14px 0 6px;color:#0B1F3A;}
+  .prose-report p{margin:5px 0;line-height:1.55;}
+  .prose-report ul{margin:5px 0;padding-left:18px;list-style:disc;}
+  .prose-report ol{margin:5px 0;padding-left:18px;list-style:decimal;}
+  .drag-over{border-color:var(--accent)!important;background:var(--accent-soft)!important;}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;}
+  .tab-btn{transition:all .15s;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback, createContext, useContext } = React;
+
+/* ============================================================
+   I18N — Tiếng Việt / English
+   ============================================================ */
+const DICT = {
+  vi: {
+    appName:"Service Report", brand:"Kiên Thịnh Eco",
+    nav_dashboard:"Bảng điều khiển", nav_reports:"Báo cáo", nav_customers:"Khách hàng",
+    nav_equipment:"Thiết bị", nav_templates:"Mẫu báo cáo", nav_history:"Lịch sử dịch vụ", nav_settings:"Cài đặt",
+    dash_title:"Bảng điều khiển", dash_sub:"Tổng quan hoạt động dịch vụ kỹ thuật",
+    stat_total:"Tổng báo cáo", stat_progress:"Đang xử lý", stat_waiting:"Chờ phản hồi",
+    stat_done:"Đã hoàn thành", stat_sent:"Đã gửi khách hàng",
+    quick:"Thao tác nhanh", new_report:"Báo cáo mới", new_inspection:"Kiểm tra thiết bị",
+    new_survey:"Khảo sát hiện trường", new_trouble:"Xử lý sự cố", new_check:"Kiểm tra nhanh",
+    recent:"Báo cáo gần đây", col_no:"Số báo cáo", col_customer:"Khách hàng", col_project:"Dự án / Nhà máy",
+    col_type:"Loại dịch vụ", col_date:"Ngày", col_engineer:"Kỹ sư", col_status:"Trạng thái", col_action:"",
+    empty_reports:"Chưa có báo cáo nào. Nhấn “Báo cáo mới” để bắt đầu.",
+    st_draft:"Nháp", st_progress:"Đang xử lý", st_completed:"Hoàn thành", st_reviewed:"Đã duyệt", st_sent:"Đã gửi", st_archived:"Lưu trữ",
+    sec_info:"Thông tin chung", sec_overview:"Tổng quan & Hiện trạng", sec_work:"Công việc thực hiện",
+    sec_results:"Kết quả & Khuyến nghị", sec_photos:"Hình ảnh hiện trường",
+    step:"Phần", back:"Quay lại", saveExit:"Lưu & thoát", preview:"Xem trước", exportPdf:"Xuất PDF",
+    autosaved:"Đã lưu tự động", saving:"Đang lưu…",
+    f_reportNo:"Số báo cáo", f_reportType:"Loại báo cáo", f_date:"Ngày thực hiện", f_engineer:"Kỹ sư thực hiện",
+    f_customer:"Công ty khách hàng", f_project:"Dự án", f_site:"Địa điểm / Nhà máy",
+    f_contact:"Người liên hệ", f_position:"Chức vụ", f_phone:"Điện thoại", f_email:"Email",
+    equipment:"Thiết bị", addEquipment:"Thêm thiết bị", eq_name:"Tên thiết bị", eq_mfr:"Hãng sản xuất",
+    eq_model:"Model", eq_serial:"Serial Number", eq_tag:"Tag Number", eq_part:"Part Number",
+    eq_app:"Ứng dụng", eq_loc:"Vị trí lắp đặt",
+    serviceType:"Loại dịch vụ",
+    stype_inspection:"Kiểm tra thiết bị", stype_trouble:"Xử lý sự cố", stype_survey:"Khảo sát hiện trường",
+    stype_pm:"Bảo trì phòng ngừa", stype_install:"Kiểm tra lắp đặt", stype_consult:"Tư vấn kỹ thuật",
+    stype_commission:"Chạy thử nghiệm thu", stype_other:"Khác",
+    ov_purpose:"Mục đích kiểm tra / khảo sát", ov_condition:"Hiện trạng ghi nhận",
+    ov_env:"Điều kiện vận hành / môi trường", ov_env_hint:"Nhiệt độ, pH, lưu lượng, áp suất, điều kiện mẫu…",
+    work_title:"Công việc thực hiện", addWork:"Thêm công việc", loadChecklist:"Nạp checklist mẫu",
+    w_title:"Tên công việc", w_desc:"Mô tả", w_result:"Kết quả", w_status:"Trạng thái",
+    ws_done:"Hoàn thành", ws_pending:"Đang thực hiện", ws_na:"Không áp dụng",
+    checklist:"Checklist kiểm tra", saveTemplate:"Lưu làm mẫu",
+    res_result:"Kết quả kiểm tra", res_assess:"Đánh giá kỹ thuật", res_cause:"Nguyên nhân / nhận định",
+    res_recommend:"Khuyến nghị",
+    assess_normal:"Bình thường", assess_attention:"Cần lưu ý", assess_fault:"Phát hiện lỗi", assess_unable:"Không xác định",
+    measurements:"Bảng kết quả đo", addRow:"Thêm dòng", m_param:"Thông số", m_result:"Kết quả", m_unit:"Đơn vị", m_status:"Đánh giá",
+    findings:"Phát hiện kỹ thuật", addFinding:"Thêm phát hiện", fi_finding:"Nội dung phát hiện", fi_severity:"Mức độ", fi_obs:"Quan sát", fi_rec:"Khuyến nghị",
+    sev_low:"Thấp", sev_med:"Trung bình", sev_high:"Cao",
+    rec_title:"KHUYẾN NGHỊ KỸ THUẬT", rec_action:"Hành động đề xuất", rec_priority:"Mức ưu tiên",
+    pri_low:"Thấp", pri_med:"Trung bình", pri_high:"Cao",
+    photos:"Hình ảnh hiện trường", dropHint:"Kéo & thả ảnh vào đây, hoặc bấm để chọn / dán ảnh",
+    caption:"Chú thích ảnh", figure:"Hình",
+    customers_title:"Khách hàng", customers_sub:"Danh bạ khách hàng để chọn nhanh khi tạo báo cáo",
+    addCustomer:"Thêm khách hàng", c_company:"Công ty", c_address:"Địa chỉ",
+    equipment_lib:"Thư viện thiết bị", equipment_sub:"Thiết bị mẫu kèm checklist tự động",
+    templates_title:"Mẫu báo cáo", templates_sub:"Bấm để tạo báo cáo mới từ mẫu",
+    history_title:"Lịch sử dịch vụ", history_sub:"Toàn bộ báo cáo theo thời gian",
+    settings_title:"Cài đặt", settings_sub:"Thông tin công ty hiển thị trên báo cáo PDF",
+    s_company:"Tên công ty", s_logo:"Logo công ty", s_address:"Địa chỉ", s_website:"Website",
+    s_email:"Email", s_phone:"Điện thoại", s_tax:"Mã số thuế", s_hotline:"Hotline", uploadLogo:"Tải logo",
+    signatures:"Chữ ký", sig_prepared:"Người lập", sig_checked:"Người kiểm tra", sig_approved:"Người duyệt",
+    save:"Lưu", cancel:"Hủy", delete:"Xóa", edit:"Sửa", add:"Thêm", close:"Đóng", duplicate:"Nhân bản", useTemplate:"Dùng mẫu này",
+    confirmDelete:"Xóa báo cáo này?", search:"Tìm kiếm…",
+    previewTitle:"Xem trước báo cáo", genPdf:"Đang tạo PDF…", downloadPdf:"Tải PDF",
+    execSummary:"Tóm tắt điều hành", serviceSummary:"TÓM TẮT DỊCH VỤ",
+    lang:"EN", langFull:"English",
+    reportInfo:"Thông tin báo cáo", preparedBy:"Người lập báo cáo",
+    condition:"Tình trạng thiết bị", cond_excellent:"Rất tốt", cond_good:"Tốt", cond_fair:"Khá", cond_poor:"Kém", cond_critical:"Nghiêm trọng",
+    thankyou:"Trân trọng cảm ơn Quý khách", confidential:"Bảo mật", page:"Trang",
+    noEquip:"Chưa thêm thiết bị", noWork:"Chưa có công việc", noPhoto:"Chưa có hình ảnh", noFinding:"Chưa có phát hiện", noMeasure:"Chưa có kết quả đo",
+    reportType_service:"Service Report", newFrom:"Tạo báo cáo",
+    priorityLabel:"Ưu tiên", back_dash:"Về bảng điều khiển",
+    ai_assist:"Trợ lý AI", ai_rewrite:"Viết lại chuyên nghiệp", ai_translate_en:"Dịch sang tiếng Anh",
+    ai_translate_vi:"Dịch sang tiếng Việt", ai_summary:"Tóm tắt kết quả", ai_recommend:"Soạn khuyến nghị",
+    ai_title:"Trợ lý viết báo cáo kỹ thuật", ai_input:"Nhập ghi chú ngắn của kỹ sư…",
+    ai_apply:"Dùng nội dung này", ai_regenerate:"Tạo lại", ai_thinking:"AI đang xử lý…",
+    ai_needKey:"Cần API key Gemini để dùng AI. Vào Cài đặt để nhập.", ai_openSettings:"Mở Cài đặt",
+    ai_hint:"AI chỉ hỗ trợ chuẩn hóa văn phong; không tự tạo thông số/kết quả đo mà kỹ sư chưa cung cấp.",
+    ai_note:"Ghi chú của kỹ sư", ai_result:"Bản chuyên nghiệp",
+    s_apikey:"Gemini API Key", s_apikey_hint:"Lấy miễn phí tại aistudio.google.com/apikey",
+    annotate:"Chú thích ảnh", ann_arrow:"Mũi tên", ann_circle:"Khoanh tròn", ann_rect:"Khung",
+    ann_number:"Đánh số", ann_text:"Chữ", ann_color:"Màu", ann_clear:"Xóa hết", ann_done:"Xong", ann_undo:"Hoàn tác",
+    bilingual:"Ngôn ngữ PDF", bi_vi:"Tiếng Việt", bi_en:"Tiếng Anh", bi_both:"Song ngữ Việt–Anh",
+    revision:"Phiên bản", rev_new:"Tạo phiên bản mới", rev_desc:"Nội dung thay đổi", rev_history:"Lịch sử phiên bản",
+    rev_by:"Người sửa", rev_none:"Chưa có phiên bản nào ngoài bản gốc.",
+    sig_draw:"Ký tại đây", sig_clear:"Xóa chữ ký", sig_name:"Họ tên", sig_pos:"Chức vụ", sig_edit:"Ký / chỉnh",
+    install_app:"Cài đặt ứng dụng", installed:"Đã cài", offline_ready:"Sẵn sàng offline",
+    qr_show:"Mã QR báo cáo", qr_hint:"Quét để mở mã báo cáo",
+  },
+  en: {
+    appName:"Service Report", brand:"Kiên Thịnh Eco",
+    nav_dashboard:"Dashboard", nav_reports:"Reports", nav_customers:"Customers",
+    nav_equipment:"Equipment", nav_templates:"Templates", nav_history:"Service History", nav_settings:"Settings",
+    dash_title:"Dashboard", dash_sub:"Overview of technical service activity",
+    stat_total:"Total reports", stat_progress:"In progress", stat_waiting:"Awaiting reply",
+    stat_done:"Completed", stat_sent:"Sent to customer",
+    quick:"Quick actions", new_report:"New report", new_inspection:"Equipment inspection",
+    new_survey:"Site survey", new_trouble:"Troubleshooting", new_check:"Quick check",
+    recent:"Recent reports", col_no:"Report No.", col_customer:"Customer", col_project:"Project / Site",
+    col_type:"Service type", col_date:"Date", col_engineer:"Engineer", col_status:"Status", col_action:"",
+    empty_reports:"No reports yet. Click “New report” to begin.",
+    st_draft:"Draft", st_progress:"In progress", st_completed:"Completed", st_reviewed:"Reviewed", st_sent:"Sent", st_archived:"Archived",
+    sec_info:"General information", sec_overview:"Overview & Condition", sec_work:"Work performed",
+    sec_results:"Results & Recommendation", sec_photos:"Site photos",
+    step:"Section", back:"Back", saveExit:"Save & exit", preview:"Preview", exportPdf:"Export PDF",
+    autosaved:"Autosaved", saving:"Saving…",
+    f_reportNo:"Report No.", f_reportType:"Report type", f_date:"Service date", f_engineer:"Engineer",
+    f_customer:"Customer company", f_project:"Project", f_site:"Site / Factory",
+    f_contact:"Contact person", f_position:"Position", f_phone:"Phone", f_email:"Email",
+    equipment:"Equipment", addEquipment:"Add equipment", eq_name:"Equipment name", eq_mfr:"Manufacturer",
+    eq_model:"Model", eq_serial:"Serial number", eq_tag:"Tag number", eq_part:"Part number",
+    eq_app:"Application", eq_loc:"Installation location",
+    serviceType:"Service type",
+    stype_inspection:"Equipment inspection", stype_trouble:"Troubleshooting", stype_survey:"Site survey",
+    stype_pm:"Preventive maintenance", stype_install:"Installation inspection", stype_consult:"Technical consultation",
+    stype_commission:"Commissioning", stype_other:"Other",
+    ov_purpose:"Purpose of inspection / survey", ov_condition:"Existing condition",
+    ov_env:"Operating / environmental condition", ov_env_hint:"Temperature, pH, flow, pressure, sample condition…",
+    work_title:"Work performed", addWork:"Add work item", loadChecklist:"Load sample checklist",
+    w_title:"Work title", w_desc:"Description", w_result:"Result", w_status:"Status",
+    ws_done:"Completed", ws_pending:"In progress", ws_na:"N/A",
+    checklist:"Inspection checklist", saveTemplate:"Save as template",
+    res_result:"Inspection results", res_assess:"Technical assessment", res_cause:"Cause / assessment",
+    res_recommend:"Recommendation",
+    assess_normal:"Normal", assess_attention:"Attention required", assess_fault:"Fault detected", assess_unable:"Unable to verify",
+    measurements:"Measurement table", addRow:"Add row", m_param:"Parameter", m_result:"Result", m_unit:"Unit", m_status:"Status",
+    findings:"Technical findings", addFinding:"Add finding", fi_finding:"Finding", fi_severity:"Severity", fi_obs:"Observation", fi_rec:"Recommendation",
+    sev_low:"Low", sev_med:"Medium", sev_high:"High",
+    rec_title:"TECHNICAL RECOMMENDATION", rec_action:"Recommended action", rec_priority:"Priority",
+    pri_low:"Low", pri_med:"Medium", pri_high:"High",
+    photos:"Site photos", dropHint:"Drag & drop images here, or click to select / paste",
+    caption:"Photo caption", figure:"Figure",
+    customers_title:"Customers", customers_sub:"Customer directory for quick selection",
+    addCustomer:"Add customer", c_company:"Company", c_address:"Address",
+    equipment_lib:"Equipment library", equipment_sub:"Sample equipment with auto checklist",
+    templates_title:"Templates", templates_sub:"Click to start a new report from a template",
+    history_title:"Service history", history_sub:"All reports over time",
+    settings_title:"Settings", settings_sub:"Company information shown on the PDF report",
+    s_company:"Company name", s_logo:"Company logo", s_address:"Address", s_website:"Website",
+    s_email:"Email", s_phone:"Phone", s_tax:"Tax code", s_hotline:"Hotline", uploadLogo:"Upload logo",
+    signatures:"Signatures", sig_prepared:"Prepared by", sig_checked:"Checked by", sig_approved:"Approved by",
+    save:"Save", cancel:"Cancel", delete:"Delete", edit:"Edit", add:"Add", close:"Close", duplicate:"Duplicate", useTemplate:"Use this template",
+    confirmDelete:"Delete this report?", search:"Search…",
+    previewTitle:"Report preview", genPdf:"Generating PDF…", downloadPdf:"Download PDF",
+    execSummary:"Executive summary", serviceSummary:"SERVICE SUMMARY",
+    lang:"VI", langFull:"Tiếng Việt",
+    reportInfo:"Report information", preparedBy:"Prepared by",
+    condition:"Equipment condition", cond_excellent:"Excellent", cond_good:"Good", cond_fair:"Fair", cond_poor:"Poor", cond_critical:"Critical",
+    thankyou:"Thank you for your trust", confidential:"Confidential", page:"Page",
+    noEquip:"No equipment added", noWork:"No work items", noPhoto:"No photos", noFinding:"No findings", noMeasure:"No measurements",
+    reportType_service:"Service Report", newFrom:"Create report",
+    priorityLabel:"Priority", back_dash:"Back to dashboard",
+    ai_assist:"AI Assistant", ai_rewrite:"Professional rewrite", ai_translate_en:"Translate to English",
+    ai_translate_vi:"Translate to Vietnamese", ai_summary:"Summarize results", ai_recommend:"Draft recommendation",
+    ai_title:"Technical writing assistant", ai_input:"Enter the engineer's short notes…",
+    ai_apply:"Use this text", ai_regenerate:"Regenerate", ai_thinking:"AI is working…",
+    ai_needKey:"A Gemini API key is required. Open Settings to enter it.", ai_openSettings:"Open Settings",
+    ai_hint:"AI only standardizes wording; it never invents measurements or results the engineer has not provided.",
+    ai_note:"Engineer notes", ai_result:"Professional version",
+    s_apikey:"Gemini API Key", s_apikey_hint:"Get one free at aistudio.google.com/apikey",
+    annotate:"Annotate photo", ann_arrow:"Arrow", ann_circle:"Circle", ann_rect:"Rectangle",
+    ann_number:"Number", ann_text:"Text", ann_color:"Color", ann_clear:"Clear all", ann_done:"Done", ann_undo:"Undo",
+    bilingual:"PDF language", bi_vi:"Vietnamese", bi_en:"English", bi_both:"Vietnamese–English",
+    revision:"Revision", rev_new:"New revision", rev_desc:"Change description", rev_history:"Revision history",
+    rev_by:"Edited by", rev_none:"No revisions beyond the original yet.",
+    sig_draw:"Sign here", sig_clear:"Clear signature", sig_name:"Full name", sig_pos:"Position", sig_edit:"Sign / edit",
+    install_app:"Install app", installed:"Installed", offline_ready:"Offline ready",
+    qr_show:"Report QR code", qr_hint:"Scan to open report code",
+  }
+};
+const LangCtx = createContext();
+const useT = () => useContext(LangCtx);
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+const DB_KEY = "kt_service_report_v1";
+const loadDB = () => { try { return JSON.parse(localStorage.getItem(DB_KEY)) || null; } catch { return null; } };
+const saveDB = (d) => { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch {} };
+
+const uid = () => Math.random().toString(36).slice(2,9);
+const todayISO = () => new Date().toISOString().slice(0,10);
+const fmtDate = (iso) => { if(!iso) return ""; const d=new Date(iso); return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`; };
+const fmtDateLong = (iso,lang) => { if(!iso) return ""; const d=new Date(iso);
+  const mVi=["01","02","03","04","05","06","07","08","09","10","11","12"];
+  const mEn=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  return lang==='en' ? `${String(d.getDate()).padStart(2,'0')} ${mEn[d.getMonth()]} ${d.getFullYear()}` : `${String(d.getDate()).padStart(2,'0')}/${mVi[d.getMonth()]}/${d.getFullYear()}`;
+};
+
+const nextReportNo = (reports) => {
+  const yr = new Date().getFullYear();
+  const nums = reports.map(r=>{ const m=(r.info?.reportNo||"").match(new RegExp(`SR-${yr}-(\\d+)`)); return m?parseInt(m[1]):0; });
+  const n = (nums.length?Math.max(...nums):0)+1;
+  return `SR-${yr}-${String(n).padStart(4,'0')}`;
+};
+
+/* ============================================================
+   AI — Gemini (free tier, user API key)
+   ============================================================ */
+async function geminiCall(apiKey, prompt){
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const res = await fetch(url, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.4, maxOutputTokens:1024} })
+  });
+  if(!res.ok){ const e=await res.text(); throw new Error('Gemini '+res.status+': '+e.slice(0,120)); }
+  const data = await res.json();
+  return data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+}
+const AI_PROMPTS = {
+  rewrite: (txt)=>`Bạn là kỹ sư dịch vụ thiết bị đo lường/quan trắc môi trường. Viết lại đoạn ghi chú sau thành văn phong kỹ thuật chuyên nghiệp, súc tích, dùng cho báo cáo gửi khách hàng. TUYỆT ĐỐI không thêm bất kỳ thông số, con số hay kết quả đo nào không có trong ghi chú gốc. Chỉ trả về đoạn văn đã viết lại, không thêm lời dẫn.\n\nGhi chú:\n"""${txt}"""`,
+  translate_en: (txt)=>`Translate the following Vietnamese technical service-report text into professional English. Keep all numbers/units exactly. Return only the translation.\n\n"""${txt}"""`,
+  translate_vi: (txt)=>`Dịch đoạn báo cáo kỹ thuật sau sang tiếng Việt chuyên nghiệp. Giữ nguyên mọi con số/đơn vị. Chỉ trả về bản dịch.\n\n"""${txt}"""`,
+  summary: (txt)=>`Tóm tắt kết quả kiểm tra sau thành 2–3 câu ngắn gọn, chuyên nghiệp cho phần "Tóm tắt điều hành" của báo cáo. Không thêm thông số mới. Chỉ trả về đoạn tóm tắt.\n\n"""${txt}"""`,
+  recommend: (txt)=>`Từ các phát hiện/kết quả sau, soạn phần "Khuyến nghị kỹ thuật" chuyên nghiệp, rõ ràng, dạng hành động cụ thể cho khách hàng. Không tự tạo thông số chưa có. Chỉ trả về nội dung khuyến nghị.\n\n"""${txt}"""`,
+};
+
+/* ============================================================
+   CHECKLIST TEMPLATES (smart, per equipment type)
+   ============================================================ */
+const CHECKLISTS = {
+  ph: { name:"pH Analyzer", groups:[
+    {title:"General Inspection", items:["Tình trạng vỏ / housing","Màn hình hiển thị","Cáp tín hiệu","Đầu nối / connector","Nguồn cấp"]},
+    {title:"Sensor", items:["Tình trạng sensor","Màng đo / membrane","Reference junction","Cáp sensor","Hiệu chuẩn / calibration"]},
+    {title:"Measurement", items:["Giá trị pH","Nhiệt độ","Độ ổn định","Thời gian đáp ứng"]},
+    {title:"Communication", items:["4–20 mA","Modbus","Relay","Digital communication"]},
+  ]},
+  flow: { name:"Flow Meter", groups:[
+    {title:"General", items:["Tình trạng vỏ","Màn hình","Cáp / đấu nối","Nguồn cấp","Tiếp địa"]},
+    {title:"Sensor / Sensor tube", items:["Điện cực / electrode","Lớp lót / lining","Đường ống","Hướng dòng chảy"]},
+    {title:"Measurement", items:["Lưu lượng","Vận tốc","Empty pipe detection","Zero point"]},
+    {title:"Communication", items:["4–20 mA","Pulse output","Modbus","HART"]},
+  ]},
+  water: { name:"Water Quality Analyzer", groups:[
+    {title:"General", items:["Vỏ tủ / cabinet","Màn hình","Nguồn cấp","Quạt / làm mát","Đấu nối"]},
+    {title:"Sample system", items:["Bơm mẫu","Đường ống mẫu","Van","Lưu lượng mẫu","Áp suất"]},
+    {title:"Reagent / Sensor", items:["Hóa chất / reagent","Sensor","Calibration","Cleaning"]},
+    {title:"Measurement", items:["COD / TSS / NH4","Độ ổn định","Data logger","Tín hiệu ngõ ra"]},
+  ]},
+  generic: { name:"Generic Equipment", groups:[
+    {title:"General Inspection", items:["Tình trạng vỏ","Màn hình / hiển thị","Cáp / đấu nối","Nguồn cấp","Tiếp địa"]},
+    {title:"Function", items:["Khởi động","Hoạt động cơ bản","Cảnh báo / alarm","Cấu hình"]},
+    {title:"Signal", items:["Tín hiệu ngõ ra","Truyền thông","Kiểm tra vòng lặp / loop test"]},
+  ]},
+};
+
+const EQUIP_LIB = [
+  { id:'e1', name:"pH / ORP Analyzer", mfr:"Endress+Hauser", model:"Liquiline CM442", cat:"Water Quality", checklist:"ph" },
+  { id:'e2', name:"Electromagnetic Flowmeter", mfr:"Endress+Hauser", model:"Promag W 400", cat:"Flow", checklist:"flow" },
+  { id:'e3', name:"pH Analyzer", mfr:"HORIBA", model:"HE-960", cat:"Water Quality", checklist:"ph" },
+  { id:'e4', name:"COD / TOC Analyzer", mfr:"HORIBA", model:"CODmax II", cat:"Water Quality", checklist:"water" },
+  { id:'e5', name:"Dissolved Oxygen Sensor", mfr:"Endress+Hauser", model:"Oxymax COS61D", cat:"Water Quality", checklist:"generic" },
+];
+
+/* ============================================================
+   SERVICE TYPES & STATUS
+   ============================================================ */
+const SERVICE_TYPES = [
+  {id:'inspection', k:'stype_inspection', cl:'generic'},
+  {id:'trouble', k:'stype_trouble', cl:'generic'},
+  {id:'survey', k:'stype_survey', cl:'generic'},
+  {id:'pm', k:'stype_pm', cl:'generic'},
+  {id:'install', k:'stype_install', cl:'generic'},
+  {id:'consult', k:'stype_consult', cl:'generic'},
+  {id:'commission', k:'stype_commission', cl:'generic'},
+  {id:'other', k:'stype_other', cl:'generic'},
+];
+const STATUS = {
+  draft:{k:'st_draft', c:'#6B7A90', bg:'#EEF1F5'},
+  progress:{k:'st_progress', c:'#1F6FB2', bg:'#E5F0F9'},
+  completed:{k:'st_completed', c:'#0E7C66', bg:'#E4F3EF'},
+  reviewed:{k:'st_reviewed', c:'#6D4AB5', bg:'#EFEAF8'},
+  sent:{k:'st_sent', c:'#0B7A54', bg:'#E1F4EC'},
+  archived:{k:'st_archived', c:'#8A94A3', bg:'#F0F2F5'},
+};
+const ASSESS = {
+  normal:{k:'assess_normal', dot:'#12A150', bg:'#E4F5EC', c:'#0B7A3E'},
+  attention:{k:'assess_attention', dot:'#C2790B', bg:'#FBF0DD', c:'#95610C'},
+  fault:{k:'assess_fault', dot:'#C0392B', bg:'#FBE9E7', c:'#9A2B20'},
+  unable:{k:'assess_unable', dot:'#94A3B8', bg:'#F1F4F8', c:'#5B6B80'},
+};
+
+/* ============================================================
+   DEMO DATA
+   ============================================================ */
+const buildDemo = (settings) => {
+  const rid = uid();
+  return {
+    id: rid, createdAt: Date.now(), status:'completed',
+    info: {
+      reportNo:"SR-2026-0001", reportType:"reportType_service", date:"2026-08-07",
+      engineer:"Đội Dịch vụ Kỹ thuật", customer:"ABC Manufacturing Vietnam",
+      project:"Hệ thống xử lý nước thải", site:"Nhà máy ABC – Bình Dương",
+      contact:"Nguyễn Văn A", position:"Trưởng phòng Môi trường",
+      phone:"0901 234 567", email:"moitruong@abc-mfg.vn",
+    },
+    equipment:[{ id:uid(), name:"Online pH Analyzer", mfr:"Endress+Hauser", model:"Liquiline CM442",
+      serial:"K8004512A03", tag:"AIT-101", part:"CM442-...", app:"Đo pH nước thải đầu ra", loc:"Bể quan trắc – vị trí xả thải", checklist:'ph' }],
+    serviceType:'inspection',
+    condition:'good',
+    overview:{
+      purpose:"Kiểm tra tình trạng hoạt động của thiết bị đo pH tại hệ thống xử lý nước thải, đánh giá độ ổn định và độ chính xác của phép đo.",
+      condition:"<p>Thiết bị hoạt động, màn hình hiển thị bình thường. Ghi nhận tín hiệu đo <b>dao động nhẹ</b> ở một số thời điểm. Sensor có dấu hiệu bám bẩn trên bề mặt màng đo.</p><ul><li>Vỏ thiết bị và tủ điện: bình thường</li><li>Nguồn cấp ổn định</li><li>Sensor: bám bẩn nhẹ, cần vệ sinh</li></ul>",
+      env:"Nhiệt độ mẫu: 28,4 °C · pH mẫu: ~7,1 · Lưu lượng ổn định · Điều kiện vận hành bình thường.",
+    },
+    work:[
+      {id:uid(),title:"Visual Inspection",desc:"Kiểm tra tổng thể thiết bị, tủ điện và đấu nối.",status:'done',result:"Không phát hiện hư hỏng cơ khí. Đấu nối chắc chắn."},
+      {id:uid(),title:"Power Supply Check",desc:"Đo điện áp nguồn cấp.",status:'done',result:"Nguồn cấp đo được 24,1 VDC, nằm trong dải vận hành cho phép."},
+      {id:uid(),title:"Sensor Inspection",desc:"Kiểm tra sensor pH và màng đo.",status:'done',result:"Sensor bám bẩn bề mặt màng đo, đã tiến hành vệ sinh."},
+      {id:uid(),title:"Signal Verification",desc:"Kiểm tra tín hiệu 4–20 mA.",status:'done',result:"Tín hiệu ngõ ra ổn định sau khi vệ sinh sensor."},
+      {id:uid(),title:"Measurement Test",desc:"Đo kiểm bằng dung dịch chuẩn.",status:'done',result:"Sai số nằm trong giới hạn sau hiệu chuẩn."},
+    ],
+    checklistState:{},
+    measurements:[
+      {id:uid(),param:"pH",result:"7.12",unit:"pH",status:'normal'},
+      {id:uid(),param:"Nhiệt độ",result:"28.4",unit:"°C",status:'normal'},
+      {id:uid(),param:"Điện áp nguồn",result:"24.1",unit:"VDC",status:'normal'},
+      {id:uid(),param:"Tín hiệu ngõ ra",result:"12.3",unit:"mA",status:'normal'},
+    ],
+    findings:[
+      {id:uid(),finding:"Sensor pH có dấu hiệu suy giảm độ ổn định.",severity:'med',
+       obs:"Tín hiệu đo dao động nhẹ trước khi vệ sinh; thời gian đáp ứng chậm hơn tiêu chuẩn.",
+       rec:"Theo dõi thêm; cân nhắc thay sensor nếu độ ổn định không cải thiện."},
+    ],
+    results:{
+      result:"Sau khi vệ sinh sensor và hiệu chuẩn lại, thiết bị hoạt động ổn định. Các thông số đo nằm trong giới hạn cho phép. Ghi nhận sensor bắt đầu có dấu hiệu suy giảm.",
+      assess:'attention',
+      cause:"Bề mặt màng đo bám bẩn dẫn tới tín hiệu không ổn định. Sensor đã qua thời gian sử dụng dài.",
+    },
+    recommendation:{
+      action:"Theo dõi độ ổn định của sensor trong 24 giờ. Chuẩn bị sensor pH thay thế để dự phòng. Thực hiện vệ sinh và hiệu chuẩn định kỳ mỗi 3 tháng.",
+      priority:'med',
+    },
+    photos:[],
+    signatures:{ prepared:{name:"KTV. Trần Văn B",pos:"Kỹ sư dịch vụ",img:null}, checked:{name:"",pos:"",img:null}, approved:{name:"",pos:"",img:null} },
+    execSummary:"Thiết bị đo pH Liquiline CM442 tại hệ thống xử lý nước thải được kiểm tra định kỳ. Sau khi vệ sinh sensor và hiệu chuẩn, thiết bị hoạt động ổn định; các thông số đạt yêu cầu. Ghi nhận sensor bắt đầu suy giảm, khuyến nghị theo dõi và chuẩn bị phương án thay thế.",
+    pdfLang:'vi',
+    revisions:[{rev:0, date:"2026-08-07", by:"Đội Dịch vụ Kỹ thuật", desc:"Bản phát hành đầu tiên"}],
+  };
+};
+
+const DEFAULT_SETTINGS = {
+  company:"Công ty TNHH MTV Kiên Thịnh", brand:"Kiên Thịnh Eco",
+  address:"TP. Hồ Chí Minh, Việt Nam", website:"kienthinh-eco.com",
+  email:"info@kienthinh-eco.com", phone:"", tax:"", hotline:"", logo:null, apiKey:"",
+};
+
+const initDB = () => {
+  const existing = loadDB();
+  if (existing) return existing;
+  const settings = {...DEFAULT_SETTINGS};
+  const demo = buildDemo(settings);
+  const db = {
+    settings,
+    reports:[demo],
+    customers:[
+      {id:uid(),company:"ABC Manufacturing Vietnam",address:"KCN Sóng Thần, Bình Dương",contact:"Nguyễn Văn A",position:"Trưởng phòng Môi trường",phone:"0901 234 567",email:"moitruong@abc-mfg.vn"},
+    ],
+    lang:'vi',
+  };
+  saveDB(db);
+  return db;
+};
+
+/* ============================================================
+   SMALL UI PRIMITIVES
+   ============================================================ */
+const Icon = ({d, s=20, sw=1.8, fill='none'}) => (
+  <svg width={s} height={s} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+);
+const I = {
+  dash:<><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></>,
+  reports:<><path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 11h8M8 15h5"/></>,
+  customers:<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></>,
+  equipment:<><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></>,
+  templates:<><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>,
+  history:<><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></>,
+  settings:<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></>,
+  plus:<><path d="M12 5v14M5 12h14"/></>,
+  chevR:<><path d="m9 18 6-6-6-6"/></>,
+  chevL:<><path d="m15 18-6-6 6-6"/></>,
+  eye:<><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></>,
+  download:<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></>,
+  trash:<><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></>,
+  check:<><path d="M20 6 9 17l-5-5"/></>,
+  x:<><path d="M18 6 6 18M6 6l12 12"/></>,
+  copy:<><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></>,
+  image:<><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></>,
+  edit:<><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></>,
+  search:<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>,
+  globe:<><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></>,
+  wrench:<><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></>,
+  alert:<><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></>,
+  spark:<><path d="M12 3l1.6 4.6L18 9l-4.4 1.4L12 15l-1.6-4.6L6 9l4.4-1.4L12 3z"/><path d="M19 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></>,
+  layers:<><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></>,
+};
+
+function Badge({children, c, bg}) {
+  return <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full" style={{color:c, background:bg}}>{children}</span>;
+}
+function StatusBadge({status}) {
+  const t = useT(); const s = STATUS[status] || STATUS.draft;
+  return <Badge c={s.c} bg={s.bg}><span className="w-1.5 h-1.5 rounded-full" style={{background:s.c}}></span>{t[s.k]}</Badge>;
+}
+function Field({label, value, onChange, placeholder, type='text', full, mono}) {
+  return (
+    <label className={"flex flex-col gap-1.5 " + (full?"col-span-2":"")}>
+      <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{label}</span>
+      <input type={type} value={value||""} onChange={e=>onChange(e.target.value)} placeholder={placeholder}
+        className={"w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] text-[var(--ink)] placeholder:text-[var(--ink-3)] focus:border-[var(--accent)] transition "+(mono?"mono":"")}/>
+    </label>
+  );
+}
+function Area({label, value, onChange, placeholder, rows=3, hint}) {
+  return (
+    <label className="flex flex-col gap-1.5 col-span-2">
+      <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{label}</span>
+      <textarea rows={rows} value={value||""} onChange={e=>onChange(e.target.value)} placeholder={placeholder||hint}
+        className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] text-[var(--ink)] leading-relaxed placeholder:text-[var(--ink-3)] focus:border-[var(--accent)] transition resize-y"/>
+    </label>
+  );
+}
+function Btn({children, onClick, variant='primary', size='md', className='', ...p}) {
+  const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition active:scale-[.98] disabled:opacity-50 disabled:cursor-not-allowed";
+  const sizes = {sm:"text-[13px] px-3 py-2", md:"text-[14px] px-4 py-2.5", lg:"text-[15px] px-5 py-3"};
+  const variants = {
+    primary:"bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] card-shadow",
+    accent:"bg-[var(--accent)] text-white hover:brightness-110 card-shadow",
+    ghost:"bg-transparent text-[var(--ink-2)] hover:bg-[var(--ice)]",
+    outline:"bg-white text-[var(--ink)] border border-[var(--line-strong)] hover:border-[var(--navy-3)] hover:bg-[var(--paper)]",
+    danger:"bg-white text-[var(--red)] border border-[#F1C9C4] hover:bg-[var(--red-soft)]",
+  };
+  return <button onClick={onClick} className={`${base} ${sizes[size]} ${variants[variant]} ${className}`} {...p}>{children}</button>;
+}
+
+/* Rich text editor (contentEditable, simple toolbar) */
+function RichEditor({value, onChange, placeholder}) {
+  const ref = useRef();
+  useEffect(()=>{ if(ref.current && ref.current.innerHTML !== (value||"")) ref.current.innerHTML = value||""; },[]);
+  const cmd = (c,v=null)=>{ document.execCommand(c,false,v); ref.current.focus(); onChange(ref.current.innerHTML); };
+  const tools = [
+    {c:'bold',label:'B',style:'font-bold'},
+    {c:'italic',label:'I',style:'italic'},
+    {c:'insertUnorderedList',label:'• List'},
+    {c:'insertOrderedList',label:'1. List'},
+  ];
+  return (
+    <div className="col-span-2 border border-[var(--line)] rounded-lg overflow-hidden bg-white focus-within:border-[var(--accent)] transition">
+      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-[var(--line)] bg-[var(--paper)]">
+        {tools.map(t=>(
+          <button key={t.c} onMouseDown={e=>{e.preventDefault();cmd(t.c);}}
+            className={"px-2.5 py-1 text-[13px] rounded hover:bg-[var(--ice)] text-[var(--ink-2)] "+(t.style||"")}>{t.label}</button>
+        ))}
+      </div>
+      <div ref={ref} contentEditable onInput={e=>onChange(e.currentTarget.innerHTML)}
+        data-ph={placeholder}
+        className="px-3 py-2.5 text-[14px] leading-relaxed min-h-[90px] text-[var(--ink)] prose-report empty:before:content-[attr(data-ph)] empty:before:text-[var(--ink-3)]"
+        suppressContentEditableWarning></div>
+    </div>
+  );
+}
+
+/* ---- AI assist button + modal ---- */
+function AIButton({apiKey, mode, sourceText, onApply, onNeedKey, label}){
+  const t = useT();
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button onClick={()=> apiKey ? setOpen(true) : onNeedKey() }
+        className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-2.5 py-1 rounded-md text-[var(--accent)] bg-[var(--accent-soft)] hover:brightness-95 transition">
+        <Icon d={I.spark} s={14} sw={2}/>{label||t.ai_assist}
+      </button>
+      {open && <AIModal apiKey={apiKey} mode={mode} sourceText={sourceText} onApply={(txt)=>{onApply(txt);setOpen(false);}} onClose={()=>setOpen(false)}/>}
+    </>
+  );
+}
+function AIModal({apiKey, mode, sourceText, onApply, onClose}){
+  const t = useT();
+  const [note, setNote] = useState(sourceText||"");
+  const [out, setOut] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [activeMode, setActiveMode] = useState(mode||'rewrite');
+  const modes = [
+    {id:'rewrite', k:'ai_rewrite'}, {id:'summary', k:'ai_summary'}, {id:'recommend', k:'ai_recommend'},
+    {id:'translate_en', k:'ai_translate_en'}, {id:'translate_vi', k:'ai_translate_vi'},
+  ];
+  const run = async (m)=>{
+    if(!note.trim()) return;
+    setBusy(true); setErr(""); setOut("");
+    try{ const r = await geminiCall(apiKey, AI_PROMPTS[m](note)); setOut(r); }
+    catch(e){ setErr(e.message); }
+    setBusy(false);
+  };
+  return (
+    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
+          <h3 className="font-bold text-[16px] flex items-center gap-2"><span className="text-[var(--accent)]"><Icon d={I.spark} s={18} sw={2}/></span>{t.ai_title}</h3>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="p-6 overflow-y-auto space-y-4">
+          <div className="flex flex-wrap gap-2">
+            {modes.map(m=>(
+              <button key={m.id} onClick={()=>{setActiveMode(m.id);}}
+                className={"text-[12.5px] font-semibold px-3 py-1.5 rounded-lg border transition "+
+                  (activeMode===m.id?"bg-[var(--navy)] text-white border-[var(--navy)]":"bg-white border-[var(--line-strong)] text-[var(--ink-2)] hover:border-[var(--navy-3)]")}>{t[m.k]}</button>
+            ))}
+          </div>
+          <div>
+            <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.ai_note}</div>
+            <textarea value={note} onChange={e=>setNote(e.target.value)} rows={3} placeholder={t.ai_input}
+              className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+          </div>
+          <Btn variant="accent" size="sm" onClick={()=>run(activeMode)} disabled={busy||!note.trim()}>
+            {busy ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>{t.ai_thinking}</> : <><Icon d={I.spark} s={15} sw={2}/>{out?t.ai_regenerate:t.ai_assist}</>}
+          </Btn>
+          {err && <div className="text-[13px] text-[var(--red)] bg-[var(--red-soft)] px-3 py-2 rounded-lg">{err}</div>}
+          {out && (
+            <div>
+              <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.ai_result}</div>
+              <div className="px-3 py-2.5 rounded-lg border border-[var(--accent)] bg-[var(--accent-soft)] text-[14px] leading-relaxed text-[var(--ink)] whitespace-pre-wrap">{out}</div>
+            </div>
+          )}
+          <div className="text-[11.5px] text-[var(--ink-3)] flex items-start gap-1.5 leading-relaxed"><span className="mt-0.5"><Icon d={I.alert} s={13}/></span>{t.ai_hint}</div>
+        </div>
+        {out && (
+          <div className="flex justify-end gap-2 px-6 py-4 border-t border-[var(--line)]">
+            <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
+            <Btn variant="primary" onClick={()=>onApply(out)}><Icon d={I.check} s={16}/>{t.ai_apply}</Btn>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Photo annotator (canvas overlay) ---- */
+function PhotoAnnotator({photo, onSave, onClose}){
+  const t = useT();
+  const canvasRef = useRef();
+  const imgRef = useRef();
+  const [tool, setTool] = useState('arrow');
+  const [color, setColor] = useState('#C0392B');
+  const [shapes, setShapes] = useState(photo.shapes||[]);
+  const [drawing, setDrawing] = useState(null);
+  const [numCount, setNumCount] = useState((photo.shapes||[]).filter(s=>s.type==='number').length);
+  const colors = ['#C0392B','#0E7C66','#1F6FB2','#C2790B','#0B1F3A','#FFFFFF'];
+
+  const redraw = ()=>{
+    const cv = canvasRef.current, img = imgRef.current;
+    if(!cv||!img||!img.complete) return;
+    cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+    const ctx = cv.getContext('2d');
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ctx.drawImage(img,0,0);
+    const scale = img.naturalWidth/1000;
+    const lw = Math.max(3, 5*scale);
+    [...shapes, drawing].filter(Boolean).forEach((s,i)=>{
+      ctx.strokeStyle = s.color; ctx.fillStyle = s.color; ctx.lineWidth = lw; ctx.lineCap='round';
+      const x1=s.x1*cv.width, y1=s.y1*cv.height, x2=s.x2*cv.width, y2=s.y2*cv.height;
+      if(s.type==='arrow'){
+        ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+        const ang=Math.atan2(y2-y1,x2-x1), h=18*scale;
+        ctx.beginPath(); ctx.moveTo(x2,y2);
+        ctx.lineTo(x2-h*Math.cos(ang-Math.PI/6), y2-h*Math.sin(ang-Math.PI/6));
+        ctx.lineTo(x2-h*Math.cos(ang+Math.PI/6), y2-h*Math.sin(ang+Math.PI/6));
+        ctx.closePath(); ctx.fill();
+      } else if(s.type==='rect'){
+        ctx.strokeRect(x1,y1,x2-x1,y2-y1);
+      } else if(s.type==='circle'){
+        ctx.beginPath(); ctx.ellipse((x1+x2)/2,(y1+y2)/2,Math.abs(x2-x1)/2,Math.abs(y2-y1)/2,0,0,2*Math.PI); ctx.stroke();
+      } else if(s.type==='number'){
+        const r=16*scale;
+        ctx.beginPath(); ctx.arc(x1,y1,r,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle = s.color==='#FFFFFF'?'#0B1F3A':'#FFFFFF'; ctx.font=`bold ${20*scale}px 'Noto Sans',Arial`; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText(String(s.n), x1, y1);
+      }
+    });
+  };
+  useEffect(()=>{ redraw(); },[shapes, drawing]);
+
+  const getPos = (e)=>{
+    const cv = canvasRef.current, rect = cv.getBoundingClientRect();
+    const cx = (e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    const cy = (e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+    return { x: cx/rect.width, y: cy/rect.height };
+  };
+  const start = (e)=>{
+    e.preventDefault(); const p=getPos(e);
+    if(tool==='number'){
+      const n=numCount+1; setNumCount(n);
+      setShapes([...shapes,{type:'number',x1:p.x,y1:p.y,x2:p.x,y2:p.y,color,n}]); return;
+    }
+    setDrawing({type:tool,x1:p.x,y1:p.y,x2:p.x,y2:p.y,color});
+  };
+  const move = (e)=>{ if(!drawing) return; const p=getPos(e); setDrawing({...drawing,x2:p.x,y2:p.y}); };
+  const end = ()=>{ if(drawing){ setShapes([...shapes,drawing]); setDrawing(null); } };
+
+  const undo = ()=> setShapes(shapes.slice(0,-1));
+  const clear = ()=>{ setShapes([]); setNumCount(0); };
+  const save = ()=>{
+    const cv = canvasRef.current;
+    const dataURL = cv.toDataURL('image/jpeg',0.92);
+    onSave({...photo, annotated:dataURL, shapes});
+  };
+  const tools = [{id:'arrow',k:'ann_arrow'},{id:'circle',k:'ann_circle'},{id:'rect',k:'ann_rect'},{id:'number',k:'ann_number'}];
+
+  return (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-3xl card-shadow-lg fade-in flex flex-col max-h-[92vh]" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--line)]">
+          <h3 className="font-bold text-[15px]">{t.annotate}</h3>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-[var(--line)] flex-wrap bg-[var(--paper)]">
+          {tools.map(tl=>(
+            <button key={tl.id} onClick={()=>setTool(tl.id)}
+              className={"text-[12.5px] font-semibold px-3 py-1.5 rounded-lg border transition "+
+                (tool===tl.id?"bg-[var(--navy)] text-white border-[var(--navy)]":"bg-white border-[var(--line-strong)] text-[var(--ink-2)] hover:border-[var(--navy-3)]")}>{t[tl.k]}</button>
+          ))}
+          <div className="w-px h-6 bg-[var(--line-strong)] mx-1"></div>
+          {colors.map(c=>(
+            <button key={c} onClick={()=>setColor(c)}
+              className={"w-6 h-6 rounded-full border-2 transition "+(color===c?"border-[var(--navy)] scale-110":"border-white")}
+              style={{background:c, boxShadow:c==='#FFFFFF'?'inset 0 0 0 1px #CBD5E1':'none'}}/>
+          ))}
+          <div className="w-px h-6 bg-[var(--line-strong)] mx-1"></div>
+          <button onClick={undo} className="text-[12.5px] font-semibold px-3 py-1.5 rounded-lg border border-[var(--line-strong)] bg-white hover:border-[var(--navy-3)]">{t.ann_undo}</button>
+          <button onClick={clear} className="text-[12.5px] font-semibold px-3 py-1.5 rounded-lg border border-[#F1C9C4] text-[var(--red)] bg-white hover:bg-[var(--red-soft)]">{t.ann_clear}</button>
+        </div>
+        <div className="p-5 overflow-auto flex items-center justify-center bg-[#2D3748]">
+          <img ref={imgRef} src={photo.src} onLoad={redraw} className="hidden"/>
+          <canvas ref={canvasRef}
+            onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
+            onTouchStart={start} onTouchMove={move} onTouchEnd={end}
+            className="max-w-full max-h-[55vh] rounded-lg cursor-crosshair" style={{touchAction:'none'}}/>
+        </div>
+        <div className="flex justify-end gap-2 px-5 py-3 border-t border-[var(--line)]">
+          <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
+          <Btn variant="accent" onClick={save}><Icon d={I.check} s={16}/>{t.ann_done}</Btn>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Signature pad (draw on canvas) ---- */
+function SignatureModal({sig, roleLabel, onSave, onClose}){
+  const t = useT();
+  const canvasRef = useRef();
+  const [name, setName] = useState(sig.name||"");
+  const [pos, setPos] = useState(sig.pos||"");
+  const drawing = useRef(false);
+  const last = useRef(null);
+
+  useEffect(()=>{
+    const cv = canvasRef.current;
+    cv.width = cv.offsetWidth*2; cv.height = cv.offsetHeight*2;
+    const ctx = cv.getContext('2d'); ctx.scale(2,2);
+    ctx.strokeStyle='#0B1F3A'; ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.lineJoin='round';
+    if(sig.img){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0,cv.offsetWidth,cv.offsetHeight); img.src=sig.img; }
+  },[]);
+  const pos_ = (e)=>{ const r=canvasRef.current.getBoundingClientRect();
+    const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left, cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top; return {x:cx,y:cy}; };
+  const start = (e)=>{ e.preventDefault(); drawing.current=true; last.current=pos_(e); };
+  const move = (e)=>{ if(!drawing.current) return; e.preventDefault(); const ctx=canvasRef.current.getContext('2d'); const p=pos_(e);
+    ctx.beginPath(); ctx.moveTo(last.current.x,last.current.y); ctx.lineTo(p.x,p.y); ctx.stroke(); last.current=p; };
+  const end = ()=>{ drawing.current=false; };
+  const clear = ()=>{ const cv=canvasRef.current; cv.getContext('2d').clearRect(0,0,cv.width,cv.height); };
+  const save = ()=>{ onSave({name, pos, img: canvasRef.current.toDataURL('image/png')}); };
+
+  return (
+    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-md card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
+          <h3 className="font-bold text-[16px]">{roleLabel}</h3>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="p-6 space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <Field label={t.sig_name} value={name} onChange={setName}/>
+            <Field label={t.sig_pos} value={pos} onChange={setPos}/>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.sig_draw}</span>
+              <button onClick={clear} className="text-[12px] font-semibold text-[var(--red)] hover:underline">{t.sig_clear}</button>
+            </div>
+            <canvas ref={canvasRef}
+              onMouseDown={start} onMouseMove={move} onMouseUp={end} onMouseLeave={end}
+              onTouchStart={start} onTouchMove={move} onTouchEnd={end}
+              className="w-full h-40 border-2 border-dashed border-[var(--line-strong)] rounded-lg bg-[var(--paper)] cursor-crosshair" style={{touchAction:'none'}}/>
+          </div>
+        </div>
+        <div className="flex justify-end gap-2 px-6 py-4 border-t border-[var(--line)]">
+          <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
+          <Btn variant="accent" onClick={save}><Icon d={I.check} s={16}/>{t.save}</Btn>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- QR code (renders to data url) ---- */
+function useQR(text, size=120){
+  const [url, setUrl] = useState(null);
+  useEffect(()=>{
+    if(!text || !window.QRCode) return;
+    const holder = document.createElement('div');
+    try{
+      new window.QRCode(holder, {text, width:size, height:size, correctLevel: window.QRCode.CorrectLevel.M});
+      setTimeout(()=>{ const img=holder.querySelector('img'), cv=holder.querySelector('canvas');
+        if(img&&img.src) setUrl(img.src); else if(cv) setUrl(cv.toDataURL()); },60);
+    }catch(e){}
+  },[text,size]);
+  return url;
+}
+
+/* ============================================================
+   APP ROOT
+   ============================================================ */
+function App(){
+  const [db, setDB] = useState(initDB);
+  const [lang, setLang] = useState(db.lang || 'vi');
+  const [view, setView] = useState('dashboard'); // dashboard|reports|customers|equipment|templates|history|settings|builder|preview
+  const [activeReport, setActiveReport] = useState(null);
+  const t = DICT[lang];
+
+  const persist = useCallback((next)=>{ setDB(next); saveDB(next); },[]);
+  const setLangAndSave = (l)=>{ setLang(l); persist({...db, lang:l}); };
+
+  const updateReport = useCallback((rid, patch)=>{
+    setDB(prev=>{
+      const reports = prev.reports.map(r=> r.id===rid ? {...r, ...(typeof patch==='function'?patch(r):patch)} : r);
+      const next = {...prev, reports};
+      saveDB(next); return next;
+    });
+  },[]);
+
+  const createReport = (serviceType='inspection', fromDemo=false)=>{
+    const rid = uid();
+    const r = {
+      id:rid, createdAt:Date.now(), status:'draft',
+      info:{ reportNo: nextReportNo(db.reports), reportType:"reportType_service", date:todayISO(),
+             engineer:"", customer:"", project:"", site:"", contact:"", position:"", phone:"", email:"" },
+      equipment:[], serviceType, condition:'good',
+      overview:{purpose:"",condition:"",env:""},
+      work:[], checklistState:{}, measurements:[], findings:[],
+      results:{result:"",assess:'normal',cause:""},
+      recommendation:{action:"",priority:'med'},
+      photos:[],
+      signatures:{prepared:{name:"",pos:"",img:null},checked:{name:"",pos:"",img:null},approved:{name:"",pos:"",img:null}},
+      execSummary:"", pdfLang:'vi',
+      revisions:[{rev:0, date:todayISO(), by:"", desc:"Bản phát hành đầu tiên"}],
+    };
+    persist({...db, reports:[r, ...db.reports]});
+    setActiveReport(rid); setView('builder');
+  };
+
+  const openReport = (rid)=>{ setActiveReport(rid); setView('builder'); };
+  const deleteReport = (rid)=>{ persist({...db, reports:db.reports.filter(r=>r.id!==rid)}); };
+  const duplicateReport = (rid)=>{
+    const src = db.reports.find(r=>r.id===rid); if(!src) return;
+    const copy = JSON.parse(JSON.stringify(src));
+    copy.id = uid(); copy.createdAt = Date.now(); copy.status='draft';
+    copy.info.reportNo = nextReportNo(db.reports);
+    persist({...db, reports:[copy, ...db.reports]});
+  };
+
+  const report = db.reports.find(r=>r.id===activeReport);
+
+  return (
+    <LangCtx.Provider value={t}>
+      <div className="flex h-screen overflow-hidden text-[var(--ink)]">
+        <Sidebar view={view} setView={(v)=>{setView(v);}} settings={db.settings} lang={lang} setLang={setLangAndSave}/>
+        <main className="flex-1 overflow-y-auto bg-[var(--paper)]">
+          {view==='dashboard' && <Dashboard db={db} onNew={createReport} onOpen={openReport} setView={setView}/>}
+          {view==='reports' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.nav_reports}/>}
+          {view==='history' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.history_title} sub={t.history_sub}/>}
+          {view==='customers' && <Customers db={db} persist={persist}/>}
+          {view==='equipment' && <EquipmentLib db={db}/>}
+          {view==='templates' && <Templates onCreate={createReport}/>}
+          {view==='settings' && <Settings db={db} persist={persist}/>}
+          {view==='builder' && report && <Builder report={report} update={(p)=>updateReport(report.id,p)} db={db} onExit={()=>setView('dashboard')} onPreview={()=>setView('preview')} onNeedKey={()=>setView('settings')}/>}
+          {view==='preview' && report && <PreviewScreen report={report} settings={db.settings} lang={lang} onBack={()=>setView('builder')} update={(p)=>updateReport(report.id,p)}/>}
+        </main>
+      </div>
+    </LangCtx.Provider>
+  );
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+function Sidebar({view, setView, settings, lang, setLang}){
+  const t = useT();
+  const [deferred, setDeferred] = useState(null);
+  const [installed, setInstalled] = useState(false);
+  useEffect(()=>{
+    const h = (e)=>{ e.preventDefault(); setDeferred(e); };
+    window.addEventListener('beforeinstallprompt', h);
+    window.addEventListener('appinstalled', ()=>{ setInstalled(true); setDeferred(null); });
+    return ()=>window.removeEventListener('beforeinstallprompt', h);
+  },[]);
+  const install = async ()=>{ if(!deferred) return; deferred.prompt(); await deferred.userChoice; setDeferred(null); };
+  const items = [
+    {id:'dashboard', k:'nav_dashboard', icon:I.dash},
+    {id:'reports', k:'nav_reports', icon:I.reports},
+    {id:'customers', k:'nav_customers', icon:I.customers},
+    {id:'equipment', k:'nav_equipment', icon:I.equipment},
+    {id:'templates', k:'nav_templates', icon:I.templates},
+    {id:'history', k:'nav_history', icon:I.history},
+    {id:'settings', k:'nav_settings', icon:I.settings},
+  ];
+  return (
+    <aside className="w-[248px] shrink-0 bg-[var(--navy)] text-white flex flex-col no-print">
+      <div className="px-5 pt-6 pb-5">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+            <span className="text-[var(--accent)]"><Icon d={I.wrench} s={20} sw={2}/></span>
+          </div>
+          <div>
+            <div className="font-extrabold text-[15px] tracking-tight leading-none">Service Report</div>
+            <div className="text-[11px] text-white/50 mt-1">{settings.brand}</div>
+          </div>
+        </div>
+      </div>
+      <nav className="flex-1 px-3 space-y-0.5">
+        {items.map(it=>(
+          <button key={it.id} onClick={()=>setView(it.id)}
+            className={"w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-medium transition "+
+              ((view===it.id||(view==='builder'&&it.id==='reports')||(view==='preview'&&it.id==='reports'))
+                ? "bg-white/10 text-white" : "text-white/60 hover:text-white hover:bg-white/5")}>
+            <span className={((view===it.id)?"text-[var(--accent)]":"")}><Icon d={it.icon} s={19}/></span>
+            {t[it.k]}
+          </button>
+        ))}
+      </nav>
+      <div className="p-3 border-t border-white/10 space-y-1">
+        {deferred && !installed && (
+          <button onClick={install}
+            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] font-semibold text-white bg-[var(--accent)] hover:brightness-110 transition">
+            <Icon d={I.download} s={17}/>{t.install_app}
+          </button>
+        )}
+        {installed && (
+          <div className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[12px] font-semibold text-white/60">
+            <Icon d={I.check} s={16}/>{t.offline_ready}
+          </div>
+        )}
+        <button onClick={()=>setLang(lang==='vi'?'en':'vi')}
+          className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/5 transition">
+          <span className="flex items-center gap-2.5"><Icon d={I.globe} s={17}/>{t.langFull}</span>
+          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-white/10">{t.lang}</span>
+        </button>
+      </div>
+    </aside>
+  );
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function Dashboard({db, onNew, onOpen, setView}){
+  const t = useT();
+  const r = db.reports;
+  const count = (s)=> r.filter(x=>x.status===s).length;
+  const stats = [
+    {k:'stat_total', v:r.length, c:'var(--navy)', bg:'#EEF2F7'},
+    {k:'stat_progress', v:count('progress'), c:STATUS.progress.c, bg:STATUS.progress.bg},
+    {k:'stat_waiting', v:count('reviewed'), c:STATUS.reviewed.c, bg:STATUS.reviewed.bg},
+    {k:'stat_done', v:count('completed'), c:STATUS.completed.c, bg:STATUS.completed.bg},
+    {k:'stat_sent', v:count('sent'), c:STATUS.sent.c, bg:STATUS.sent.bg},
+  ];
+  const quick = [
+    {label:t.new_report, icon:I.plus, primary:true, fn:()=>onNew('inspection')},
+    {label:t.new_inspection, icon:I.wrench, st:'inspection'},
+    {label:t.new_survey, icon:I.templates, st:'survey'},
+    {label:t.new_trouble, icon:I.alert, st:'trouble'},
+    {label:t.new_check, icon:I.check, st:'pm'},
+  ];
+  return (
+    <div className="p-8 max-w-[1200px] mx-auto fade-in">
+      <header className="mb-7">
+        <h1 className="text-[26px] font-extrabold tracking-tight text-[var(--ink)]">{t.dash_title}</h1>
+        <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.dash_sub}</p>
+      </header>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-7">
+        {stats.map(s=>(
+          <div key={s.k} className="bg-white rounded-xl border border-[var(--line)] p-4 card-shadow">
+            <div className="text-[32px] font-extrabold leading-none mono" style={{color:s.c}}>{s.v}</div>
+            <div className="text-[12px] font-semibold text-[var(--ink-3)] mt-2 uppercase tracking-wide">{t[s.k]}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mb-7">
+        <h2 className="text-[13px] font-bold text-[var(--ink-3)] uppercase tracking-wider mb-3">{t.quick}</h2>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          {quick.map((q,i)=>(
+            <button key={i} onClick={q.fn||(()=>onNew(q.st))}
+              className={"group rounded-xl p-4 text-left transition card-shadow "+
+                (q.primary ? "bg-[var(--navy)] text-white hover:bg-[var(--navy-2)]" : "bg-white border border-[var(--line)] hover:border-[var(--navy-3)]")}>
+              <div className={"w-9 h-9 rounded-lg flex items-center justify-center mb-3 "+(q.primary?"bg-[var(--accent)]":"bg-[var(--ice)] text-[var(--navy)]")}>
+                <Icon d={q.icon} s={18} sw={2}/>
+              </div>
+              <div className={"text-[13.5px] font-bold "+(q.primary?"text-white":"text-[var(--ink)]")}>{q.label}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl border border-[var(--line)] card-shadow overflow-hidden">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--line)]">
+          <h2 className="text-[15px] font-bold text-[var(--ink)]">{t.recent}</h2>
+          <Btn variant="ghost" size="sm" onClick={()=>setView('reports')}>{t.nav_reports}<Icon d={I.chevR} s={16}/></Btn>
+        </div>
+        <ReportTable reports={r.slice(0,8)} onOpen={onOpen}/>
+      </div>
+    </div>
+  );
+}
+
+function ReportTable({reports, onOpen, onDelete, onDup}){
+  const t = useT();
+  const svcLabel = (id)=>{ const s=SERVICE_TYPES.find(x=>x.id===id); return s?t[s.k]:id; };
+  if(!reports.length) return <div className="px-5 py-12 text-center text-[var(--ink-3)] text-[14px]">{t.empty_reports}</div>;
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-[13.5px]">
+        <thead>
+          <tr className="text-left text-[var(--ink-3)] text-[11px] uppercase tracking-wider border-b border-[var(--line)]">
+            <th className="font-bold px-5 py-3">{t.col_no}</th>
+            <th className="font-bold px-4 py-3">{t.col_customer}</th>
+            <th className="font-bold px-4 py-3 hidden md:table-cell">{t.col_project}</th>
+            <th className="font-bold px-4 py-3 hidden lg:table-cell">{t.col_type}</th>
+            <th className="font-bold px-4 py-3 hidden md:table-cell">{t.col_date}</th>
+            <th className="font-bold px-4 py-3">{t.col_status}</th>
+            {(onDelete||onDup)&&<th className="px-4 py-3"></th>}
+          </tr>
+        </thead>
+        <tbody>
+          {reports.map(r=>(
+            <tr key={r.id} onClick={()=>onOpen(r.id)}
+              className="border-b border-[var(--line)] last:border-0 hover:bg-[var(--paper)] cursor-pointer transition">
+              <td className="px-5 py-3.5 font-bold mono text-[var(--navy)]">{r.info.reportNo}</td>
+              <td className="px-4 py-3.5 font-medium">{r.info.customer||"—"}</td>
+              <td className="px-4 py-3.5 text-[var(--ink-2)] hidden md:table-cell">{r.info.project||"—"}</td>
+              <td className="px-4 py-3.5 text-[var(--ink-2)] hidden lg:table-cell">{svcLabel(r.serviceType)}</td>
+              <td className="px-4 py-3.5 text-[var(--ink-2)] mono hidden md:table-cell">{fmtDate(r.info.date)}</td>
+              <td className="px-4 py-3.5"><StatusBadge status={r.status}/></td>
+              {(onDelete||onDup)&&(
+                <td className="px-4 py-3.5" onClick={e=>e.stopPropagation()}>
+                  <div className="flex items-center gap-1 justify-end">
+                    {onDup&&<button onClick={()=>onDup(r.id)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--navy)] hover:bg-[var(--ice)]" title={t.duplicate}><Icon d={I.copy} s={16}/></button>}
+                    {onDelete&&<button onClick={()=>{if(confirm(t.confirmDelete))onDelete(r.id);}} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]" title={t.delete}><Icon d={I.trash} s={16}/></button>}
+                  </div>
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/* ============================================================
+   REPORTS LIST
+   ============================================================ */
+function ReportsList({db, onOpen, onNew, onDelete, onDup, title, sub}){
+  const t = useT();
+  const [q, setQ] = useState("");
+  const filtered = db.reports.filter(r=>{
+    const s = (r.info.reportNo+" "+r.info.customer+" "+r.info.project+" "+r.info.site+" "+r.info.engineer+" "+
+      (r.equipment||[]).map(e=>e.model+" "+e.serial+" "+e.name).join(" ")).toLowerCase();
+    return s.includes(q.toLowerCase());
+  });
+  return (
+    <div className="p-8 max-w-[1200px] mx-auto fade-in">
+      <header className="flex items-center justify-between mb-6 flex-wrap gap-3">
+        <div>
+          <h1 className="text-[26px] font-extrabold tracking-tight">{title}</h1>
+          {sub && <p className="text-[var(--ink-3)] text-[14px] mt-1">{sub}</p>}
+        </div>
+        <Btn variant="primary" onClick={()=>onNew('inspection')}><Icon d={I.plus} s={17} sw={2}/>{t.new_report}</Btn>
+      </header>
+      <div className="relative mb-4 max-w-md">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
+        <input value={q} onChange={e=>setQ(e.target.value)} placeholder={t.search}
+          className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] focus:border-[var(--accent)]"/>
+      </div>
+      <div className="bg-white rounded-xl border border-[var(--line)] card-shadow overflow-hidden">
+        <ReportTable reports={filtered} onOpen={onOpen} onDelete={onDelete} onDup={onDup}/>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   BUILDER
+   ============================================================ */
+const SECTIONS = [
+  {id:'info', k:'sec_info'},
+  {id:'overview', k:'sec_overview'},
+  {id:'work', k:'sec_work'},
+  {id:'results', k:'sec_results'},
+  {id:'photos', k:'sec_photos'},
+  {id:'signoff', k:'signatures'},
+];
+
+function Builder({report, update, db, onExit, onPreview, onNeedKey}){
+  const t = useT();
+  const apiKey = db.settings.apiKey;
+  const [section, setSection] = useState('info');
+  const [saved, setSaved] = useState(true);
+  const timer = useRef();
+
+  // autosave indicator
+  const touch = ()=>{ setSaved(false); clearTimeout(timer.current); timer.current=setTimeout(()=>setSaved(true),600); };
+  const up = (patch)=>{ update(patch); touch(); };
+
+  const idx = SECTIONS.findIndex(s=>s.id===section);
+  const svcLabel = (id)=>{ const s=SERVICE_TYPES.find(x=>x.id===id); return s?t[s.k]:id; };
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* top bar */}
+      <div className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-[var(--line)] no-print">
+        <div className="flex items-center gap-3 min-w-0">
+          <button onClick={onExit} className="p-2 rounded-lg hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={18}/></button>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2.5">
+              <span className="font-extrabold mono text-[15px] text-[var(--navy)]">{report.info.reportNo}</span>
+              <StatusBadge status={report.status}/>
+            </div>
+            <div className="text-[12px] text-[var(--ink-3)] truncate">{report.info.customer||"—"} · {svcLabel(report.serviceType)}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[12px] text-[var(--ink-3)] flex items-center gap-1.5 mr-1">
+            <span className={"w-1.5 h-1.5 rounded-full "+(saved?"bg-[var(--accent)]":"bg-[var(--amber)]")}></span>
+            {saved?t.autosaved:t.saving}
+          </span>
+          <select value={report.status} onChange={e=>up({status:e.target.value})}
+            className="text-[13px] font-semibold px-3 py-2 rounded-lg border border-[var(--line)] bg-white">
+            {Object.keys(STATUS).map(s=><option key={s} value={s}>{t[STATUS[s].k]}</option>)}
+          </select>
+          <Btn variant="outline" size="sm" onClick={onPreview}><Icon d={I.eye} s={16}/>{t.preview}</Btn>
+          <Btn variant="accent" size="sm" onClick={onPreview}><Icon d={I.download} s={16}/>{t.exportPdf}</Btn>
+        </div>
+      </div>
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* section nav */}
+        <div className="w-[230px] shrink-0 border-r border-[var(--line)] bg-white p-3 overflow-y-auto no-print hidden md:block">
+          {SECTIONS.map((s,i)=>(
+            <button key={s.id} onClick={()=>setSection(s.id)}
+              className={"w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left mb-1 transition "+
+                (section===s.id?"bg-[var(--navy)] text-white":"hover:bg-[var(--paper)] text-[var(--ink-2)]")}>
+              <span className={"mono text-[12px] font-bold w-6 h-6 rounded flex items-center justify-center shrink-0 "+
+                (section===s.id?"bg-white/15 text-white":"bg-[var(--ice)] text-[var(--navy)]")}>{String(i+1).padStart(2,'0')}</span>
+              <span className="text-[13.5px] font-semibold leading-tight">{t[s.k]}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* editor */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-[820px] mx-auto p-6 md:p-8 fade-in" key={section}>
+            {section==='info' && <SectionInfo report={report} up={up} db={db}/>}
+            {section==='overview' && <SectionOverview report={report} up={up} apiKey={apiKey} onNeedKey={onNeedKey}/>}
+            {section==='work' && <SectionWork report={report} up={up}/>}
+            {section==='results' && <SectionResults report={report} up={up} apiKey={apiKey} onNeedKey={onNeedKey}/>}
+            {section==='photos' && <SectionPhotos report={report} up={up}/>}
+            {section==='signoff' && <SectionSignoff report={report} up={up} update={update} settings={db.settings}/>}
+
+            {/* nav footer */}
+            <div className="flex items-center justify-between mt-8 pt-5 border-t border-[var(--line)] no-print">
+              <Btn variant="outline" size="md" disabled={idx===0} onClick={()=>setSection(SECTIONS[idx-1].id)}>
+                <Icon d={I.chevL} s={16}/>{t.back}
+              </Btn>
+              {idx<SECTIONS.length-1
+                ? <Btn variant="primary" onClick={()=>setSection(SECTIONS[idx+1].id)}>{t[SECTIONS[idx+1].k]}<Icon d={I.chevR} s={16}/></Btn>
+                : <Btn variant="accent" onClick={onPreview}><Icon d={I.eye} s={16}/>{t.preview}</Btn>}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SecHead({no, title, desc}){
+  return (
+    <div className="mb-5">
+      <div className="flex items-center gap-2.5 mb-1">
+        <span className="mono text-[12px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] px-2 py-0.5 rounded">{no}</span>
+        <h2 className="text-[19px] font-extrabold tracking-tight">{title}</h2>
+      </div>
+      {desc && <p className="text-[13px] text-[var(--ink-3)]">{desc}</p>}
+    </div>
+  );
+}
+function Card({children, className=''}){ return <div className={"bg-white rounded-xl border border-[var(--line)] card-shadow p-5 "+className}>{children}</div>; }
+
+/* ---- Section: Info ---- */
+function SectionInfo({report, up, db}){
+  const t = useT();
+  const info = report.info;
+  const setInfo = (k,v)=> up({info:{...info,[k]:v}});
+  const setEq = (id,k,v)=> up({equipment: report.equipment.map(e=>e.id===id?{...e,[k]:v}:e)});
+  const addEq = ()=> up({equipment:[...report.equipment,{id:uid(),name:"",mfr:"",model:"",serial:"",tag:"",part:"",app:"",loc:"",checklist:'generic'}]});
+  const delEq = (id)=> up({equipment: report.equipment.filter(e=>e.id!==id)});
+  const pickCustomer = (c)=> up({info:{...info,customer:c.company,contact:c.contact,position:c.position,phone:c.phone,email:c.email}});
+  const pickEquipLib = (id, lib)=> setEq(id,'__lib__',lib); // handled below
+
+  const applyLib = (id, lib)=>{
+    up({equipment: report.equipment.map(e=> e.id===id ? {...e, name:lib.name, mfr:lib.mfr, model:lib.model, checklist:lib.checklist} : e)});
+  };
+
+  return (
+    <div className="space-y-5">
+      <SecHead no="01" title={t.sec_info}/>
+      <Card>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label={t.f_reportNo} value={info.reportNo} onChange={v=>setInfo('reportNo',v)} mono/>
+          <Field label={t.f_date} type="date" value={info.date} onChange={v=>setInfo('date',v)}/>
+          <label className="flex flex-col gap-1.5 col-span-2">
+            <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.serviceType}</span>
+            <select value={report.serviceType} onChange={e=>up({serviceType:e.target.value})}
+              className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px]">
+              {SERVICE_TYPES.map(s=><option key={s.id} value={s.id}>{t[s.k]}</option>)}
+            </select>
+          </label>
+          <Field label={t.f_engineer} value={info.engineer} onChange={v=>setInfo('engineer',v)}/>
+          <div/>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-[14px] font-bold text-[var(--ink)]">{t.f_customer}</h3>
+          {db.customers.length>0 && (
+            <select onChange={e=>{ const c=db.customers.find(x=>x.id===e.target.value); if(c)pickCustomer(c); e.target.value=''; }}
+              className="text-[13px] px-3 py-1.5 rounded-lg border border-[var(--line)] bg-white text-[var(--ink-2)]">
+              <option value="">{t.nav_customers}…</option>
+              {db.customers.map(c=><option key={c.id} value={c.id}>{c.company}</option>)}
+            </select>
+          )}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label={t.f_customer} value={info.customer} onChange={v=>setInfo('customer',v)} full/>
+          <Field label={t.f_project} value={info.project} onChange={v=>setInfo('project',v)}/>
+          <Field label={t.f_site} value={info.site} onChange={v=>setInfo('site',v)}/>
+          <Field label={t.f_contact} value={info.contact} onChange={v=>setInfo('contact',v)}/>
+          <Field label={t.f_position} value={info.position} onChange={v=>setInfo('position',v)}/>
+          <Field label={t.f_phone} value={info.phone} onChange={v=>setInfo('phone',v)}/>
+          <Field label={t.f_email} value={info.email} onChange={v=>setInfo('email',v)}/>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-[14px] font-bold text-[var(--ink)]">{t.equipment}</h3>
+          <Btn variant="outline" size="sm" onClick={addEq}><Icon d={I.plus} s={15} sw={2}/>{t.addEquipment}</Btn>
+        </div>
+        {report.equipment.length===0 && <div className="text-[13px] text-[var(--ink-3)] py-6 text-center border border-dashed border-[var(--line)] rounded-lg">{t.noEquip}</div>}
+        <div className="space-y-4">
+          {report.equipment.map((e,i)=>(
+            <div key={e.id} className="border border-[var(--line)] rounded-lg p-4 bg-[var(--paper)]">
+              <div className="flex items-center justify-between mb-3">
+                <span className="mono text-[12px] font-bold text-[var(--navy)] bg-[var(--ice)] px-2 py-0.5 rounded">EQ-{String(i+1).padStart(2,'0')}</span>
+                <div className="flex items-center gap-2">
+                  <select onChange={ev=>{ const lib=EQUIP_LIB.find(x=>x.id===ev.target.value); if(lib)applyLib(e.id,lib); ev.target.value=''; }}
+                    className="text-[12px] px-2.5 py-1.5 rounded-lg border border-[var(--line)] bg-white text-[var(--ink-2)]">
+                    <option value="">{t.equipment_lib}…</option>
+                    {EQUIP_LIB.map(l=><option key={l.id} value={l.id}>{l.mfr} {l.model}</option>)}
+                  </select>
+                  <button onClick={()=>delEq(e.id)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label={t.eq_name} value={e.name} onChange={v=>setEq(e.id,'name',v)} full/>
+                <Field label={t.eq_mfr} value={e.mfr} onChange={v=>setEq(e.id,'mfr',v)}/>
+                <Field label={t.eq_model} value={e.model} onChange={v=>setEq(e.id,'model',v)}/>
+                <Field label={t.eq_serial} value={e.serial} onChange={v=>setEq(e.id,'serial',v)} mono/>
+                <Field label={t.eq_tag} value={e.tag} onChange={v=>setEq(e.id,'tag',v)} mono/>
+                <Field label={t.eq_app} value={e.app} onChange={v=>setEq(e.id,'app',v)}/>
+                <Field label={t.eq_loc} value={e.loc} onChange={v=>setEq(e.id,'loc',v)}/>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* ---- Section: Overview ---- */
+function SectionOverview({report, up, apiKey, onNeedKey}){
+  const t = useT();
+  const ov = report.overview;
+  const set = (k,v)=> up({overview:{...ov,[k]:v}});
+  return (
+    <div className="space-y-5">
+      <SecHead no="02" title={t.sec_overview}/>
+      <Card>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.ov_purpose}</span>
+          <AIButton apiKey={apiKey} mode="rewrite" sourceText={ov.purpose} onApply={v=>set('purpose',v)} onNeedKey={onNeedKey}/>
+        </div>
+        <textarea rows={2} value={ov.purpose||""} onChange={e=>set('purpose',e.target.value)}
+          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+      </Card>
+      <Card>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="col-span-2">
+            <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide block mb-1.5">{t.ov_condition}</span>
+            <RichEditor value={ov.condition} onChange={v=>set('condition',v)} placeholder={t.ov_condition}/>
+          </div>
+        </div>
+      </Card>
+      <Card>
+        <div className="grid grid-cols-2 gap-4">
+          <Area label={t.ov_env} value={ov.env} onChange={v=>set('env',v)} rows={2} hint={t.ov_env_hint}/>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* ---- Section: Work + Checklist ---- */
+function SectionWork({report, up}){
+  const t = useT();
+  const work = report.work;
+  const setW = (id,k,v)=> up({work: work.map(w=>w.id===id?{...w,[k]:v}:w)});
+  const addW = ()=> up({work:[...work,{id:uid(),title:"",desc:"",status:'done',result:""}]});
+  const delW = (id)=> up({work: work.filter(w=>w.id!==id)});
+  const loadSample = ()=>{
+    const sample = ["Visual Inspection","Power Supply Check","Sensor Inspection","Signal Verification","Measurement Test","Communication Test"];
+    up({work:[...work, ...sample.map(s=>({id:uid(),title:s,desc:"",status:'done',result:""}))]});
+  };
+
+  // checklist based on first equipment
+  const eqCl = report.equipment[0]?.checklist || 'generic';
+  const cl = CHECKLISTS[eqCl] || CHECKLISTS.generic;
+  const clState = report.checklistState || {};
+  const toggle = (key)=> up({checklistState:{...clState,[key]:!clState[key]}});
+
+  const WS = {done:{k:'ws_done',c:'#0E7C66'},pending:{k:'ws_pending',c:'#C2790B'},na:{k:'ws_na',c:'#8A94A3'}};
+
+  return (
+    <div className="space-y-5">
+      <SecHead no="03" title={t.sec_work}/>
+
+      {/* checklist */}
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-[14px] font-bold">{t.checklist} · <span className="text-[var(--ink-3)] font-medium">{cl.name}</span></h3>
+        </div>
+        <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
+          {cl.groups.map((g,gi)=>(
+            <div key={gi}>
+              <div className="text-[12px] font-bold text-[var(--navy)] uppercase tracking-wide mb-2">{g.title}</div>
+              <div className="space-y-1">
+                {g.items.map((it,ii)=>{
+                  const key = `${eqCl}-${gi}-${ii}`;
+                  const on = !!clState[key];
+                  return (
+                    <button key={ii} onClick={()=>toggle(key)}
+                      className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-md hover:bg-[var(--paper)] text-left transition">
+                      <span className={"w-[18px] h-[18px] rounded border flex items-center justify-center shrink-0 transition "+
+                        (on?"bg-[var(--accent)] border-[var(--accent)] text-white":"border-[var(--line-strong)] bg-white")}>
+                        {on&&<Icon d={I.check} s={13} sw={3}/>}
+                      </span>
+                      <span className={"text-[13px] "+(on?"text-[var(--ink)] line-through decoration-[var(--accent)]/40":"text-[var(--ink-2)]")}>{it}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* work items timeline */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-[14px] font-bold">{t.work_title}</h3>
+        <div className="flex gap-2">
+          <Btn variant="outline" size="sm" onClick={loadSample}>{t.loadChecklist}</Btn>
+          <Btn variant="primary" size="sm" onClick={addW}><Icon d={I.plus} s={15} sw={2}/>{t.addWork}</Btn>
+        </div>
+      </div>
+      {work.length===0 && <div className="text-[13px] text-[var(--ink-3)] py-8 text-center border border-dashed border-[var(--line)] rounded-lg bg-white">{t.noWork}</div>}
+      <div className="space-y-3">
+        {work.map((w,i)=>(
+          <div key={w.id} className="bg-white rounded-xl border border-[var(--line)] card-shadow p-4">
+            <div className="flex items-start gap-3">
+              <span className="mono text-[13px] font-bold text-white bg-[var(--navy)] w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5">{String(i+1).padStart(2,'0')}</span>
+              <div className="flex-1 space-y-2.5">
+                <div className="flex items-center gap-2">
+                  <input value={w.title} onChange={e=>setW(w.id,'title',e.target.value)} placeholder={t.w_title}
+                    className="flex-1 px-3 py-2 rounded-lg border border-[var(--line)] text-[14px] font-semibold focus:border-[var(--accent)]"/>
+                  <select value={w.status} onChange={e=>setW(w.id,'status',e.target.value)}
+                    className="text-[12px] font-semibold px-2.5 py-2 rounded-lg border border-[var(--line)] bg-white" style={{color:WS[w.status].c}}>
+                    {Object.keys(WS).map(s=><option key={s} value={s}>{t[WS[s].k]}</option>)}
+                  </select>
+                  <button onClick={()=>delW(w.id)} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+                </div>
+                <textarea value={w.result} onChange={e=>setW(w.id,'result',e.target.value)} placeholder={t.w_result} rows={2}
+                  className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Section: Results, Measurements, Findings, Recommendation ---- */
+function SectionResults({report, up, apiKey, onNeedKey}){
+  const t = useT();
+  const res = report.results;
+  const setRes = (k,v)=> up({results:{...res,[k]:v}});
+  const rec = report.recommendation;
+  const setRec = (k,v)=> up({recommendation:{...rec,[k]:v}});
+
+  // measurements
+  const meas = report.measurements;
+  const setM = (id,k,v)=> up({measurements: meas.map(m=>m.id===id?{...m,[k]:v}:m)});
+  const addM = ()=> up({measurements:[...meas,{id:uid(),param:"",result:"",unit:"",status:'normal'}]});
+  const delM = (id)=> up({measurements: meas.filter(m=>m.id!==id)});
+
+  // findings
+  const fnd = report.findings;
+  const setF = (id,k,v)=> up({findings: fnd.map(f=>f.id===id?{...f,[k]:v}:f)});
+  const addF = ()=> up({findings:[...fnd,{id:uid(),finding:"",severity:'med',obs:"",rec:""}]});
+  const delF = (id)=> up({findings: fnd.filter(f=>f.id!==id)});
+
+  const SEV = {low:{k:'sev_low',c:'#0E7C66',bg:'#E4F3EF'},med:{k:'sev_med',c:'#C2790B',bg:'#FBF0DD'},high:{k:'sev_high',c:'#C0392B',bg:'#FBE9E7'}};
+  const PRI = {low:'pri_low',med:'pri_med',high:'pri_high'};
+  const priColor = {low:'#0E7C66',med:'#C2790B',high:'#C0392B'};
+
+  return (
+    <div className="space-y-5">
+      <SecHead no="04" title={t.sec_results}/>
+
+      {/* assessment */}
+      <Card>
+        <h3 className="text-[14px] font-bold mb-3">{t.res_assess}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 mb-4">
+          {Object.keys(ASSESS).map(a=>{
+            const on = res.assess===a; const A=ASSESS[a];
+            return (
+              <button key={a} onClick={()=>setRes('assess',a)}
+                className={"flex items-center gap-2.5 px-3 py-3 rounded-lg border-2 transition text-left "+
+                  (on?"":"border-[var(--line)] hover:border-[var(--line-strong)]")}
+                style={on?{borderColor:A.dot,background:A.bg}:{}}>
+                <span className="w-3 h-3 rounded-full shrink-0" style={{background:A.dot}}></span>
+                <span className="text-[13px] font-bold" style={{color:on?A.c:'var(--ink-2)'}}>{t[A.k]}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.res_result}</span>
+          <AIButton apiKey={apiKey} mode="rewrite" sourceText={res.result} onApply={v=>setRes('result',v)} onNeedKey={onNeedKey}/>
+        </div>
+        <textarea rows={3} value={res.result||""} onChange={e=>setRes('result',e.target.value)}
+          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+      </Card>
+
+      {/* measurement table */}
+      <Card>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-[14px] font-bold">{t.measurements}</h3>
+          <Btn variant="outline" size="sm" onClick={addM}><Icon d={I.plus} s={15} sw={2}/>{t.addRow}</Btn>
+        </div>
+        {meas.length===0 && <div className="text-[13px] text-[var(--ink-3)] py-5 text-center border border-dashed border-[var(--line)] rounded-lg">{t.noMeasure}</div>}
+        {meas.length>0 && (
+          <div className="border border-[var(--line)] rounded-lg overflow-hidden">
+            <table className="w-full text-[13.5px]">
+              <thead className="bg-[var(--paper)]">
+                <tr className="text-left text-[11px] uppercase tracking-wide text-[var(--ink-3)]">
+                  <th className="font-bold px-3 py-2">{t.m_param}</th>
+                  <th className="font-bold px-3 py-2 w-28">{t.m_result}</th>
+                  <th className="font-bold px-3 py-2 w-24">{t.m_unit}</th>
+                  <th className="font-bold px-3 py-2 w-36">{t.m_status}</th>
+                  <th className="w-10"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {meas.map(m=>(
+                  <tr key={m.id} className="border-t border-[var(--line)]">
+                    <td className="px-2 py-1"><input value={m.param} onChange={e=>setM(m.id,'param',e.target.value)} className="w-full px-2 py-1.5 rounded border border-transparent hover:border-[var(--line)] focus:border-[var(--accent)] text-[13.5px]"/></td>
+                    <td className="px-2 py-1"><input value={m.result} onChange={e=>setM(m.id,'result',e.target.value)} className="w-full px-2 py-1.5 rounded border border-transparent hover:border-[var(--line)] focus:border-[var(--accent)] text-[13.5px] mono"/></td>
+                    <td className="px-2 py-1"><input value={m.unit} onChange={e=>setM(m.id,'unit',e.target.value)} className="w-full px-2 py-1.5 rounded border border-transparent hover:border-[var(--line)] focus:border-[var(--accent)] text-[13.5px]"/></td>
+                    <td className="px-2 py-1">
+                      <select value={m.status} onChange={e=>setM(m.id,'status',e.target.value)} className="w-full px-2 py-1.5 rounded border border-[var(--line)] text-[12.5px] font-semibold" style={{color:ASSESS[m.status]?.c}}>
+                        {Object.keys(ASSESS).map(a=><option key={a} value={a}>{t[ASSESS[a].k]}</option>)}
+                      </select>
+                    </td>
+                    <td className="px-1"><button onClick={()=>delM(m.id)} className="p-1.5 rounded text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.trash} s={15}/></button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Card>
+
+      {/* findings */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-[14px] font-bold">{t.findings}</h3>
+        <Btn variant="primary" size="sm" onClick={addF}><Icon d={I.plus} s={15} sw={2}/>{t.addFinding}</Btn>
+      </div>
+      {fnd.length===0 && <div className="text-[13px] text-[var(--ink-3)] py-6 text-center border border-dashed border-[var(--line)] rounded-lg bg-white">{t.noFinding}</div>}
+      <div className="space-y-3">
+        {fnd.map((f,i)=>(
+          <div key={f.id} className="bg-white rounded-xl border border-[var(--line)] card-shadow p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="mono text-[12px] font-bold text-[var(--navy)] bg-[var(--ice)] px-2 py-0.5 rounded">FINDING {String(i+1).padStart(2,'0')}</span>
+              <div className="flex items-center gap-2">
+                <select value={f.severity} onChange={e=>setF(f.id,'severity',e.target.value)}
+                  className="text-[12px] font-bold px-2.5 py-1.5 rounded-lg" style={{color:SEV[f.severity].c,background:SEV[f.severity].bg}}>
+                  {Object.keys(SEV).map(s=><option key={s} value={s}>{t[SEV[s].k]}</option>)}
+                </select>
+                <button onClick={()=>delF(f.id)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+              </div>
+            </div>
+            <div className="space-y-2.5">
+              <input value={f.finding} onChange={e=>setF(f.id,'finding',e.target.value)} placeholder={t.fi_finding}
+                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[14px] font-semibold focus:border-[var(--accent)]"/>
+              <textarea value={f.obs} onChange={e=>setF(f.id,'obs',e.target.value)} placeholder={t.fi_obs} rows={2}
+                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--accent)] resize-y"/>
+              <textarea value={f.rec} onChange={e=>setF(f.id,'rec',e.target.value)} placeholder={t.fi_rec} rows={2}
+                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--accent)] resize-y"/>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* recommendation card */}
+      <div className="rounded-xl border-2 border-[var(--navy)] overflow-hidden card-shadow-lg">
+        <div className="bg-[var(--navy)] text-white px-5 py-3 flex items-center justify-between">
+          <span className="text-[13px] font-extrabold tracking-wide flex items-center gap-2"><Icon d={I.alert} s={17}/>{t.rec_title}</span>
+          <select value={rec.priority} onChange={e=>setRec('priority',e.target.value)}
+            className="text-[12px] font-extrabold px-3 py-1 rounded-full bg-white" style={{color:priColor[rec.priority]}}>
+            {Object.keys(PRI).map(p=><option key={p} value={p}>{t.priorityLabel}: {t[PRI[p]]}</option>)}
+          </select>
+        </div>
+        <div className="bg-white p-5 space-y-4">
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.res_cause}</span>
+              <AIButton apiKey={apiKey} mode="rewrite" sourceText={res.cause} onApply={v=>setRes('cause',v)} onNeedKey={onNeedKey}/>
+            </div>
+            <textarea rows={2} value={res.cause||""} onChange={e=>setRes('cause',e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.rec_action}</span>
+              <AIButton apiKey={apiKey} mode="recommend" sourceText={rec.action || (res.result+"\n"+res.cause)} onApply={v=>setRec('action',v)} onNeedKey={onNeedKey}/>
+            </div>
+            <textarea rows={3} value={rec.action||""} onChange={e=>setRec('action',e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+          </div>
+        </div>
+      </div>
+
+      {/* exec summary */}
+      <Card>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.execSummary}</span>
+          <AIButton apiKey={apiKey} mode="summary" sourceText={report.execSummary || (res.result+"\n"+rec.action)} onApply={v=>up({execSummary:v})} onNeedKey={onNeedKey}/>
+        </div>
+        <textarea rows={3} value={report.execSummary||""} onChange={e=>up({execSummary:e.target.value})}
+          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+      </Card>
+    </div>
+  );
+}
+
+/* ---- Section: Photos ---- */
+function SectionPhotos({report, up}){
+  const t = useT();
+  const photos = report.photos;
+  const fileRef = useRef();
+  const [drag, setDrag] = useState(false);
+  const [annotating, setAnnotating] = useState(null);
+  const saveAnn = (p)=> up({photos: photos.map(x=>x.id===p.id?p:x)});
+
+  const addFiles = (files)=>{
+    Array.from(files).forEach(file=>{
+      if(!file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = e=> up(r=>({photos:[...r.photos,{id:uid(),src:e.target.result,caption:""}]}));
+      reader.readAsDataURL(file);
+    });
+  };
+  const onDrop = (e)=>{ e.preventDefault(); setDrag(false); if(e.dataTransfer.files) addFiles(e.dataTransfer.files); };
+  const setCap = (id,v)=> up({photos: photos.map(p=>p.id===id?{...p,caption:v}:p)});
+  const del = (id)=> up({photos: photos.filter(p=>p.id!==id)});
+  const move = (id,dir)=>{
+    const i = photos.findIndex(p=>p.id===id); const j=i+dir;
+    if(j<0||j>=photos.length) return;
+    const arr=[...photos]; [arr[i],arr[j]]=[arr[j],arr[i]]; up({photos:arr});
+  };
+
+  // paste support
+  useEffect(()=>{
+    const h = (e)=>{ if(e.clipboardData){ const items=[...e.clipboardData.items].filter(x=>x.type.startsWith('image/')); if(items.length){ addFiles(items.map(x=>x.getAsFile())); } } };
+    window.addEventListener('paste',h); return ()=>window.removeEventListener('paste',h);
+  },[photos]);
+
+  return (
+    <div className="space-y-5">
+      <SecHead no="05" title={t.sec_photos}/>
+      <div onDragOver={e=>{e.preventDefault();setDrag(true);}} onDragLeave={()=>setDrag(false)} onDrop={onDrop}
+        onClick={()=>fileRef.current.click()}
+        className={"border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition bg-white "+(drag?"drag-over":"border-[var(--line-strong)] hover:border-[var(--accent)] hover:bg-[var(--paper)]")}>
+        <div className="w-12 h-12 rounded-xl bg-[var(--ice)] text-[var(--navy)] flex items-center justify-center mx-auto mb-3"><Icon d={I.image} s={24}/></div>
+        <div className="text-[14px] font-semibold text-[var(--ink-2)]">{t.dropHint}</div>
+        <input ref={fileRef} type="file" accept="image/*" multiple className="hidden" onChange={e=>addFiles(e.target.files)}/>
+      </div>
+
+      {photos.length===0 && <div className="text-[13px] text-[var(--ink-3)] py-2 text-center">{t.noPhoto}</div>}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {photos.map((p,i)=>(
+          <div key={p.id} className="bg-white rounded-xl border border-[var(--line)] card-shadow overflow-hidden group">
+            <div className="relative aspect-video bg-[var(--paper)]">
+              <img src={p.annotated||p.src} className="w-full h-full object-cover"/>
+              <div className="absolute top-2 left-2 mono text-[11px] font-bold text-white bg-black/55 px-2 py-0.5 rounded">{t.figure} {String(i+1).padStart(2,'0')}</div>
+              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
+                <button onClick={()=>setAnnotating(p)} className="w-7 h-7 rounded-md bg-black/55 text-white flex items-center justify-center hover:bg-[var(--accent)]" title={t.annotate}><Icon d={I.edit} s={14}/></button>
+                <button onClick={()=>move(p.id,-1)} className="w-7 h-7 rounded-md bg-black/55 text-white flex items-center justify-center hover:bg-black/75"><Icon d={I.chevL} s={15}/></button>
+                <button onClick={()=>move(p.id,1)} className="w-7 h-7 rounded-md bg-black/55 text-white flex items-center justify-center hover:bg-black/75"><Icon d={I.chevR} s={15}/></button>
+                <button onClick={()=>del(p.id)} className="w-7 h-7 rounded-md bg-black/55 text-white flex items-center justify-center hover:bg-[var(--red)]"><Icon d={I.trash} s={15}/></button>
+              </div>
+            </div>
+            <input value={p.caption} onChange={e=>setCap(p.id,e.target.value)} placeholder={t.caption}
+              className="w-full px-3 py-2.5 text-[13px] border-t border-[var(--line)] focus:border-[var(--accent)]"/>
+          </div>
+        ))}
+      </div>
+      {annotating && <PhotoAnnotator photo={annotating} onSave={(p)=>{saveAnn(p);setAnnotating(null);}} onClose={()=>setAnnotating(null)}/>}
+    </div>
+  );
+}
+
+/* ---- Section: Signatures + Revisions ---- */
+function SectionSignoff({report, up, update, settings}){
+  const t = useT();
+  const [signing, setSigning] = useState(null); // key
+  const sigs = report.signatures;
+  const roles = [['prepared','sig_prepared'],['checked','sig_checked'],['approved','sig_approved']];
+  const setSig = (key,val)=> up({signatures:{...sigs,[key]:val}});
+
+  const revs = report.revisions || [];
+  const [desc, setDesc] = useState("");
+  const [by, setBy] = useState("");
+  const newRev = ()=>{
+    const rev = revs.length;
+    const entry = {rev, date:todayISO(), by:by||report.info.engineer||"—", desc:desc||"—"};
+    up({revisions:[...revs, entry]}); setDesc(""); setBy("");
+  };
+
+  const qrText = `${report.info.reportNo} | ${report.info.customer||""} | ${settings.company}`;
+  const qrUrl = useQR(qrText, 140);
+
+  return (
+    <div className="space-y-5">
+      <SecHead no="06" title={t.signatures}/>
+
+      {/* signatures */}
+      <Card>
+        <div className="grid md:grid-cols-3 gap-4">
+          {roles.map(([key,label])=>{
+            const s = sigs[key];
+            return (
+              <div key={key} className="border border-[var(--line)] rounded-lg p-4 text-center">
+                <div className="text-[12px] font-bold text-[var(--ink-3)] uppercase tracking-wide mb-3">{t[label]}</div>
+                <div className="h-20 flex items-center justify-center border-b border-[var(--line)] mb-2 bg-[var(--paper)] rounded">
+                  {s.img ? <img src={s.img} className="max-h-16 object-contain"/> : <span className="text-[12px] text-[var(--ink-3)]">—</span>}
+                </div>
+                <div className="text-[13.5px] font-bold text-[var(--ink)]">{s.name||"—"}</div>
+                <div className="text-[12px] text-[var(--ink-3)] mb-3">{s.pos||""}</div>
+                <Btn variant="outline" size="sm" onClick={()=>setSigning(key)} className="w-full"><Icon d={I.edit} s={15}/>{t.sig_edit}</Btn>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* QR */}
+      <Card>
+        <div className="flex items-center gap-4">
+          <div className="w-[110px] h-[110px] rounded-lg border border-[var(--line)] bg-white flex items-center justify-center shrink-0">
+            {qrUrl ? <img src={qrUrl} className="w-24 h-24"/> : <span className="text-[11px] text-[var(--ink-3)]">QR…</span>}
+          </div>
+          <div>
+            <div className="text-[14px] font-bold mb-1">{t.qr_show}</div>
+            <div className="text-[13px] text-[var(--ink-3)] leading-relaxed">{t.qr_hint}</div>
+            <div className="text-[12px] mono text-[var(--navy)] mt-1.5">{report.info.reportNo}</div>
+          </div>
+        </div>
+      </Card>
+
+      {/* revisions */}
+      <Card>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-[14px] font-bold">{t.rev_history}</h3>
+        </div>
+        <div className="space-y-2 mb-4">
+          {revs.length===0 && <div className="text-[13px] text-[var(--ink-3)]">{t.rev_none}</div>}
+          {revs.map((r,i)=>(
+            <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-[var(--paper)] border border-[var(--line)]">
+              <span className="mono text-[12px] font-bold text-white bg-[var(--navy)] px-2 py-1 rounded shrink-0">REV {String(r.rev).padStart(2,'0')}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[13.5px] font-semibold text-[var(--ink)] truncate">{r.desc}</div>
+                <div className="text-[12px] text-[var(--ink-3)] mono">{fmtDate(r.date)} · {r.by}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="border-t border-[var(--line)] pt-4 grid grid-cols-2 gap-3">
+          <Field label={t.rev_desc} value={desc} onChange={setDesc} full/>
+          <Field label={t.rev_by} value={by} onChange={setBy}/>
+          <div className="flex items-end">
+            <Btn variant="primary" size="sm" onClick={newRev} disabled={!desc.trim()}><Icon d={I.plus} s={15} sw={2}/>{t.rev_new}</Btn>
+          </div>
+        </div>
+      </Card>
+
+      {signing && <SignatureModal sig={sigs[signing]} roleLabel={t[roles.find(r=>r[0]===signing)[1]]}
+        onSave={(v)=>{setSig(signing,v);setSigning(null);}} onClose={()=>setSigning(null)}/>}
+    </div>
+  );
+}
+
+/* ============================================================
+   CUSTOMERS
+   ============================================================ */
+function Customers({db, persist}){
+  const t = useT();
+  const [edit, setEdit] = useState(null);
+  const save = (c)=>{
+    let list = db.customers;
+    if(c.id) list = list.map(x=>x.id===c.id?c:x); else list=[{...c,id:uid()},...list];
+    persist({...db, customers:list}); setEdit(null);
+  };
+  const del = (id)=> persist({...db, customers:db.customers.filter(c=>c.id!==id)});
+  return (
+    <div className="p-8 max-w-[1000px] mx-auto fade-in">
+      <header className="flex items-center justify-between mb-6">
+        <div><h1 className="text-[26px] font-extrabold tracking-tight">{t.customers_title}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.customers_sub}</p></div>
+        <Btn variant="primary" onClick={()=>setEdit({company:"",address:"",contact:"",position:"",phone:"",email:""})}><Icon d={I.plus} s={17} sw={2}/>{t.addCustomer}</Btn>
+      </header>
+      <div className="grid md:grid-cols-2 gap-4">
+        {db.customers.map(c=>(
+          <div key={c.id} className="bg-white rounded-xl border border-[var(--line)] card-shadow p-5">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="font-bold text-[15px]">{c.company}</div>
+                <div className="text-[13px] text-[var(--ink-3)] mt-0.5">{c.address}</div>
+              </div>
+              <div className="flex gap-1">
+                <button onClick={()=>setEdit(c)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--navy)] hover:bg-[var(--ice)]"><Icon d={I.edit} s={16}/></button>
+                <button onClick={()=>del(c.id)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-[var(--line)] text-[13px] text-[var(--ink-2)] space-y-1">
+              {c.contact && <div><span className="text-[var(--ink-3)]">{t.f_contact}:</span> {c.contact} {c.position&&`· ${c.position}`}</div>}
+              {c.phone && <div><span className="text-[var(--ink-3)]">{t.f_phone}:</span> {c.phone}</div>}
+              {c.email && <div><span className="text-[var(--ink-3)]">Email:</span> {c.email}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+      {edit && <CustomerModal customer={edit} onSave={save} onClose={()=>setEdit(null)}/>}
+    </div>
+  );
+}
+function CustomerModal({customer, onSave, onClose}){
+  const t = useT();
+  const [c, setC] = useState(customer);
+  const s = (k,v)=>setC({...c,[k]:v});
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-lg card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
+          <h3 className="font-bold text-[16px]">{t.addCustomer}</h3>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="p-6 grid grid-cols-2 gap-4">
+          <Field label={t.c_company} value={c.company} onChange={v=>s('company',v)} full/>
+          <Field label={t.c_address} value={c.address} onChange={v=>s('address',v)} full/>
+          <Field label={t.f_contact} value={c.contact} onChange={v=>s('contact',v)}/>
+          <Field label={t.f_position} value={c.position} onChange={v=>s('position',v)}/>
+          <Field label={t.f_phone} value={c.phone} onChange={v=>s('phone',v)}/>
+          <Field label={t.f_email} value={c.email} onChange={v=>s('email',v)}/>
+        </div>
+        <div className="flex justify-end gap-2 px-6 py-4 border-t border-[var(--line)]">
+          <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
+          <Btn variant="primary" onClick={()=>onSave(c)}>{t.save}</Btn>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   EQUIPMENT LIBRARY
+   ============================================================ */
+function EquipmentLib({db}){
+  const t = useT();
+  return (
+    <div className="p-8 max-w-[1000px] mx-auto fade-in">
+      <header className="mb-6"><h1 className="text-[26px] font-extrabold tracking-tight">{t.equipment_lib}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.equipment_sub}</p></header>
+      <div className="grid md:grid-cols-2 gap-4">
+        {EQUIP_LIB.map(e=>{
+          const cl = CHECKLISTS[e.checklist];
+          return (
+            <div key={e.id} className="bg-white rounded-xl border border-[var(--line)] card-shadow p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg bg-[var(--ice)] text-[var(--navy)] flex items-center justify-center"><Icon d={I.equipment} s={20}/></div>
+                <div>
+                  <div className="font-bold text-[14.5px]">{e.name}</div>
+                  <div className="text-[12.5px] text-[var(--ink-3)]">{e.mfr} · <span className="mono">{e.model}</span></div>
+                </div>
+              </div>
+              <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.checklist} · {cl.name}</div>
+              <div className="flex flex-wrap gap-1.5">
+                {cl.groups.map((g,i)=><span key={i} className="text-[11.5px] px-2 py-0.5 rounded bg-[var(--paper)] border border-[var(--line)] text-[var(--ink-2)]">{g.title}</span>)}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   TEMPLATES
+   ============================================================ */
+function Templates({onCreate}){
+  const t = useT();
+  const list = [
+    {st:'inspection', k:'stype_inspection', icon:I.wrench},
+    {st:'survey', k:'stype_survey', icon:I.templates},
+    {st:'trouble', k:'stype_trouble', icon:I.alert},
+    {st:'pm', k:'stype_pm', icon:I.check},
+    {st:'install', k:'stype_install', icon:I.equipment},
+    {st:'commission', k:'stype_commission', icon:I.reports},
+  ];
+  return (
+    <div className="p-8 max-w-[1000px] mx-auto fade-in">
+      <header className="mb-6"><h1 className="text-[26px] font-extrabold tracking-tight">{t.templates_title}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.templates_sub}</p></header>
+      <div className="grid md:grid-cols-3 gap-4">
+        {list.map((l,i)=>(
+          <button key={i} onClick={()=>onCreate(l.st)}
+            className="group bg-white rounded-xl border border-[var(--line)] card-shadow p-5 text-left hover:border-[var(--navy-3)] transition">
+            <div className="w-11 h-11 rounded-lg bg-[var(--navy)] text-white flex items-center justify-center mb-3 group-hover:bg-[var(--accent)] transition"><Icon d={l.icon} s={22}/></div>
+            <div className="font-bold text-[15px] mb-1">{t[l.k]}</div>
+            <div className="text-[13px] text-[var(--accent)] font-semibold flex items-center gap-1">{t.useTemplate}<Icon d={I.chevR} s={15}/></div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   SETTINGS
+   ============================================================ */
+function Settings({db, persist}){
+  const t = useT();
+  const [s, setS] = useState(db.settings);
+  const set = (k,v)=>setS({...s,[k]:v});
+  const logoRef = useRef();
+  const onLogo = (file)=>{ if(!file) return; const r=new FileReader(); r.onload=e=>set('logo',e.target.result); r.readAsDataURL(file); };
+  const save = ()=> persist({...db, settings:s});
+  return (
+    <div className="p-8 max-w-[820px] mx-auto fade-in">
+      <header className="mb-6"><h1 className="text-[26px] font-extrabold tracking-tight">{t.settings_title}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.settings_sub}</p></header>
+      <Card className="space-y-5">
+        <div className="flex items-center gap-4">
+          <div className="w-20 h-20 rounded-xl border border-[var(--line)] bg-[var(--paper)] flex items-center justify-center overflow-hidden shrink-0">
+            {s.logo ? <img src={s.logo} className="w-full h-full object-contain"/> : <span className="text-[var(--ink-3)]"><Icon d={I.image} s={24}/></span>}
+          </div>
+          <div>
+            <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.s_logo}</div>
+            <Btn variant="outline" size="sm" onClick={()=>logoRef.current.click()}><Icon d={I.image} s={15}/>{t.uploadLogo}</Btn>
+            <input ref={logoRef} type="file" accept="image/*" className="hidden" onChange={e=>onLogo(e.target.files[0])}/>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label={t.s_company} value={s.company} onChange={v=>set('company',v)} full/>
+          <Field label="Brand" value={s.brand} onChange={v=>set('brand',v)}/>
+          <Field label={t.s_website} value={s.website} onChange={v=>set('website',v)}/>
+          <Field label={t.s_address} value={s.address} onChange={v=>set('address',v)} full/>
+          <Field label={t.s_email} value={s.email} onChange={v=>set('email',v)}/>
+          <Field label={t.s_phone} value={s.phone} onChange={v=>set('phone',v)}/>
+          <Field label={t.s_tax} value={s.tax} onChange={v=>set('tax',v)}/>
+          <Field label={t.s_hotline} value={s.hotline} onChange={v=>set('hotline',v)}/>
+        </div>
+        <div className="pt-4 border-t border-[var(--line)]">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-[var(--accent)]"><Icon d={I.spark} s={16} sw={2}/></span>
+            <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.s_apikey}</span>
+          </div>
+          <input type="password" value={s.apiKey||""} onChange={e=>set('apiKey',e.target.value)} placeholder="AIza…"
+            className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] mono focus:border-[var(--accent)]"/>
+          <div className="text-[12px] text-[var(--ink-3)] mt-1.5">{t.s_apikey_hint}</div>
+        </div>
+        <div className="flex justify-end pt-2"><Btn variant="primary" onClick={save}><Icon d={I.check} s={16}/>{t.save}</Btn></div>
+      </Card>
+    </div>
+  );
+}
+
+/* ============================================================
+   PREVIEW + PDF
+   ============================================================ */
+function PreviewScreen({report, settings, lang, onBack, update}){
+  const t = useT();
+  const [gen, setGen] = useState(false);
+  const paperRef = useRef();
+  const pdfLang = report.pdfLang || 'vi';
+  const setPdfLang = (v)=> update && update({pdfLang:v});
+
+  const exportPDF = async ()=>{
+    setGen(true);
+    await new Promise(r=>setTimeout(r,60));
+    try {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p','mm','a4');
+      const pages = paperRef.current.querySelectorAll('.pdf-page');
+      for(let i=0;i<pages.length;i++){
+        const canvas = await html2canvas(pages[i], {scale:2, useCORS:true, backgroundColor:'#ffffff', logging:false});
+        const img = canvas.toDataURL('image/jpeg',0.92);
+        if(i>0) pdf.addPage();
+        pdf.addImage(img,'JPEG',0,0,210,297,undefined,'FAST');
+      }
+      const fn = `${report.info.reportNo}_${(report.info.customer||'Report').replace(/[^\w]+/g,'-')}_${(report.equipment[0]?.model||'').replace(/[^\w]+/g,'-')}.pdf`.replace(/-+/g,'-');
+      pdf.save(fn);
+    } catch(err){ alert('PDF error: '+err.message); }
+    setGen(false);
+  };
+
+  return (
+    <div className="flex flex-col h-full bg-[#4A5568]">
+      <div className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-[var(--line)] no-print">
+        <div className="flex items-center gap-3">
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={18}/></button>
+          <div>
+            <div className="font-bold text-[15px]">{t.previewTitle}</div>
+            <div className="text-[12px] text-[var(--ink-3)] mono">{report.info.reportNo}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 mr-1 text-[var(--ink-3)]"><Icon d={I.layers} s={16}/><span className="text-[12px] font-semibold hidden md:inline">{t.bilingual}</span></div>
+          <div className="flex bg-[var(--paper)] rounded-lg p-0.5 border border-[var(--line)]">
+            {[['vi',t.bi_vi],['en',t.bi_en],['both',t.bi_both]].map(([v,label])=>(
+              <button key={v} onClick={()=>setPdfLang(v)}
+                className={"text-[12.5px] font-semibold px-3 py-1.5 rounded-md transition "+(pdfLang===v?"bg-[var(--navy)] text-white":"text-[var(--ink-2)] hover:bg-white")}>{label}</button>
+            ))}
+          </div>
+          <Btn variant="accent" onClick={exportPDF} disabled={gen}>
+            {gen ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>{t.genPdf}</> : <><Icon d={I.download} s={17}/>{t.downloadPdf}</>}
+          </Btn>
+        </div>
+      </div>
+      <div className="flex-1 overflow-y-auto py-8 px-4">
+        <div ref={paperRef} className="mx-auto" style={{width:'210mm'}}>
+          <ReportDocument report={report} settings={settings} lang={lang} pdfLang={pdfLang}/>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- The actual A4 document (rendered as pages) ---- */
+function ReportDocument({report, settings, lang, pdfLang='vi'}){
+  const primary = pdfLang==='en' ? 'en' : 'vi';
+  const both = pdfLang==='both';
+  const t = DICT[primary];
+  // Bilingual label helper: returns "VI / EN" when both, else single-language label
+  const L = (key)=> both ? `${DICT.vi[key]} / ${DICT.en[key]}` : DICT[primary][key];
+  const svcLabelIn = (id,lg)=>{ const s=SERVICE_TYPES.find(x=>x.id===id); return s?DICT[lg][s.k]:id; };
+  const svcLabel = (id)=> both ? `${svcLabelIn(id,'vi')} / ${svcLabelIn(id,'en')}` : svcLabelIn(id, primary);
+  const A = ASSESS[report.results.assess] || ASSESS.normal;
+  const assessLabel = both ? `${DICT.vi[A.k]} / ${DICT.en[A.k]}` : t[A.k];
+  const priColor = {low:'#0E7C66',med:'#C2790B',high:'#C0392B'};
+  const priKey = {low:'pri_low',med:'pri_med',high:'pri_high'};
+  const priLabel = {low:L('pri_low'),med:L('pri_med'),high:L('pri_high')};
+  const SEVc = {low:'#0E7C66',med:'#C2790B',high:'#C0392B'};
+  const sevLabel = (s)=> both ? `${DICT.vi[s==='low'?'sev_low':s==='med'?'sev_med':'sev_high']} / ${DICT.en[s==='low'?'sev_low':s==='med'?'sev_med':'sev_high']}` : (s==='low'?t.sev_low:s==='med'?t.sev_med:t.sev_high);
+  const condLabel = {excellent:L('cond_excellent'),good:L('cond_good'),fair:L('cond_fair'),poor:L('cond_poor'),critical:L('cond_critical')};
+  const qrUrl = useQR(`${report.info.reportNo} | ${report.info.customer||""} | ${settings.company}`, 160);
+  const lastRev = (report.revisions||[]).slice(-1)[0];
+
+  const Page = ({children, n, foot=true}) => (
+    <div className="pdf-page bg-white mb-6 card-shadow-lg relative" style={{width:'210mm',minHeight:'297mm',boxSizing:'border-box',fontFamily:"'Noto Sans',Arial,sans-serif"}}>
+      {children}
+    </div>
+  );
+  const Header = () => (
+    <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10mm 16mm 6mm',borderBottom:'1px solid #E2E8F0'}}>
+      <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
+        {settings.logo ? <img src={settings.logo} style={{height:'11mm',objectFit:'contain'}}/> :
+          <div style={{width:'9mm',height:'9mm',borderRadius:'6px',background:'#0B1F3A',color:'#0E7C66',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon d={I.wrench} s={16} sw={2}/></div>}
+        <div>
+          <div style={{fontWeight:800,fontSize:'11pt',color:'#0B1F3A',lineHeight:1}}>{settings.company}</div>
+          <div style={{fontSize:'7pt',color:'#6B7A90',marginTop:'2px'}}>{settings.website}</div>
+        </div>
+      </div>
+      <div style={{fontSize:'7.5pt',color:'#6B7A90',fontFamily:"'JetBrains Mono',monospace"}}>{report.info.reportNo}</div>
+    </div>
+  );
+  const Footer = ({n,total}) => (
+    <div style={{position:'absolute',bottom:'8mm',left:'16mm',right:'16mm',display:'flex',justifyContent:'space-between',fontSize:'7.5pt',color:'#8A94A3',borderTop:'1px solid #E2E8F0',paddingTop:'3mm',fontFamily:"'JetBrains Mono',monospace"}}>
+      <span>{report.info.reportNo}</span>
+      <span>{L('confidential')}</span>
+      <span>{L('page')} {String(n).padStart(2,'0')} / {String(total).padStart(2,'0')}</span>
+    </div>
+  );
+  const H = ({no,children}) => (
+    <div style={{display:'flex',alignItems:'center',gap:'8px',margin:'0 0 5mm'}}>
+      <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'9pt',fontWeight:700,color:'#fff',background:'#0B1F3A',padding:'2px 8px',borderRadius:'4px'}}>{no}</span>
+      <span style={{fontSize:'13pt',fontWeight:800,color:'#0B1F3A'}}>{children}</span>
+    </div>
+  );
+  const KV = ({k,v}) => (
+    <div style={{display:'flex',padding:'2.4mm 0',borderBottom:'1px solid #EEF1F5',fontSize:'9.5pt'}}>
+      <div style={{width:'40%',color:'#6B7A90',fontWeight:600}}>{k}</div>
+      <div style={{width:'60%',color:'#0F1B2D',fontWeight:600}}>{v||'—'}</div>
+    </div>
+  );
+
+  const TOTAL = 4 + (report.photos.length>0?1:0);
+  let pn = 0;
+
+  return (
+    <div>
+      {/* COVER */}
+      <Page>
+        <div style={{height:'297mm',display:'flex',flexDirection:'column',position:'relative',overflow:'hidden'}}>
+          <div style={{position:'absolute',top:0,left:0,right:0,height:'150mm',background:'linear-gradient(135deg,#0B1F3A 0%,#13294B 55%,#1C3A63 100%)'}}></div>
+          <div style={{position:'absolute',top:'150mm',left:0,right:0,height:'4mm',background:'#0E7C66'}}></div>
+          <div style={{position:'relative',padding:'20mm 20mm 0',color:'#fff',flex:1,display:'flex',flexDirection:'column'}}>
+            <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'30mm'}}>
+              {settings.logo ? <img src={settings.logo} style={{height:'14mm',objectFit:'contain'}}/> :
+                <div style={{width:'12mm',height:'12mm',borderRadius:'8px',background:'rgba(255,255,255,.1)',border:'1px solid rgba(255,255,255,.2)',display:'flex',alignItems:'center',justifyContent:'center',color:'#0E7C66'}}><Icon d={I.wrench} s={22} sw={2}/></div>}
+              <div>
+                <div style={{fontWeight:800,fontSize:'13pt'}}>{settings.company}</div>
+                <div style={{fontSize:'8pt',opacity:.6}}>{settings.website}</div>
+              </div>
+            </div>
+            <div style={{fontSize:'8pt',letterSpacing:'3px',opacity:.7,fontWeight:600,marginBottom:'3mm'}}>{t.reportType_service.toUpperCase()}</div>
+            <div style={{fontSize:'30pt',fontWeight:800,lineHeight:1.05,marginBottom:'4mm',maxWidth:'150mm'}}>{report.info.project||svcLabel(report.serviceType)}</div>
+            <div style={{fontSize:'11pt',opacity:.85,fontWeight:500}}>{svcLabel(report.serviceType)}</div>
+          </div>
+          <div style={{position:'relative',padding:'0 20mm 22mm',color:'#0F1B2D'}}>
+            <div style={{background:'#fff',border:'1px solid #E2E8F0',borderRadius:'12px',padding:'8mm',boxShadow:'0 8px 30px rgba(11,31,58,.12)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5mm 10mm'}}>
+              {[[L('col_customer'),report.info.customer],[L('f_site'),report.info.site],[L('col_no'),report.info.reportNo],[L('f_date'),fmtDateLong(report.info.date,primary)],[L('preparedBy'),settings.company],[L('f_engineer'),report.info.engineer]].map((r,i)=>(
+                <div key={i}>
+                  <div style={{fontSize:'7.5pt',color:'#6B7A90',fontWeight:700,textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'1mm'}}>{r[0]}</div>
+                  <div style={{fontSize:'10.5pt',fontWeight:700,color:'#0B1F3A'}}>{r[1]||'—'}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Page>
+
+      {/* PAGE 1: Info + Summary + Overview */}
+      <Page>
+        <Header/>
+        <div style={{padding:'8mm 16mm'}}>
+          {/* service summary card */}
+          <div style={{border:'2px solid #0B1F3A',borderRadius:'10px',overflow:'hidden',marginBottom:'8mm'}}>
+            <div style={{background:'#0B1F3A',color:'#fff',padding:'3mm 5mm',fontSize:'9pt',fontWeight:800,letterSpacing:'1px'}}>{L('serviceSummary')}</div>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',padding:'5mm',gap:'4mm'}}>
+              {[[L('serviceType'),svcLabel(report.serviceType)],[L('equipment'),report.equipment[0]?.name||'—'],[L('condition'),condLabel[report.condition]],
+                [L('res_assess'),assessLabel],[L('rec_priority'),priLabel[report.recommendation.priority]],['Model',report.equipment[0]?.model||'—']].map((r,i)=>(
+                <div key={i}>
+                  <div style={{fontSize:'7pt',color:'#6B7A90',fontWeight:700,textTransform:'uppercase',marginBottom:'1mm'}}>{r[0]}</div>
+                  <div style={{fontSize:'9.5pt',fontWeight:700,color:i===3?A.c:'#0F1B2D'}}>{i===3&&<span style={{display:'inline-block',width:'7px',height:'7px',borderRadius:'50%',background:A.dot,marginRight:'4px'}}></span>}{r[1]}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {report.execSummary && (
+            <div style={{marginBottom:'8mm'}}>
+              <H no="00">{L('execSummary')}</H>
+              <p style={{fontSize:'9.5pt',lineHeight:1.6,color:'#3E4C61'}}>{report.execSummary}</p>
+            </div>
+          )}
+
+          <H no="01">{L('reportInfo')}</H>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0 12mm',marginBottom:'6mm'}}>
+            <div>
+              <KV k={L('f_customer')} v={report.info.customer}/>
+              <KV k={L('f_project')} v={report.info.project}/>
+              <KV k={L('f_site')} v={report.info.site}/>
+              <KV k={L('f_contact')} v={report.info.contact}/>
+            </div>
+            <div>
+              <KV k={L('f_engineer')} v={report.info.engineer}/>
+              <KV k={L('f_date')} v={fmtDate(report.info.date)}/>
+              <KV k={L('f_position')} v={report.info.position}/>
+              <KV k={L('f_phone')} v={report.info.phone}/>
+            </div>
+          </div>
+
+          {report.equipment.length>0 && (
+            <div>
+              <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'2mm'}}>{L('equipment')}</div>
+              <table style={{width:'100%',borderCollapse:'collapse',fontSize:'9pt'}}>
+                <thead><tr style={{background:'#F5F7FA'}}>
+                  {[L('eq_name'),L('eq_mfr'),L('eq_model'),L('eq_serial'),L('eq_tag')].map((h,i)=>(
+                    <th key={i} style={{textAlign:'left',padding:'2.5mm 3mm',fontSize:'7.5pt',color:'#6B7A90',textTransform:'uppercase',fontWeight:700,border:'1px solid #E2E8F0'}}>{h}</th>
+                  ))}
+                </tr></thead>
+                <tbody>
+                  {report.equipment.map(e=>(
+                    <tr key={e.id}>
+                      <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',fontWeight:600}}>{e.name}</td>
+                      <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0'}}>{e.mfr}</td>
+                      <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',fontFamily:"'JetBrains Mono',monospace"}}>{e.model}</td>
+                      <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',fontFamily:"'JetBrains Mono',monospace"}}>{e.serial}</td>
+                      <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',fontFamily:"'JetBrains Mono',monospace"}}>{e.tag}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+        <Footer n={2} total={TOTAL+1}/>
+      </Page>
+
+      {/* PAGE 2: Overview & Work */}
+      <Page>
+        <Header/>
+        <div style={{padding:'8mm 16mm'}}>
+          <H no="02">{L('sec_overview')}</H>
+          {report.overview.purpose && <>
+            <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',marginBottom:'1.5mm'}}>{L('ov_purpose')}</div>
+            <p style={{fontSize:'9.5pt',lineHeight:1.6,color:'#3E4C61',marginBottom:'4mm'}}>{report.overview.purpose}</p>
+          </>}
+          {report.overview.condition && <>
+            <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',marginBottom:'1.5mm'}}>{L('ov_condition')}</div>
+            <div className="prose-report" style={{fontSize:'9.5pt',color:'#3E4C61',marginBottom:'4mm'}} dangerouslySetInnerHTML={{__html:report.overview.condition}}/>
+          </>}
+          {report.overview.env && <>
+            <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',marginBottom:'1.5mm'}}>{L('ov_env')}</div>
+            <div style={{fontSize:'9.5pt',lineHeight:1.6,color:'#3E4C61',marginBottom:'6mm',background:'#F5F7FA',padding:'3mm 4mm',borderRadius:'6px',borderLeft:'3px solid #0E7C66'}}>{report.overview.env}</div>
+          </>}
+
+          <H no="03">{L('sec_work')}</H>
+          <div>
+            {report.work.map((w,i)=>{
+              const wc = w.status==='done'?'#0E7C66':w.status==='pending'?'#C2790B':'#8A94A3';
+              return (
+                <div key={w.id} style={{display:'flex',gap:'4mm',marginBottom:'3.5mm',paddingBottom:'3.5mm',borderBottom:i<report.work.length-1?'1px solid #EEF1F5':'none'}}>
+                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'8.5pt',fontWeight:700,color:'#fff',background:'#0B1F3A',minWidth:'7mm',height:'7mm',borderRadius:'4px',display:'flex',alignItems:'center',justifyContent:'center'}}>{String(i+1).padStart(2,'0')}</div>
+                  <div style={{flex:1}}>
+                    <div style={{display:'flex',alignItems:'center',gap:'6px',marginBottom:'1mm'}}>
+                      <span style={{fontSize:'10pt',fontWeight:700,color:'#0B1F3A'}}>{w.title}</span>
+                      <span style={{fontSize:'7pt',fontWeight:700,color:wc,border:`1px solid ${wc}`,borderRadius:'3px',padding:'0 4px'}}>{both?`${DICT.vi[w.status==='done'?'ws_done':w.status==='pending'?'ws_pending':'ws_na']} / ${DICT.en[w.status==='done'?'ws_done':w.status==='pending'?'ws_pending':'ws_na']}`:(w.status==='done'?t.ws_done:w.status==='pending'?t.ws_pending:t.ws_na)}</span>
+                    </div>
+                    {w.result && <div style={{fontSize:'9pt',color:'#3E4C61',lineHeight:1.5}}>{w.result}</div>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <Footer n={3} total={TOTAL+1}/>
+      </Page>
+
+      {/* PAGE 3: Results + Measurements + Findings + Recommendation */}
+      <Page>
+        <Header/>
+        <div style={{padding:'8mm 16mm'}}>
+          <H no="04">{L('sec_results')}</H>
+          <div style={{display:'inline-flex',alignItems:'center',gap:'8px',background:A.bg,padding:'2.5mm 5mm',borderRadius:'6px',marginBottom:'4mm'}}>
+            <span style={{width:'10px',height:'10px',borderRadius:'50%',background:A.dot}}></span>
+            <span style={{fontSize:'10pt',fontWeight:800,color:A.c}}>{assessLabel}</span>
+          </div>
+          {report.results.result && <p style={{fontSize:'9.5pt',lineHeight:1.6,color:'#3E4C61',marginBottom:'5mm'}}>{report.results.result}</p>}
+
+          {report.measurements.length>0 && <>
+            <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',marginBottom:'2mm'}}>{L('measurements')}</div>
+            <table style={{width:'100%',borderCollapse:'collapse',fontSize:'9pt',marginBottom:'5mm'}}>
+              <thead><tr style={{background:'#0B1F3A',color:'#fff'}}>
+                {[L('m_param'),L('m_result'),L('m_unit'),L('m_status')].map((h,i)=>(
+                  <th key={i} style={{textAlign:i===1?'right':'left',padding:'2.5mm 3mm',fontSize:'7.5pt',textTransform:'uppercase',fontWeight:700}}>{h}</th>
+                ))}
+              </tr></thead>
+              <tbody>
+                {report.measurements.map((m,i)=>{ const ma=ASSESS[m.status]||ASSESS.normal; return (
+                  <tr key={m.id} style={{background:i%2?'#F5F7FA':'#fff'}}>
+                    <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',fontWeight:600}}>{m.param}</td>
+                    <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',textAlign:'right',fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>{m.result}</td>
+                    <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0',color:'#6B7A90'}}>{m.unit}</td>
+                    <td style={{padding:'2.5mm 3mm',border:'1px solid #E2E8F0'}}><span style={{color:ma.c,fontWeight:600}}>● {both?`${DICT.vi[ma.k]} / ${DICT.en[ma.k]}`:t[ma.k]}</span></td>
+                  </tr>
+                );})}
+              </tbody>
+            </table>
+          </>}
+
+          {report.findings.length>0 && <>
+            <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',marginBottom:'2mm'}}>{L('findings')}</div>
+            {report.findings.map((f,i)=>(
+              <div key={f.id} style={{border:'1px solid #E2E8F0',borderRadius:'8px',padding:'3.5mm 4mm',marginBottom:'3mm',borderLeft:`3px solid ${SEVc[f.severity]}`}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1.5mm'}}>
+                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'8pt',fontWeight:700,color:'#0B1F3A'}}>FINDING {String(i+1).padStart(2,'0')}</span>
+                  <span style={{fontSize:'7.5pt',fontWeight:700,color:SEVc[f.severity]}}>{sevLabel(f.severity)}</span>
+                </div>
+                <div style={{fontSize:'9.5pt',fontWeight:700,color:'#0F1B2D',marginBottom:'1mm'}}>{f.finding}</div>
+                {f.obs && <div style={{fontSize:'8.5pt',color:'#3E4C61',lineHeight:1.5,marginBottom:'1mm'}}><b style={{color:'#6B7A90'}}>{L('fi_obs')}:</b> {f.obs}</div>}
+                {f.rec && <div style={{fontSize:'8.5pt',color:'#3E4C61',lineHeight:1.5}}><b style={{color:'#6B7A90'}}>{L('fi_rec')}:</b> {f.rec}</div>}
+              </div>
+            ))}
+          </>}
+
+          {report.results.cause && <>
+            <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',marginBottom:'1.5mm',marginTop:'3mm'}}>{L('res_cause')}</div>
+            <p style={{fontSize:'9.5pt',lineHeight:1.6,color:'#3E4C61',marginBottom:'5mm'}}>{report.results.cause}</p>
+          </>}
+
+          {/* recommendation card */}
+          <div style={{border:'2px solid #0B1F3A',borderRadius:'10px',overflow:'hidden',marginTop:'2mm'}}>
+            <div style={{background:'#0B1F3A',color:'#fff',padding:'3mm 5mm',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <span style={{fontSize:'9.5pt',fontWeight:800,letterSpacing:'.5px'}}>{L('rec_title')}</span>
+              <span style={{fontSize:'8pt',fontWeight:800,background:'#fff',color:priColor[report.recommendation.priority],padding:'1mm 3mm',borderRadius:'20px'}}>{L('rec_priority')}: {priLabel[report.recommendation.priority].toUpperCase()}</span>
+            </div>
+            <div style={{padding:'4mm 5mm',fontSize:'9.5pt',lineHeight:1.6,color:'#0F1B2D'}}>{report.recommendation.action||'—'}</div>
+          </div>
+        </div>
+        <Footer n={4} total={TOTAL+1}/>
+      </Page>
+
+      {/* PAGE: Photos */}
+      {report.photos.length>0 && (
+        <Page>
+          <Header/>
+          <div style={{padding:'8mm 16mm'}}>
+            <H no="05">{L('sec_photos')}</H>
+            <div style={{display:'grid',gridTemplateColumns:report.photos.length===1?'1fr':'1fr 1fr',gap:'5mm'}}>
+              {report.photos.map((p,i)=>(
+                <div key={p.id} style={{gridColumn:report.photos.length===3&&i===0?'span 2':'auto'}}>
+                  <div style={{border:'1px solid #E2E8F0',borderRadius:'8px',overflow:'hidden'}}>
+                    <img src={p.annotated||p.src} style={{width:'100%',height:report.photos.length===1?'auto':'55mm',objectFit:'cover',display:'block'}}/>
+                  </div>
+                  <div style={{fontSize:'8pt',color:'#3E4C61',marginTop:'1.5mm',fontWeight:600}}>
+                    <span style={{fontFamily:"'JetBrains Mono',monospace",color:'#0B1F3A'}}>{t.figure} {String(i+1).padStart(2,'0')}</span>{p.caption?` — ${p.caption}`:''}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Footer n={5} total={TOTAL+1}/>
+        </Page>
+      )}
+
+      {/* END PAGE */}
+      <Page>
+        <div style={{height:'297mm',display:'flex',flexDirection:'column',justifyContent:'space-between',position:'relative'}}>
+          <Header/>
+          <div style={{textAlign:'center',padding:'0 20mm'}}>
+            {/* signatures */}
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10mm',marginBottom:'30mm',textAlign:'center'}}>
+              {[['sig_prepared','prepared'],['sig_checked','checked'],['sig_approved','approved']].map(([k,key])=>(
+                <div key={key}>
+                  <div style={{fontSize:'8pt',fontWeight:700,color:'#6B7A90',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'2mm'}}>{L(k)}</div>
+                  <div style={{height:'18mm',display:'flex',alignItems:'flex-end',justifyContent:'center',marginBottom:'1mm'}}>
+                    {report.signatures[key].img ? <img src={report.signatures[key].img} style={{maxHeight:'18mm',maxWidth:'90%',objectFit:'contain'}}/> : null}
+                  </div>
+                  <div style={{borderTop:'1px solid #CBD5E1',paddingTop:'2mm'}}>
+                    <div style={{fontSize:'9.5pt',fontWeight:700,color:'#0B1F3A'}}>{report.signatures[key].name||'—'}</div>
+                    <div style={{fontSize:'8pt',color:'#6B7A90'}}>{report.signatures[key].pos||''}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{fontSize:'16pt',fontWeight:800,color:'#0B1F3A',marginBottom:'2mm'}}>{both?`${DICT.vi.thankyou}`:t.thankyou}</div>
+            <div style={{width:'40mm',height:'3px',background:'#0E7C66',margin:'4mm auto'}}></div>
+            {qrUrl && (
+              <div style={{display:'flex',flexDirection:'column',alignItems:'center',marginTop:'6mm'}}>
+                <img src={qrUrl} style={{width:'26mm',height:'26mm'}}/>
+                <div style={{fontSize:'7.5pt',color:'#6B7A90',marginTop:'2mm',fontFamily:"'JetBrains Mono',monospace"}}>{report.info.reportNo}{lastRev?` · REV ${String(lastRev.rev).padStart(2,'0')}`:''}</div>
+              </div>
+            )}
+          </div>
+          <div style={{background:'#0B1F3A',color:'#fff',padding:'8mm 16mm',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <div>
+              <div style={{fontWeight:800,fontSize:'11pt'}}>{settings.company}</div>
+              <div style={{fontSize:'8pt',opacity:.7,marginTop:'1mm'}}>{settings.address}</div>
+            </div>
+            <div style={{textAlign:'right',fontSize:'8pt',opacity:.8}}>
+              {settings.website && <div>{settings.website}</div>}
+              {settings.email && <div>{settings.email}</div>}
+              {settings.hotline && <div>{t.s_hotline}: {settings.hotline}</div>}
+            </div>
+          </div>
+        </div>
+      </Page>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
