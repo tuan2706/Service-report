@@ -159,7 +159,13 @@ const DICT = {
     caption:"Chú thích ảnh", figure:"Hình",
     customers_title:"Khách hàng", customers_sub:"Danh bạ khách hàng để chọn nhanh khi tạo báo cáo",
     addCustomer:"Thêm khách hàng", c_company:"Công ty", c_address:"Địa chỉ",
-    equipment_lib:"Thư viện thiết bị", equipment_sub:"Thiết bị mẫu kèm checklist tự động",
+    equipment_lib:"Thư viện thiết bị", equipment_sub:"Thiết bị của bạn, kèm checklist. Thêm/sửa để chọn nhanh khi lập báo cáo.",
+    addEquipLib:"Thêm thiết bị", editEquip:"Sửa thiết bị", eq_category:"Nhóm thiết bị", eq_checklist_type:"Loại checklist",
+    saveToLib:"Lưu vào thư viện", savedToLib:"Đã lưu vào thư viện", inLib:"Đã có trong thư viện",
+    chooseFromLib:"Chọn từ thư viện", noEquipLib:"Thư viện chưa có thiết bị. Bấm “Thêm thiết bị”.",
+    cl_custom:"Checklist tùy chỉnh", cl_useSample:"Dùng checklist mẫu theo loại", cl_addGroup:"Thêm nhóm", cl_addItem:"Thêm mục",
+    cl_groupName:"Tên nhóm", cl_itemName:"Nội dung kiểm tra", cl_empty:"Chưa có mục checklist nào.",
+    eq_items:"mục", eq_groups:"nhóm", searchEquip:"Tìm thiết bị…",
     templates_title:"Mẫu báo cáo", templates_sub:"Bấm để tạo báo cáo mới từ mẫu",
     history_title:"Lịch sử dịch vụ", history_sub:"Toàn bộ báo cáo theo thời gian",
     settings_title:"Cài đặt", settings_sub:"Thông tin công ty hiển thị trên báo cáo PDF",
@@ -247,7 +253,13 @@ const DICT = {
     caption:"Photo caption", figure:"Figure",
     customers_title:"Customers", customers_sub:"Customer directory for quick selection",
     addCustomer:"Add customer", c_company:"Company", c_address:"Address",
-    equipment_lib:"Equipment library", equipment_sub:"Sample equipment with auto checklist",
+    equipment_lib:"Equipment library", equipment_sub:"Your equipment with checklists. Add/edit to pick quickly when creating reports.",
+    addEquipLib:"Add equipment", editEquip:"Edit equipment", eq_category:"Category", eq_checklist_type:"Checklist type",
+    saveToLib:"Save to library", savedToLib:"Saved to library", inLib:"Already in library",
+    chooseFromLib:"Choose from library", noEquipLib:"No equipment yet. Click “Add equipment”.",
+    cl_custom:"Custom checklist", cl_useSample:"Use sample checklist by type", cl_addGroup:"Add group", cl_addItem:"Add item",
+    cl_groupName:"Group name", cl_itemName:"Inspection item", cl_empty:"No checklist items yet.",
+    eq_items:"items", eq_groups:"groups", searchEquip:"Search equipment…",
     templates_title:"Templates", templates_sub:"Click to start a new report from a template",
     history_title:"Service history", history_sub:"All reports over time",
     settings_title:"Settings", settings_sub:"Company information shown on the PDF report",
@@ -401,9 +413,19 @@ const CHECKLISTS = {
     {title:"Signal", items:["Tín hiệu ngõ ra","Truyền thông","Kiểm tra vòng lặp / loop test"]},
   ]},
 };
+const CHECKLIST_TYPES = [
+  {id:'ph', label:'pH / ORP Analyzer'},
+  {id:'flow', label:'Flow Meter'},
+  {id:'water', label:'Water Quality Analyzer'},
+  {id:'generic', label:'Chung / Generic'},
+];
+/* Return the checklist groups for a library equipment item: custom groups if present, else sample by type */
+const equipGroups = (e)=>{
+  if(e && Array.isArray(e.customChecklist) && e.customChecklist.length) return e.customChecklist;
+  return (CHECKLISTS[e?.checklist] || CHECKLISTS.generic).groups;
+};
 
-const EQUIP_LIB = [
-  { id:'e1', name:"pH / ORP Analyzer", mfr:"Endress+Hauser", model:"Liquiline CM442", cat:"Water Quality", checklist:"ph" },
+const EQUIP_LIB_SEED = [  { id:'e1', name:"pH / ORP Analyzer", mfr:"Endress+Hauser", model:"Liquiline CM442", cat:"Water Quality", checklist:"ph" },
   { id:'e2', name:"Electromagnetic Flowmeter", mfr:"Endress+Hauser", model:"Promag W 400", cat:"Flow", checklist:"flow" },
   { id:'e3', name:"pH Analyzer", mfr:"HORIBA", model:"HE-960", cat:"Water Quality", checklist:"ph" },
   { id:'e4', name:"COD / TOC Analyzer", mfr:"HORIBA", model:"CODmax II", cat:"Water Quality", checklist:"water" },
@@ -512,6 +534,8 @@ const initDB = () => {
   if (existing) {
     // migration: ensure brand logo present for older saved data
     if (existing.settings && !existing.settings.logo) existing.settings.logo = LOGO_MARK;
+    // migration: seed the equipment library if missing
+    if (!Array.isArray(existing.equipmentLib)) existing.equipmentLib = EQUIP_LIB_SEED.map(e=>({...e}));
     return existing;
   }
   const settings = {...DEFAULT_SETTINGS};
@@ -519,6 +543,7 @@ const initDB = () => {
   const db = {
     settings,
     reports:[demo],
+    equipmentLib: EQUIP_LIB_SEED.map(e=>({...e})),
     customers:[
       {id:uid(),company:"ABC Manufacturing Vietnam",address:"KCN Sóng Thần, Bình Dương",contact:"Nguyễn Văn A",position:"Trưởng phòng Môi trường",phone:"0901 234 567",email:"moitruong@abc-mfg.vn"},
     ],
@@ -559,6 +584,7 @@ const I = {
   alert:<><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></>,
   spark:<><path d="M12 3l1.6 4.6L18 9l-4.4 1.4L12 15l-1.6-4.6L6 9l4.4-1.4L12 3z"/><path d="M19 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></>,
   layers:<><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></>,
+  save:<><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></>,
 };
 
 function Badge({children, c, bg}) {
@@ -1041,10 +1067,10 @@ function App(){
           {view==='reports' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.nav_reports}/>}
           {view==='history' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.history_title} sub={t.history_sub}/>}
           {view==='customers' && <Customers db={db} persist={persist}/>}
-          {view==='equipment' && <EquipmentLib db={db}/>}
+          {view==='equipment' && <EquipmentLib db={db} persist={persist}/>}
           {view==='templates' && <Templates onCreate={createReport}/>}
           {view==='settings' && <Settings db={db} persist={persist}/>}
-          {view==='builder' && report && <Builder report={report} update={(p)=>updateReport(report.id,p)} db={db} onExit={()=>setView('dashboard')} onPreview={()=>setView('preview')} onNeedKey={()=>setView('settings')}/>}
+          {view==='builder' && report && <Builder report={report} update={(p)=>updateReport(report.id,p)} db={db} persist={persist} onExit={()=>setView('dashboard')} onPreview={()=>setView('preview')} onNeedKey={()=>setView('settings')}/>}
           {view==='preview' && report && <PreviewScreen report={report} settings={db.settings} lang={lang} onBack={()=>setView('builder')} update={(p)=>updateReport(report.id,p)}/>}
         </main>
       </div>
@@ -1281,7 +1307,7 @@ const SECTIONS = [
   {id:'signoff', k:'signatures'},
 ];
 
-function Builder({report, update, db, onExit, onPreview, onNeedKey}){
+function Builder({report, update, db, persist, onExit, onPreview, onNeedKey}){
   const t = useT();
   const apiKey = db.settings.apiKey;
   const [section, setSection] = useState('info');
@@ -1340,9 +1366,9 @@ function Builder({report, update, db, onExit, onPreview, onNeedKey}){
         {/* editor */}
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-[820px] mx-auto p-6 md:p-8 fade-in" key={section}>
-            {section==='info' && <SectionInfo report={report} up={up} db={db}/>}
+            {section==='info' && <SectionInfo report={report} up={up} db={db} persist={persist}/>}
             {section==='overview' && <SectionOverview report={report} up={up} apiKey={apiKey} onNeedKey={onNeedKey}/>}
-            {section==='work' && <SectionWork report={report} up={up}/>}
+            {section==='work' && <SectionWork report={report} up={up} db={db}/>}
             {section==='results' && <SectionResults report={report} up={up} apiKey={apiKey} onNeedKey={onNeedKey}/>}
             {section==='photos' && <SectionPhotos report={report} up={up}/>}
             {section==='signoff' && <SectionSignoff report={report} up={up} update={update} settings={db.settings}/>}
@@ -1377,18 +1403,26 @@ function SecHead({no, title, desc}){
 function Card({children, className=''}){ return <div className={"bg-white rounded-xl border border-[var(--line)] card-shadow p-5 "+className}>{children}</div>; }
 
 /* ---- Section: Info ---- */
-function SectionInfo({report, up, db}){
+function SectionInfo({report, up, db, persist}){
   const t = useT();
   const info = report.info;
+  const lib = db.equipmentLib || [];
   const setInfo = (k,v)=> up({info:{...info,[k]:v}});
   const setEq = (id,k,v)=> up({equipment: report.equipment.map(e=>e.id===id?{...e,[k]:v}:e)});
   const addEq = ()=> up({equipment:[...report.equipment,{id:uid(),name:"",mfr:"",model:"",serial:"",tag:"",part:"",app:"",loc:"",checklist:'generic'}]});
   const delEq = (id)=> up({equipment: report.equipment.filter(e=>e.id!==id)});
   const pickCustomer = (c)=> up({info:{...info,customer:c.company,contact:c.contact,position:c.position,phone:c.phone,email:c.email}});
-  const pickEquipLib = (id, lib)=> setEq(id,'__lib__',lib); // handled below
 
-  const applyLib = (id, lib)=>{
-    up({equipment: report.equipment.map(e=> e.id===id ? {...e, name:lib.name, mfr:lib.mfr, model:lib.model, checklist:lib.checklist} : e)});
+  const applyLib = (id, l)=>{
+    up({equipment: report.equipment.map(e=> e.id===id ? {...e, name:l.name, mfr:l.mfr, model:l.model, checklist:l.checklist, libId:l.id} : e)});
+  };
+  // is this report-equipment already saved in the library? (match by model+mfr+name)
+  const inLib = (e)=> lib.some(l=> (l.model||"")===(e.model||"") && (l.mfr||"")===(e.mfr||"") && (l.name||"")===(e.name||""));
+  const saveToLib = (e)=>{
+    if(!persist) return;
+    const entry = { id:uid(), name:(e.name||e.model||"").trim(), mfr:e.mfr||"", model:e.model||"", cat:e.app||"", checklist:e.checklist||'generic', customChecklist:null };
+    if(!entry.name && !entry.model) return;
+    persist({...db, equipmentLib:[entry, ...lib]});
   };
 
   return (
@@ -1439,16 +1473,23 @@ function SectionInfo({report, up, db}){
         </div>
         {report.equipment.length===0 && <div className="text-[13px] text-[var(--ink-3)] py-6 text-center border border-dashed border-[var(--line)] rounded-lg">{t.noEquip}</div>}
         <div className="space-y-4">
-          {report.equipment.map((e,i)=>(
+          {report.equipment.map((e,i)=>{
+            const saved = inLib(e);
+            return (
             <div key={e.id} className="border border-[var(--line)] rounded-lg p-4 bg-[var(--paper)]">
-              <div className="flex items-center justify-between mb-3">
-                <span className="mono text-[12px] font-bold text-[var(--navy)] bg-[var(--ice)] px-2 py-0.5 rounded">EQ-{String(i+1).padStart(2,'0')}</span>
+              <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
+                <span className="mono text-[12px] font-bold text-[var(--gold-3)] bg-[var(--gold-soft)] px-2 py-0.5 rounded">EQ-{String(i+1).padStart(2,'0')}</span>
                 <div className="flex items-center gap-2">
-                  <select onChange={ev=>{ const lib=EQUIP_LIB.find(x=>x.id===ev.target.value); if(lib)applyLib(e.id,lib); ev.target.value=''; }}
-                    className="text-[12px] px-2.5 py-1.5 rounded-lg border border-[var(--line)] bg-white text-[var(--ink-2)]">
-                    <option value="">{t.equipment_lib}…</option>
-                    {EQUIP_LIB.map(l=><option key={l.id} value={l.id}>{l.mfr} {l.model}</option>)}
+                  <select onChange={ev=>{ const l=lib.find(x=>x.id===ev.target.value); if(l)applyLib(e.id,l); ev.target.value=''; }}
+                    className="text-[12px] px-2.5 py-1.5 rounded-lg border border-[var(--line)] bg-white text-[var(--ink-2)] max-w-[190px]">
+                    <option value="">{t.chooseFromLib}…</option>
+                    {lib.map(l=><option key={l.id} value={l.id}>{l.mfr?`${l.mfr} `:''}{l.model||l.name}</option>)}
                   </select>
+                  {saved
+                    ? <span className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[var(--green)] bg-[var(--green-soft)] px-2 py-1.5 rounded-lg"><Icon d={I.check} s={13} sw={2.5}/>{t.inLib}</span>
+                    : <button onClick={()=>saveToLib(e)} disabled={!(e.name||e.model)}
+                        className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[var(--gold-3)] bg-[var(--gold-soft)] hover:brightness-95 px-2 py-1.5 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed" title={t.saveToLib}>
+                        <Icon d={I.save} s={13}/>{t.saveToLib}</button>}
                   <button onClick={()=>delEq(e.id)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
                 </div>
               </div>
@@ -1462,7 +1503,7 @@ function SectionInfo({report, up, db}){
                 <Field label={t.eq_loc} value={e.loc} onChange={v=>setEq(e.id,'loc',v)}/>
               </div>
             </div>
-          ))}
+          );})}
         </div>
       </Card>
     </div>
@@ -1506,7 +1547,7 @@ function SectionOverview({report, up, apiKey, onNeedKey}){
 }
 
 /* ---- Section: Work + Checklist ---- */
-function SectionWork({report, up}){
+function SectionWork({report, up, db}){
   const t = useT();
   const work = report.work;
   const setW = (id,k,v)=> up({work: work.map(w=>w.id===id?{...w,[k]:v}:w)});
@@ -1517,9 +1558,14 @@ function SectionWork({report, up}){
     up({work:[...work, ...sample.map(s=>({id:uid(),title:s,desc:"",status:'done',result:""}))]});
   };
 
-  // checklist based on first equipment
-  const eqCl = report.equipment[0]?.checklist || 'generic';
-  const cl = CHECKLISTS[eqCl] || CHECKLISTS.generic;
+  // checklist based on first equipment; prefer the library item's custom checklist if linked
+  const eq0 = report.equipment[0];
+  const eqCl = eq0?.checklist || 'generic';
+  const libItem = (db?.equipmentLib||[]).find(l=> l.id===eq0?.libId || ((l.model||"")===(eq0?.model||"") && (l.mfr||"")===(eq0?.mfr||"") && (eq0?.model||eq0?.mfr)));
+  const groups = libItem ? equipGroups(libItem) : (CHECKLISTS[eqCl] || CHECKLISTS.generic).groups;
+  const clName = libItem ? (eq0?.name || eq0?.model || (CHECKLISTS[eqCl]||CHECKLISTS.generic).name) : (CHECKLISTS[eqCl] || CHECKLISTS.generic).name;
+  const cl = {name:clName, groups};
+  const clKeyBase = libItem ? ('lib-'+libItem.id) : eqCl;
   const clState = report.checklistState || {};
   const toggle = (key)=> up({checklistState:{...clState,[key]:!clState[key]}});
 
@@ -1537,10 +1583,10 @@ function SectionWork({report, up}){
         <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
           {cl.groups.map((g,gi)=>(
             <div key={gi}>
-              <div className="text-[12px] font-bold text-[var(--navy)] uppercase tracking-wide mb-2">{g.title}</div>
+              <div className="text-[12px] font-bold text-[var(--gold-3)] uppercase tracking-wide mb-2">{g.title}</div>
               <div className="space-y-1">
                 {g.items.map((it,ii)=>{
-                  const key = `${eqCl}-${gi}-${ii}`;
+                  const key = `${clKeyBase}-${gi}-${ii}`;
                   const on = !!clState[key];
                   return (
                     <button key={ii} onClick={()=>toggle(key)}
@@ -2006,32 +2052,187 @@ function CustomerModal({customer, onSave, onClose}){
 }
 
 /* ============================================================
-   EQUIPMENT LIBRARY
+   EQUIPMENT LIBRARY (managed: add / edit / delete + custom checklist)
    ============================================================ */
-function EquipmentLib({db}){
+function EquipmentLib({db, persist}){
   const t = useT();
+  const [edit, setEdit] = useState(null); // equipment object or {} for new
+  const [q, setQ] = useState("");
+  const lib = db.equipmentLib || [];
+
+  const save = (e)=>{
+    let list = lib;
+    if(e.id && lib.some(x=>x.id===e.id)) list = lib.map(x=>x.id===e.id?e:x);
+    else list = [{...e, id:e.id||uid()}, ...lib];
+    persist({...db, equipmentLib:list}); setEdit(null);
+  };
+  const del = (id)=> persist({...db, equipmentLib: lib.filter(e=>e.id!==id)});
+
+  const filtered = lib.filter(e=> (`${e.name} ${e.mfr} ${e.model} ${e.cat}`).toLowerCase().includes(q.toLowerCase()));
+
   return (
-    <div className="p-8 max-w-[1000px] mx-auto fade-in">
-      <header className="mb-6"><h1 className="app-title text-[27px] font-bold tracking-tight">{t.equipment_lib}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.equipment_sub}</p></header>
+    <div className="p-8 max-w-[1100px] mx-auto fade-in">
+      <header className="flex items-start justify-between mb-6 flex-wrap gap-3">
+        <div>
+          <h1 className="app-title text-[27px] font-bold tracking-tight">{t.equipment_lib}</h1>
+          <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.equipment_sub}</p>
+        </div>
+        <Btn variant="gold" onClick={()=>setEdit({name:"",mfr:"",model:"",cat:"",checklist:'generic',customChecklist:null})}><Icon d={I.plus} s={17} sw={2}/>{t.addEquipLib}</Btn>
+      </header>
+
+      <div className="relative mb-4 max-w-md">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
+        <input value={q} onChange={e=>setQ(e.target.value)} placeholder={t.searchEquip}
+          className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] focus:border-[var(--gold)]"/>
+      </div>
+
+      {filtered.length===0 && <div className="text-[14px] text-[var(--ink-3)] py-14 text-center border border-dashed border-[var(--line)] rounded-xl bg-white">{t.noEquipLib}</div>}
+
       <div className="grid md:grid-cols-2 gap-4">
-        {EQUIP_LIB.map(e=>{
-          const cl = CHECKLISTS[e.checklist];
+        {filtered.map(e=>{
+          const groups = equipGroups(e);
+          const items = groups.reduce((n,g)=>n+g.items.length,0);
+          const custom = Array.isArray(e.customChecklist) && e.customChecklist.length;
           return (
-            <div key={e.id} className="bg-white rounded-xl border border-[var(--line)] card-shadow p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-[var(--ice)] text-[var(--navy)] flex items-center justify-center"><Icon d={I.equipment} s={20}/></div>
-                <div>
-                  <div className="font-bold text-[14.5px]">{e.name}</div>
-                  <div className="text-[12.5px] text-[var(--ink-3)]">{e.mfr} · <span className="mono">{e.model}</span></div>
+            <div key={e.id} className="group bg-white rounded-xl border border-[var(--line)] card-shadow p-5 hover:border-[var(--gold)] transition">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-lg bg-[var(--gold-soft)] text-[var(--gold-3)] flex items-center justify-center shrink-0"><Icon d={I.equipment} s={20}/></div>
+                  <div className="min-w-0">
+                    <div className="font-bold text-[14.5px] truncate">{e.name||"—"}</div>
+                    <div className="text-[12.5px] text-[var(--ink-3)] truncate">{e.mfr} · <span className="mono">{e.model}</span></div>
+                  </div>
+                </div>
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+                  <button onClick={()=>setEdit(e)} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--gold-3)] hover:bg-[var(--gold-soft)]"><Icon d={I.edit} s={16}/></button>
+                  <button onClick={()=>{if(confirm(t.delete+'?'))del(e.id);}} className="p-1.5 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
                 </div>
               </div>
-              <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.checklist} · {cl.name}</div>
+              <div className="flex items-center gap-2 text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">
+                <span>{t.checklist}</span>
+                {custom ? <span className="px-1.5 py-0.5 rounded text-[10px] bg-[var(--gold-soft)] text-[var(--gold-3)] normal-case tracking-normal font-bold">{t.cl_custom}</span> : null}
+                <span className="normal-case tracking-normal text-[var(--ink-2)]">· {groups.length} {t.eq_groups} · {items} {t.eq_items}</span>
+              </div>
               <div className="flex flex-wrap gap-1.5">
-                {cl.groups.map((g,i)=><span key={i} className="text-[11.5px] px-2 py-0.5 rounded bg-[var(--paper)] border border-[var(--line)] text-[var(--ink-2)]">{g.title}</span>)}
+                {groups.map((g,i)=><span key={i} className="text-[11.5px] px-2 py-0.5 rounded bg-[var(--paper)] border border-[var(--line)] text-[var(--ink-2)]">{g.title}</span>)}
               </div>
             </div>
           );
         })}
+      </div>
+
+      {edit && <EquipmentModal equip={edit} onSave={save} onClose={()=>setEdit(null)}/>}
+    </div>
+  );
+}
+
+/* ---- Equipment add/edit modal with checklist editor ---- */
+function EquipmentModal({equip, onSave, onClose}){
+  const t = useT();
+  const [e, setE] = useState(()=>({...equip, customChecklist: equip.customChecklist ? JSON.parse(JSON.stringify(equip.customChecklist)) : null}));
+  const s = (k,v)=>setE({...e,[k]:v});
+  const useCustom = Array.isArray(e.customChecklist);
+
+  // When switching to custom, seed from the sample of current type so user has a starting point
+  const enableCustom = ()=> setE({...e, customChecklist: JSON.parse(JSON.stringify(equipGroups(e)))});
+  const disableCustom = ()=> setE({...e, customChecklist:null});
+
+  const groups = e.customChecklist || [];
+  const setGroups = (g)=> setE({...e, customChecklist:g});
+  const addGroup = ()=> setGroups([...groups, {title:"", items:[]}]);
+  const setGroupTitle = (gi,v)=> setGroups(groups.map((g,i)=>i===gi?{...g,title:v}:g));
+  const delGroup = (gi)=> setGroups(groups.filter((_,i)=>i!==gi));
+  const addItem = (gi)=> setGroups(groups.map((g,i)=>i===gi?{...g,items:[...g.items,""]}:g));
+  const setItem = (gi,ii,v)=> setGroups(groups.map((g,i)=>i===gi?{...g,items:g.items.map((it,j)=>j===ii?v:it)}:g));
+  const delItem = (gi,ii)=> setGroups(groups.map((g,i)=>i===gi?{...g,items:g.items.filter((_,j)=>j!==ii)}:g));
+
+  const canSave = (e.name||"").trim() || (e.model||"").trim();
+  const doSave = ()=>{
+    // clean empty custom items/groups
+    let clean = e.customChecklist;
+    if(Array.isArray(clean)){
+      clean = clean.map(g=>({title:(g.title||"").trim(), items:g.items.map(x=>(x||"").trim()).filter(Boolean)}))
+                   .filter(g=>g.title || g.items.length);
+    }
+    onSave({...e, name:(e.name||"").trim()||e.model, customChecklist: (Array.isArray(clean)&&clean.length)?clean:(useCustom?[]:null)});
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[92vh] flex flex-col" onClick={ev=>ev.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
+          <h3 className="app-title font-bold text-[17px]">{equip.id ? t.editEquip : t.addEquipLib}</h3>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+
+        <div className="p-6 overflow-y-auto space-y-5">
+          <div className="grid grid-cols-2 gap-4">
+            <Field label={t.eq_name} value={e.name} onChange={v=>s('name',v)} full/>
+            <Field label={t.eq_mfr} value={e.mfr} onChange={v=>s('mfr',v)}/>
+            <Field label={t.eq_model} value={e.model} onChange={v=>s('model',v)} mono/>
+            <Field label={t.eq_category} value={e.cat} onChange={v=>s('cat',v)}/>
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.eq_checklist_type}</span>
+              <select value={e.checklist} onChange={ev=>s('checklist',ev.target.value)} disabled={useCustom}
+                className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] disabled:opacity-50">
+                {CHECKLIST_TYPES.map(c=><option key={c.id} value={c.id}>{c.label}</option>)}
+              </select>
+            </label>
+          </div>
+
+          {/* checklist section */}
+          <div className="border-t border-[var(--line)] pt-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[13px] font-bold text-[var(--ink)]">{t.checklist}</span>
+              {useCustom
+                ? <button onClick={disableCustom} className="text-[12.5px] font-semibold text-[var(--ink-3)] hover:text-[var(--ink)]">{t.cl_useSample}</button>
+                : <Btn variant="outline" size="sm" onClick={enableCustom}><Icon d={I.edit} s={14}/>{t.cl_custom}</Btn>}
+            </div>
+
+            {!useCustom && (
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--paper)] p-3">
+                {equipGroups(e).map((g,i)=>(
+                  <div key={i} className="mb-2 last:mb-0">
+                    <div className="text-[12px] font-bold text-[var(--gold-3)] uppercase tracking-wide">{g.title}</div>
+                    <div className="text-[12.5px] text-[var(--ink-2)]">{g.items.join(" · ")}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {useCustom && (
+              <div className="space-y-3">
+                {groups.length===0 && <div className="text-[13px] text-[var(--ink-3)] text-center py-4 border border-dashed border-[var(--line)] rounded-lg">{t.cl_empty}</div>}
+                {groups.map((g,gi)=>(
+                  <div key={gi} className="border border-[var(--line)] rounded-lg p-3 bg-[var(--paper)]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <input value={g.title} onChange={ev=>setGroupTitle(gi,ev.target.value)} placeholder={t.cl_groupName}
+                        className="flex-1 px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] font-semibold bg-white focus:border-[var(--gold)]"/>
+                      <button onClick={()=>delGroup(gi)} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={15}/></button>
+                    </div>
+                    <div className="space-y-1.5 pl-1">
+                      {g.items.map((it,ii)=>(
+                        <div key={ii} className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[var(--line-strong)] shrink-0"></span>
+                          <input value={it} onChange={ev=>setItem(gi,ii,ev.target.value)} placeholder={t.cl_itemName}
+                            className="flex-1 px-2.5 py-1.5 rounded-md border border-[var(--line)] text-[13px] bg-white focus:border-[var(--gold)]"/>
+                          <button onClick={()=>delItem(gi,ii)} className="p-1 rounded text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.x} s={14}/></button>
+                        </div>
+                      ))}
+                      <button onClick={()=>addItem(gi)} className="text-[12.5px] font-semibold text-[var(--gold-3)] hover:underline flex items-center gap-1 pl-3.5 pt-1"><Icon d={I.plus} s={13} sw={2.5}/>{t.cl_addItem}</button>
+                    </div>
+                  </div>
+                ))}
+                <Btn variant="outline" size="sm" onClick={addGroup}><Icon d={I.plus} s={15} sw={2}/>{t.cl_addGroup}</Btn>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-2 px-6 py-4 border-t border-[var(--line)]">
+          <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
+          <Btn variant="primary" onClick={doSave} disabled={!canSave}><Icon d={I.check} s={16}/>{t.save}</Btn>
+        </div>
       </div>
     </div>
   );
@@ -2348,8 +2549,8 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
         <div style={{position:'absolute',top:0,left:0,right:0,height:'135mm',background:`linear-gradient(150deg,${DARK} 0%,#22402F 60%,${GREEND} 100%)`}}></div>
         {/* gold divider */}
         <div style={{position:'absolute',top:'135mm',left:0,right:0,height:'2.5mm',background:`linear-gradient(90deg,${GOLDD},${GOLD} 40%,${GOLDL})`}}></div>
-        {/* faint watermark on cover band */}
-        <div style={{position:'absolute',top:'8mm',right:'-20mm',opacity:0.08}}>
+        {/* faint watermark on cover band — centered */}
+        <div style={{position:'absolute',top:0,left:0,right:0,height:'135mm',display:'flex',alignItems:'center',justifyContent:'center',opacity:0.08,pointerEvents:'none'}}>
           <img src={logo} style={{width:'150mm'}}/>
         </div>
         <div style={{position:'relative',padding:'20mm 20mm 0',color:'#fff',flex:1,display:'flex',flexDirection:'column'}}>
@@ -2674,8 +2875,7 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
               </div>
             ))}
           </div>
-          <img src={logo} style={{height:'18mm',objectFit:'contain',marginBottom:'4mm'}}/>
-          <div style={{fontFamily:SERIF,fontSize:'15pt',fontWeight:700,color:INK,marginBottom:'2mm'}}>{both?`${DICT.vi.thankyou}`:t.thankyou}</div>
+          <div style={{fontFamily:SERIF,fontSize:'15pt',fontWeight:700,color:INK,marginBottom:'2mm',marginTop:'6mm'}}>{both?`${DICT.vi.thankyou}`:t.thankyou}</div>
           <div style={{width:'34mm',height:'2.5px',background:`linear-gradient(90deg,${GOLDD},${GOLD})`,margin:'3mm auto'}}></div>
           {qrUrl && (
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',marginTop:'5mm'}}>
