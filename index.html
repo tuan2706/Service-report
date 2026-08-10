@@ -90,8 +90,16 @@
   @media print{.no-print{display:none!important;}}
   .prose-report h3{font-size:11pt;font-weight:700;margin:14px 0 6px;color:var(--pdf-ink);}
   .prose-report p{margin:5px 0;line-height:1.55;}
-  .prose-report ul{margin:5px 0;padding-left:18px;list-style:disc;}
-  .prose-report ol{margin:5px 0;padding-left:18px;list-style:decimal;}
+  .prose-report ul{margin:5px 0 5px 0;padding-left:0;list-style:none;}
+  .prose-report ol{margin:5px 0 5px 0;padding-left:0;list-style:none;counter-reset:li;}
+  .prose-report li{margin:2px 0;line-height:1.55;padding-left:20px;position:relative;}
+  .prose-report ul>li::before{content:"•";position:absolute;left:5px;top:0;line-height:1.55;color:var(--pdf-ink);}
+  .prose-report ol>li{counter-increment:li;}
+  .prose-report ol>li::before{content:counter(li) ".";position:absolute;left:2px;top:0;line-height:1.55;font-variant-numeric:tabular-nums;}
+  .prose-report b,.prose-report strong{font-weight:700;}
+  /* Stabilize text rendering for html2canvas capture (avoids baseline jump / dropped glyphs) */
+  .pdf-page,.pdf-page *{text-rendering:geometricPrecision;}
+  .pdf-page li{break-inside:avoid;}
   .drag-over{border-color:var(--gold)!important;background:var(--gold-soft)!important;}
   input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:-1px;}
   .tab-btn{transition:all .15s;}
@@ -179,6 +187,7 @@ const DICT = {
     lang:"EN", langFull:"English",
     reportInfo:"Thông tin báo cáo", preparedBy:"Người lập báo cáo",
     condition:"Tình trạng thiết bị", cond_excellent:"Rất tốt", cond_good:"Tốt", cond_fair:"Khá", cond_poor:"Kém", cond_critical:"Nghiêm trọng",
+    eq_count:"Số lượng thiết bị", eq_unit:"thiết bị", eq_multi:"thiết bị",
     thankyou:"Trân trọng cảm ơn Quý khách", confidential:"Bảo mật", page:"Trang",
     noEquip:"Chưa thêm thiết bị", noWork:"Chưa có công việc", noPhoto:"Chưa có hình ảnh", noFinding:"Chưa có phát hiện", noMeasure:"Chưa có kết quả đo",
     reportType_service:"Service Report", newFrom:"Tạo báo cáo",
@@ -273,6 +282,7 @@ const DICT = {
     lang:"VI", langFull:"Tiếng Việt",
     reportInfo:"Report information", preparedBy:"Prepared by",
     condition:"Equipment condition", cond_excellent:"Excellent", cond_good:"Good", cond_fair:"Fair", cond_poor:"Poor", cond_critical:"Critical",
+    eq_count:"Equipment count", eq_unit:"units", eq_multi:"equipment",
     thankyou:"Thank you for your trust", confidential:"Confidential", page:"Page",
     noEquip:"No equipment added", noWork:"No work items", noPhoto:"No photos", noFinding:"No findings", noMeasure:"No measurements",
     reportType_service:"Service Report", newFrom:"Create report",
@@ -2349,14 +2359,32 @@ function PreviewScreen({report, settings, lang, onBack, update}){
   const noDiacritics = (s)=> (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D');
   const exportPDF = async ()=>{
     setGen(true);
-    await new Promise(r=>setTimeout(r,80));
     try {
+      // Ensure web fonts are fully loaded before rasterizing (prevents baseline jump / dropped glyphs)
+      if(document.fonts && document.fonts.ready){ try{ await document.fonts.ready; }catch(e){} }
+      await new Promise(r=>setTimeout(r,350));
+
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF({orientation:'p',unit:'mm',format:'a4',compress:true});
       const pages = paperRef.current.querySelectorAll('.pdf-page');
       for(let i=0;i<pages.length;i++){
-        const canvas = await html2canvas(pages[i], {scale:2.5, useCORS:true, backgroundColor:'#ffffff', logging:false, imageTimeout:0});
-        const img = canvas.toDataURL('image/jpeg',0.94);
+        const canvas = await html2canvas(pages[i], {
+          scale:2.5, useCORS:true, backgroundColor:'#ffffff', logging:false, imageTimeout:0,
+          width: pages[i].offsetWidth, height: pages[i].offsetHeight,
+          windowWidth: pages[i].offsetWidth, windowHeight: pages[i].offsetHeight,
+          scrollX:0, scrollY:0,
+          onclone: (doc)=>{
+            // Force stable text metrics inside the cloned document used for rasterization
+            doc.querySelectorAll('.pdf-page, .pdf-page *').forEach(el=>{
+              el.style.textRendering = 'geometricPrecision';
+              el.style.webkitFontSmoothing = 'antialiased';
+            });
+            doc.querySelectorAll('.prose-report li').forEach(el=>{
+              el.style.lineHeight = '1.55';
+            });
+          }
+        });
+        const img = canvas.toDataURL('image/jpeg',0.95);
         if(i>0) pdf.addPage();
         pdf.addImage(img,'JPEG',0,0,210,297,undefined,'SLOW');
       }
@@ -2606,13 +2634,25 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
             <span style={{width:'16mm',height:'2px',background:GOLD}}></span>
           </div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',padding:'4.5mm 5mm',gap:'4mm',background:GOLDSOFT}}>
-            {[[L('serviceType'),svcLabel(report.serviceType)],[L('equipment'),report.equipment[0]?.name||'—'],[L('condition'),condLabel[report.condition]],
-              [L('res_assess'),assessLabel],[L('rec_priority'),priLabel[report.recommendation.priority]],['Model',report.equipment[0]?.model||'—']].map((r,i)=>(
-              <div key={i}>
-                <div style={{fontSize:'6.8pt',color:GOLDD,fontWeight:700,textTransform:'uppercase',marginBottom:'1mm',letterSpacing:'.4px'}}>{r[0]}</div>
-                <div style={{fontSize:'9pt',fontWeight:700,color:i===3?A.c:INK}}>{i===3&&<span style={{display:'inline-block',width:'7px',height:'7px',borderRadius:'50%',background:A.dot,marginRight:'4px'}}></span>}{r[1]}</div>
-              </div>
-            ))}
+            {(()=>{
+              const eqs = report.equipment||[];
+              const eqNames = eqs.map(e=>e.name||e.model).filter(Boolean);
+              const eqLabel = eqs.length===0 ? '—' : (eqs.length===1 ? (eqNames[0]||'—') : eqNames.join(' · '));
+              const assessIdx = 3;
+              const rows = [
+                [L('serviceType'), svcLabel(report.serviceType), false],
+                [L('equipment'), eqLabel, false],
+                [L('eq_count'), (eqs.length? `${eqs.length} ${L('eq_unit')}` : '—'), false],
+                [L('res_assess'), assessLabel, true],
+                [L('rec_priority'), priLabel[report.recommendation.priority], false],
+              ];
+              return rows.map((r,i)=>(
+                <div key={i}>
+                  <div style={{fontSize:'6.8pt',color:GOLDD,fontWeight:700,textTransform:'uppercase',marginBottom:'1mm',letterSpacing:'.4px'}}>{r[0]}</div>
+                  <div style={{fontSize:'9pt',fontWeight:700,color:r[2]?A.c:INK}}>{r[2]&&<span style={{display:'inline-block',width:'7px',height:'7px',borderRadius:'50%',background:A.dot,marginRight:'4px'}}></span>}{r[1]}</div>
+                </div>
+              ));
+            })()}
           </div>
         </div>
 
@@ -2756,9 +2796,9 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
       <Header/>
       <div style={{padding:'7mm 16mm'}}>
         <H no="04">{L('sec_results')}</H>
-        <div style={{display:'inline-flex',alignItems:'center',gap:'8px',background:A.bg,padding:'2.2mm 5mm',borderRadius:'6px',marginBottom:'4mm'}}>
-          <span style={{width:'10px',height:'10px',borderRadius:'50%',background:A.dot}}></span>
-          <span style={{fontSize:'10pt',fontWeight:800,color:A.c}}>{assessLabel}</span>
+        <div style={{display:'inline-block',background:A.bg,padding:'2.2mm 5mm',borderRadius:'6px',marginBottom:'4mm',whiteSpace:'nowrap'}}>
+          <span style={{display:'inline-block',width:'9px',height:'9px',borderRadius:'50%',background:A.dot,verticalAlign:'middle',marginRight:'6px'}}></span>
+          <span style={{fontSize:'10pt',fontWeight:800,color:A.c,verticalAlign:'middle'}}>{assessLabel}</span>
         </div>
         {htmlToText(report.results.result).trim() && <RichOut v={report.results.result} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}/>}
 
