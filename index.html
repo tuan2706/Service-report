@@ -315,6 +315,10 @@ const loadDB = () => { try { return JSON.parse(localStorage.getItem(DB_KEY)) || 
 const saveDB = (d) => { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch {} };
 
 const uid = () => Math.random().toString(36).slice(2,9);
+const escHtml = (s)=> (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const textToHtml = (s)=> escHtml(s).replace(/\n/g,'<br>');
+const htmlToText = (h)=> (h||"").replace(/<br\s*\/?>/gi,'\n').replace(/<\/(p|div|li)>/gi,'\n').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
+const isHtml = (s)=> /<[a-z][\s\S]*>/i.test(s||"");
 const todayISO = () => new Date().toISOString().slice(0,10);
 const fmtDate = (iso) => { if(!iso) return ""; const d=new Date(iso); return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`; };
 const fmtDateLong = (iso,lang) => { if(!iso) return ""; const d=new Date(iso);
@@ -628,28 +632,68 @@ function Btn({children, onClick, variant='primary', size='md', className='', ...
 }
 
 /* Rich text editor (contentEditable, simple toolbar) */
-function RichEditor({value, onChange, placeholder}) {
+function RichEditor({value, onChange, placeholder, minH=90}) {
   const ref = useRef();
+  const [showColor, setShowColor] = useState(false);
   useEffect(()=>{ if(ref.current && ref.current.innerHTML !== (value||"")) ref.current.innerHTML = value||""; },[]);
   const cmd = (c,v=null)=>{ document.execCommand(c,false,v); ref.current.focus(); onChange(ref.current.innerHTML); };
+  const colors = [
+    {name:'Mặc định', v:'#22271F'},
+    {name:'Xanh lá', v:'#0B7A47'},
+    {name:'Vàng kim', v:'#A5760A'},
+    {name:'Đỏ', v:'#B23A2E'},
+    {name:'Xanh dương', v:'#1F6FB2'},
+  ];
   const tools = [
     {c:'bold',label:'B',style:'font-bold'},
     {c:'italic',label:'I',style:'italic'},
+    {c:'underline',label:'U',style:'underline'},
     {c:'insertUnorderedList',label:'• List'},
     {c:'insertOrderedList',label:'1. List'},
   ];
   return (
-    <div className="col-span-2 border border-[var(--line)] rounded-lg overflow-hidden bg-white focus-within:border-[var(--accent)] transition">
-      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-[var(--line)] bg-[var(--paper)]">
+    <div className="col-span-2 border border-[var(--line)] rounded-lg overflow-hidden bg-white focus-within:border-[var(--gold)] transition">
+      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-[var(--line)] bg-[var(--paper)] relative flex-wrap">
         {tools.map(t=>(
           <button key={t.c} onMouseDown={e=>{e.preventDefault();cmd(t.c);}}
             className={"px-2.5 py-1 text-[13px] rounded hover:bg-[var(--ice)] text-[var(--ink-2)] "+(t.style||"")}>{t.label}</button>
         ))}
+        <div className="w-px h-5 bg-[var(--line-strong)] mx-0.5"></div>
+        <div className="relative">
+          <button onMouseDown={e=>{e.preventDefault();setShowColor(s=>!s);}}
+            className="px-2 py-1 text-[13px] rounded hover:bg-[var(--ice)] text-[var(--ink-2)] flex items-center gap-1" title="Màu chữ">
+            <span style={{width:'14px',height:'14px',borderRadius:'3px',background:'linear-gradient(135deg,#0B7A47,#A5760A,#B23A2E)',display:'inline-block'}}></span>A
+          </button>
+          {showColor && (
+            <div className="absolute top-full left-0 mt-1 bg-white border border-[var(--line)] rounded-lg card-shadow-lg p-1.5 z-20 flex gap-1">
+              {colors.map(c=>(
+                <button key={c.v} onMouseDown={e=>{e.preventDefault();cmd('foreColor',c.v);setShowColor(false);}} title={c.name}
+                  className="w-6 h-6 rounded-md border border-[var(--line)] hover:scale-110 transition" style={{background:c.v}}></button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       <div ref={ref} contentEditable onInput={e=>onChange(e.currentTarget.innerHTML)}
+        onBlur={()=>setShowColor(false)}
         data-ph={placeholder}
-        className="px-3 py-2.5 text-[14px] leading-relaxed min-h-[90px] text-[var(--ink)] prose-report empty:before:content-[attr(data-ph)] empty:before:text-[var(--ink-3)]"
+        style={{minHeight:minH+'px'}}
+        className="px-3 py-2.5 text-[14px] leading-relaxed text-[var(--ink)] prose-report empty:before:content-[attr(data-ph)] empty:before:text-[var(--ink-3)]"
         suppressContentEditableWarning></div>
+    </div>
+  );
+}
+
+/* ---- Reusable labelled rich field with optional AI button ---- */
+function RichField({label, value, onChange, placeholder, minH=80, ai, apiKey, aiMode='rewrite', onNeedKey}){
+  const t = useT();
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-1.5">
+        <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{label}</span>
+        {ai && <AIButton apiKey={apiKey} mode={aiMode} sourceText={htmlToText(value)} onApply={v=>onChange(textToHtml(v))} onNeedKey={onNeedKey}/>}
+      </div>
+      <RichEditor value={value} onChange={onChange} placeholder={placeholder} minH={minH}/>
     </div>
   );
 }
@@ -1519,12 +1563,7 @@ function SectionOverview({report, up, apiKey, onNeedKey}){
     <div className="space-y-5">
       <SecHead no="02" title={t.sec_overview}/>
       <Card>
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.ov_purpose}</span>
-          <AIButton apiKey={apiKey} mode="rewrite" sourceText={ov.purpose} onApply={v=>set('purpose',v)} onNeedKey={onNeedKey}/>
-        </div>
-        <textarea rows={2} value={ov.purpose||""} onChange={e=>set('purpose',e.target.value)}
-          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+        <RichField label={t.ov_purpose} value={ov.purpose} onChange={v=>set('purpose',v)} placeholder={t.ov_purpose} minH={60} ai apiKey={apiKey} onNeedKey={onNeedKey}/>
       </Card>
       <Card>
         <div className="grid grid-cols-2 gap-4">
@@ -1535,9 +1574,7 @@ function SectionOverview({report, up, apiKey, onNeedKey}){
         </div>
       </Card>
       <Card>
-        <div className="grid grid-cols-2 gap-4">
-          <Area label={t.ov_env} value={ov.env} onChange={v=>set('env',v)} rows={2} hint={t.ov_env_hint}/>
-        </div>
+        <RichField label={t.ov_env} value={ov.env} onChange={v=>set('env',v)} placeholder={t.ov_env_hint} minH={60}/>
       </Card>
       <Card>
         <ImageUploader photos={ov.photos||[]} onChange={ph=>set('photos',ph)} label={t.photos_overview}/>
@@ -1629,8 +1666,7 @@ function SectionWork({report, up, db}){
                   </select>
                   <button onClick={()=>delW(w.id)} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
                 </div>
-                <textarea value={w.result} onChange={e=>setW(w.id,'result',e.target.value)} placeholder={t.w_result} rows={2}
-                  className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+                <RichEditor value={w.result} onChange={v=>setW(w.id,'result',v)} placeholder={t.w_result} minH={54}/>
               </div>
             </div>
           </div>
@@ -1688,12 +1724,7 @@ function SectionResults({report, up, apiKey, onNeedKey}){
             );
           })}
         </div>
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.res_result}</span>
-          <AIButton apiKey={apiKey} mode="rewrite" sourceText={res.result} onApply={v=>setRes('result',v)} onNeedKey={onNeedKey}/>
-        </div>
-        <textarea rows={3} value={res.result||""} onChange={e=>setRes('result',e.target.value)}
-          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+        <RichField label={t.res_result} value={res.result} onChange={v=>setRes('result',v)} placeholder={t.res_result} minH={70} ai apiKey={apiKey} onNeedKey={onNeedKey}/>
       </Card>
 
       {/* measurement table */}
@@ -1756,11 +1787,9 @@ function SectionResults({report, up, apiKey, onNeedKey}){
             </div>
             <div className="space-y-2.5">
               <input value={f.finding} onChange={e=>setF(f.id,'finding',e.target.value)} placeholder={t.fi_finding}
-                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[14px] font-semibold focus:border-[var(--accent)]"/>
-              <textarea value={f.obs} onChange={e=>setF(f.id,'obs',e.target.value)} placeholder={t.fi_obs} rows={2}
-                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--accent)] resize-y"/>
-              <textarea value={f.rec} onChange={e=>setF(f.id,'rec',e.target.value)} placeholder={t.fi_rec} rows={2}
-                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--accent)] resize-y"/>
+                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[14px] font-semibold focus:border-[var(--gold)]"/>
+              <RichEditor value={f.obs} onChange={v=>setF(f.id,'obs',v)} placeholder={t.fi_obs} minH={54}/>
+              <RichEditor value={f.rec} onChange={v=>setF(f.id,'rec',v)} placeholder={t.fi_rec} minH={54}/>
             </div>
           </div>
         ))}
@@ -1776,22 +1805,8 @@ function SectionResults({report, up, apiKey, onNeedKey}){
           </select>
         </div>
         <div className="bg-white p-5 space-y-4">
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.res_cause}</span>
-              <AIButton apiKey={apiKey} mode="rewrite" sourceText={res.cause} onApply={v=>setRes('cause',v)} onNeedKey={onNeedKey}/>
-            </div>
-            <textarea rows={2} value={res.cause||""} onChange={e=>setRes('cause',e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.rec_action}</span>
-              <AIButton apiKey={apiKey} mode="recommend" sourceText={rec.action || (res.result+"\n"+res.cause)} onApply={v=>setRec('action',v)} onNeedKey={onNeedKey}/>
-            </div>
-            <textarea rows={3} value={rec.action||""} onChange={e=>setRec('action',e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
-          </div>
+          <RichField label={t.res_cause} value={res.cause} onChange={v=>setRes('cause',v)} placeholder={t.res_cause} minH={54} ai apiKey={apiKey} onNeedKey={onNeedKey}/>
+          <RichField label={t.rec_action} value={rec.action} onChange={v=>setRec('action',v)} placeholder={t.rec_action} minH={70} ai apiKey={apiKey} aiMode="recommend" onNeedKey={onNeedKey}/>
         </div>
       </div>
 
@@ -1802,22 +1817,12 @@ function SectionResults({report, up, apiKey, onNeedKey}){
 
       {/* conclusion */}
       <Card>
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.sec_conclusion}</span>
-          <AIButton apiKey={apiKey} mode="rewrite" sourceText={report.conclusion} onApply={v=>up({conclusion:v})} onNeedKey={onNeedKey}/>
-        </div>
-        <textarea rows={3} value={report.conclusion||""} onChange={e=>up({conclusion:e.target.value})} placeholder={t.conclusion_ph}
-          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+        <RichField label={t.sec_conclusion} value={report.conclusion} onChange={v=>up({conclusion:v})} placeholder={t.conclusion_ph} minH={70} ai apiKey={apiKey} onNeedKey={onNeedKey}/>
       </Card>
 
       {/* exec summary */}
       <Card>
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.execSummary}</span>
-          <AIButton apiKey={apiKey} mode="summary" sourceText={report.execSummary || (res.result+"\n"+rec.action)} onApply={v=>up({execSummary:v})} onNeedKey={onNeedKey}/>
-        </div>
-        <textarea rows={3} value={report.execSummary||""} onChange={e=>up({execSummary:e.target.value})}
-          className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] text-[14px] leading-relaxed focus:border-[var(--accent)] resize-y"/>
+        <RichField label={t.execSummary} value={report.execSummary} onChange={v=>up({execSummary:v})} placeholder={t.execSummary} minH={70} ai apiKey={apiKey} aiMode="summary" onNeedKey={onNeedKey}/>
       </Card>
     </div>
   );
@@ -2421,6 +2426,12 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
   const SANS="'Noto Sans',Arial,sans-serif";
   const MONO="'JetBrains Mono',monospace";
 
+  /* rich value -> safe html (handles legacy plain-text values with newlines) */
+  const rh = (v)=> isHtml(v) ? v : textToHtml(v);
+  const RichOut = ({v, style, className})=> (v && htmlToText(v).trim())
+    ? <div className={className||'prose-report'} style={style} dangerouslySetInnerHTML={{__html: rh(v)}}/> : null;
+  const RichInline = ({v, style})=> <span style={style} dangerouslySetInnerHTML={{__html: rh(v)}}/>;
+
   /* ---- Watermark (very light, centered) ---- */
   const Watermark = () => (
     <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',pointerEvents:'none',zIndex:0}}>
@@ -2544,17 +2555,16 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
   // ---------- COVER ----------
   pages.push(
     <Page cover key="cover">
-      <div style={{height:'297mm',display:'flex',flexDirection:'column',position:'relative',overflow:'hidden',background:'#fff'}}>
-        {/* top dark band */}
-        <div style={{position:'absolute',top:0,left:0,right:0,height:'135mm',background:`linear-gradient(150deg,${DARK} 0%,#22402F 60%,${GREEND} 100%)`}}></div>
-        {/* gold divider */}
-        <div style={{position:'absolute',top:'135mm',left:0,right:0,height:'2.5mm',background:`linear-gradient(90deg,${GOLDD},${GOLD} 40%,${GOLDL})`}}></div>
-        {/* faint watermark on cover band — centered */}
-        <div style={{position:'absolute',top:0,left:0,right:0,height:'135mm',display:'flex',alignItems:'center',justifyContent:'center',opacity:0.08,pointerEvents:'none'}}>
-          <img src={logo} style={{width:'150mm'}}/>
+      <div style={{height:'297mm',display:'flex',flexDirection:'column',position:'relative',overflow:'hidden',background:`linear-gradient(160deg,${DARK} 0%,#22402F 55%,${GREEND} 100%)`}}>
+        {/* faint watermark — centered on full page */}
+        <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',opacity:0.07,pointerEvents:'none'}}>
+          <img src={logo} style={{width:'165mm'}}/>
         </div>
+        {/* gold accent line near top */}
+        <div style={{position:'absolute',top:'62mm',left:'20mm',width:'28mm',height:'2.5mm',background:`linear-gradient(90deg,${GOLD},${GOLDL})`,borderRadius:'2px'}}></div>
+
         <div style={{position:'relative',padding:'20mm 20mm 0',color:'#fff',flex:1,display:'flex',flexDirection:'column'}}>
-          <div style={{display:'flex',alignItems:'center',gap:'11px',marginBottom:'26mm'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'11px',marginBottom:'30mm'}}>
             <div style={{background:'#fff',borderRadius:'10px',padding:'4px 8px',display:'flex',alignItems:'center'}}>
               <img src={logo} style={{height:'16mm',objectFit:'contain'}}/>
             </div>
@@ -2563,21 +2573,21 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
               <div style={{fontSize:'8pt',opacity:.7,marginTop:'1mm'}}>{settings.website}{settings.hotline?`  ·  ${settings.hotline}`:''}</div>
             </div>
           </div>
-          <div style={{fontSize:'8.5pt',letterSpacing:'5px',color:GOLDL,fontWeight:600,marginBottom:'4mm'}}>{L('reportType_service').toUpperCase()}</div>
+          <div style={{fontSize:'8.5pt',letterSpacing:'5px',color:GOLDL,fontWeight:600,marginBottom:'4mm',marginTop:'8mm'}}>{L('reportType_service').toUpperCase()}</div>
           <div style={{fontFamily:SERIF,fontSize:'31pt',fontWeight:700,lineHeight:1.1,marginBottom:'5mm',maxWidth:'150mm'}}>{report.info.project||svcLabel(report.serviceType)}</div>
           <div style={{fontSize:'11pt',opacity:.9,fontWeight:500}}>{svcLabel(report.serviceType)}</div>
         </div>
-        <div style={{position:'relative',padding:'0 20mm 22mm',color:INK}}>
-          <div style={{background:'#fff',border:`1px solid ${LINE2}`,borderRadius:'12px',padding:'8mm',boxShadow:'0 10px 34px rgba(26,46,36,.14)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5mm 10mm'}}>
+        <div style={{position:'relative',padding:'0 20mm 22mm',color:'#fff'}}>
+          <div style={{background:'rgba(255,255,255,.06)',border:`1px solid rgba(234,217,168,.35)`,borderRadius:'12px',padding:'8mm',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5mm 10mm',backdropFilter:'blur(2px)'}}>
             {[[L('col_customer'),report.info.customer,SANS],[L('f_engineer'),report.info.engineer,SANS],[L('f_date'),fmtDateLong(report.info.date,primary),SANS],[L('col_no'),report.info.reportNo,MONO]].map((r,i)=>(
               <div key={i}>
-                <div style={{fontSize:'7pt',color:MUT,fontWeight:700,textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'1mm'}}>{r[0]}</div>
-                <div style={{fontSize:'10.5pt',fontWeight:700,color:INK,fontFamily:r[2]}}>{r[1]||'—'}</div>
+                <div style={{fontSize:'7pt',color:GOLDL,fontWeight:700,textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'1.5mm'}}>{r[0]}</div>
+                <div style={{fontSize:'10.5pt',fontWeight:700,color:'#fff',fontFamily:r[2]}}>{r[1]||'—'}</div>
               </div>
             ))}
           </div>
-          <div style={{marginTop:'5mm',textAlign:'center',fontSize:'8pt',color:MUT}}>
-            {L('preparedBy')}: <span style={{color:INK,fontWeight:700}}>{settings.company}</span>{report.info.engineer?`  ·  ${report.info.engineer}`:''}
+          <div style={{marginTop:'5mm',textAlign:'center',fontSize:'8pt',color:'rgba(255,255,255,.6)'}}>
+            {L('preparedBy')}: <span style={{color:'#fff',fontWeight:700}}>{settings.company}</span>{report.info.engineer?`  ·  ${report.info.engineer}`:''}
           </div>
         </div>
       </div>
@@ -2609,7 +2619,7 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
         {report.execSummary && (
           <div style={{marginBottom:'6mm'}}>
             <H no="00">{L('execSummary')}</H>
-            <p style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,margin:0}}>{report.execSummary}</p>
+            <RichOut v={report.execSummary} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,margin:0}}/>
           </div>
         )}
 
@@ -2662,17 +2672,17 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
       <Header/>
       <div style={{padding:'7mm 16mm'}}>
         <H no="02">{L('sec_overview')}</H>
-        {report.overview.purpose && <>
+        {htmlToText(report.overview.purpose).trim() && <>
           <SubH>{L('ov_purpose')}</SubH>
-          <p style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'4mm'}}>{report.overview.purpose}</p>
+          <RichOut v={report.overview.purpose} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'4mm'}}/>
         </>}
-        {report.overview.condition && <>
+        {htmlToText(report.overview.condition).trim() && <>
           <SubH>{L('ov_condition')}</SubH>
-          <div className="prose-report" style={{fontSize:'9.5pt',color:SUB,marginBottom:'4mm'}} dangerouslySetInnerHTML={{__html:report.overview.condition}}/>
+          <div className="prose-report" style={{fontSize:'9.5pt',color:SUB,marginBottom:'4mm'}} dangerouslySetInnerHTML={{__html:rh(report.overview.condition)}}/>
         </>}
-        {report.overview.env && <>
+        {htmlToText(report.overview.env).trim() && <>
           <SubH>{L('ov_env')}</SubH>
-          <div style={{fontSize:'9.5pt',lineHeight:1.6,color:SUB,marginBottom:'4mm',background:GREENSOFT,padding:'3mm 4mm',borderRadius:'6px',borderLeft:`3px solid ${GREEN}`}}>{report.overview.env}</div>
+          <RichOut v={report.overview.env} style={{fontSize:'9.5pt',lineHeight:1.6,color:SUB,marginBottom:'4mm',background:GREENSOFT,padding:'3mm 4mm',borderRadius:'6px',borderLeft:`3px solid ${GREEN}`}}/>
         </>}
         {nOverview>0 && <>
           <SubH>{L('photos_overview')}</SubH>
@@ -2713,7 +2723,7 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
                     <span style={{fontSize:'10pt',fontWeight:700,color:INK,fontFamily:SERIF}}>{w.title}</span>
                     <span style={{fontSize:'6.5pt',fontWeight:700,color:wc,border:`1px solid ${wc}`,borderRadius:'3px',padding:'0 4px'}}>{both?`${DICT.vi[w.status==='done'?'ws_done':w.status==='pending'?'ws_pending':'ws_na']} / ${DICT.en[w.status==='done'?'ws_done':w.status==='pending'?'ws_pending':'ws_na']}`:(w.status==='done'?t.ws_done:w.status==='pending'?t.ws_pending:t.ws_na)}</span>
                   </div>
-                  {w.result && <div style={{fontSize:'9pt',color:SUB,lineHeight:1.5}}>{w.result}</div>}
+                  {htmlToText(w.result).trim() && <RichOut v={w.result} style={{fontSize:'9pt',color:SUB,lineHeight:1.5}}/>}
                 </div>
               </div>
             );
@@ -2750,7 +2760,7 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
           <span style={{width:'10px',height:'10px',borderRadius:'50%',background:A.dot}}></span>
           <span style={{fontSize:'10pt',fontWeight:800,color:A.c}}>{assessLabel}</span>
         </div>
-        {report.results.result && <p style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}>{report.results.result}</p>}
+        {htmlToText(report.results.result).trim() && <RichOut v={report.results.result} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}/>}
 
         {report.measurements.length>0 && <>
           <SubH>{L('measurements')}</SubH>
@@ -2782,15 +2792,15 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
                 <span style={{fontSize:'7pt',fontWeight:700,color:SEVc[f.severity]}}>{sevLabel(f.severity)}</span>
               </div>
               <div style={{fontSize:'9.5pt',fontWeight:700,color:INK,marginBottom:'1mm',fontFamily:SERIF}}>{f.finding}</div>
-              {f.obs && <div style={{fontSize:'8.5pt',color:SUB,lineHeight:1.5,marginBottom:'1mm'}}><b style={{color:MUT}}>{L('fi_obs')}:</b> {f.obs}</div>}
-              {f.rec && <div style={{fontSize:'8.5pt',color:SUB,lineHeight:1.5}}><b style={{color:MUT}}>{L('fi_rec')}:</b> {f.rec}</div>}
+              {htmlToText(f.obs).trim() && <div style={{fontSize:'8.5pt',color:SUB,lineHeight:1.5,marginBottom:'1mm'}}><b style={{color:MUT}}>{L('fi_obs')}:</b> <RichInline v={f.obs}/></div>}
+              {htmlToText(f.rec).trim() && <div style={{fontSize:'8.5pt',color:SUB,lineHeight:1.5}}><b style={{color:MUT}}>{L('fi_rec')}:</b> <RichInline v={f.rec}/></div>}
             </div>
           ))}
         </>}
 
-        {report.results.cause && <>
+        {htmlToText(report.results.cause).trim() && <>
           <div style={{marginTop:'2mm'}}><SubH>{L('res_cause')}</SubH></div>
-          <p style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}>{report.results.cause}</p>
+          <RichOut v={report.results.cause} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}/>
         </>}
 
         {/* recommendation card */}
@@ -2799,7 +2809,9 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
             <span style={{fontFamily:SERIF,fontSize:'9.5pt',fontWeight:700,letterSpacing:'.4px'}}>{L('rec_title')}</span>
             <span style={{fontSize:'7.5pt',fontWeight:800,background:`linear-gradient(135deg,${GOLDD},${GOLD})`,color:'#fff',padding:'1mm 3.5mm',borderRadius:'20px'}}>{L('rec_priority')}: {priLabel[report.recommendation.priority].toUpperCase()}</span>
           </div>
-          <div style={{padding:'3.5mm 5mm',fontSize:'9.5pt',lineHeight:1.6,color:INK,background:GOLDSOFT}}>{report.recommendation.action||'—'}</div>
+          <div style={{padding:'3.5mm 5mm',fontSize:'9.5pt',lineHeight:1.6,color:INK,background:GOLDSOFT}}>
+            {htmlToText(report.recommendation.action).trim() ? <RichInline v={report.recommendation.action}/> : '—'}
+          </div>
         </div>
       </div>
       <Footer/>
@@ -2807,14 +2819,14 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
   );
 
   // ---------- PAGE: Result photos + Conclusion ----------
-  if(nResults>0 || report.conclusion){
+  if(nResults>0 || htmlToText(report.conclusion).trim()){
     pages.push(
       <Page key="concl">
         <Header/>
         <div style={{padding:'7mm 16mm'}}>
-          {report.conclusion && <>
+          {htmlToText(report.conclusion).trim() && <>
             <H no="05">{L('sec_conclusion')}</H>
-            <p style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}>{report.conclusion}</p>
+            <RichOut v={report.conclusion} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB,marginTop:0,marginBottom:'5mm'}}/>
           </>}
           {nResults>0 && <>
             <SubH>{L('photos_results')}</SubH>
