@@ -2569,10 +2569,10 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
         </div>
         <div style={{position:'relative',padding:'0 20mm 22mm',color:INK}}>
           <div style={{background:'#fff',border:`1px solid ${LINE2}`,borderRadius:'12px',padding:'8mm',boxShadow:'0 10px 34px rgba(26,46,36,.14)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5mm 10mm'}}>
-            {[[L('col_customer'),report.info.customer],[L('equipment'),report.equipment[0]?.name],['Model',report.equipment[0]?.model],[L('eq_serial'),report.equipment[0]?.serial],[L('f_date'),fmtDateLong(report.info.date,primary)],[L('col_no'),report.info.reportNo]].map((r,i)=>(
+            {[[L('col_customer'),report.info.customer,SANS],[L('f_engineer'),report.info.engineer,SANS],[L('f_date'),fmtDateLong(report.info.date,primary),SANS],[L('col_no'),report.info.reportNo,MONO]].map((r,i)=>(
               <div key={i}>
                 <div style={{fontSize:'7pt',color:MUT,fontWeight:700,textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'1mm'}}>{r[0]}</div>
-                <div style={{fontSize:'10.5pt',fontWeight:700,color:INK,fontFamily:i===5?MONO:SANS}}>{r[1]||'—'}</div>
+                <div style={{fontSize:'10.5pt',fontWeight:700,color:INK,fontFamily:r[2]}}>{r[1]||'—'}</div>
               </div>
             ))}
           </div>
@@ -2619,13 +2619,12 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
             <KV k={L('f_customer')} v={report.info.customer}/>
             <KV k={L('f_project')} v={report.info.project}/>
             <KV k={L('f_site')} v={report.info.site}/>
-            <KV k={L('f_contact')} v={report.info.contact}/>
           </div>
           <div>
-            <KV k={L('f_engineer')} v={report.info.engineer}/>
-            <KV k={L('f_date')} v={fmtDate(report.info.date)}/>
+            <KV k={L('f_contact')} v={report.info.contact}/>
             <KV k={L('f_position')} v={report.info.position}/>
             <KV k={L('f_phone')} v={report.info.phone}/>
+            <KV k={L('f_date')} v={fmtDate(report.info.date)}/>
           </div>
         </div>
 
