@@ -127,6 +127,32 @@ const DICT = {
     appName:"Service Report", brand:"Kiên Thịnh Eco",
     nav_dashboard:"Bảng điều khiển", nav_reports:"Báo cáo", nav_customers:"Khách hàng",
     nav_equipment:"Thiết bị", nav_templates:"Mẫu báo cáo", nav_history:"Lịch sử dịch vụ", nav_settings:"Cài đặt",
+    nav_sop:"SOP", grp_service:"DỊCH VỤ", grp_documents:"TÀI LIỆU", grp_system:"HỆ THỐNG",
+    sop_module:"SOP — Quy trình chuẩn", sop_module_desc:"Tạo, quản lý và xuất PDF quy trình vận hành chuẩn.",
+    sop_open:"Mở thư viện SOP", svc_module:"Báo cáo dịch vụ", svc_module_desc:"Tạo và quản lý báo cáo dịch vụ kỹ thuật.", svc_open:"Mở báo cáo",
+    sop_lib_title:"Thư viện SOP", sop_lib_sub:"Tài liệu quy trình chuẩn của công ty",
+    sop_create:"Tạo SOP", sop_new:"SOP mới", sop_from_tpl:"Tạo từ mẫu", sop_duplicate:"Nhân bản",
+    sop_total:"Tổng SOP", sop_recent:"SOP gần đây",
+    sop_st_draft:"Bản nháp", sop_st_review:"Đang duyệt", sop_st_approved:"Đã duyệt", sop_st_published:"Đã ban hành", sop_st_archived:"Lưu trữ",
+    sop_no:"Số SOP", sop_code:"Mã SOP", sop_title:"Tên SOP", sop_category:"Nhóm", sop_version:"Phiên bản",
+    sop_effective:"Ngày hiệu lực", sop_review:"Ngày rà soát", sop_status:"Trạng thái",
+    sop_docinfo:"Thông tin tài liệu", sop_department:"Bộ phận", sop_prepared:"Người soạn", sop_checked:"Người kiểm tra", sop_approved:"Người duyệt",
+    sop_site:"Địa điểm áp dụng", sop_equipment:"Thiết bị áp dụng", sop_mfr:"Hãng sản xuất", sop_model:"Model", sop_owner:"Chủ tài liệu",
+    sop_basic:"Thông tin cơ bản", sop_sections:"Nội dung SOP", sop_add_section:"Thêm mục", sop_section:"Mục",
+    sop_step:"Bước", sop_add_step:"Thêm bước", sop_step_title:"Tên bước", sop_instruction:"Hướng dẫn thực hiện",
+    sop_expected:"Kết quả mong đợi", sop_step_warning:"Cảnh báo", sop_measurement:"Ghi nhận đo",
+    sop_ppe:"Trang bị bảo hộ (PPE)", sop_add_callout:"Thêm cảnh báo", sop_callout_type:"Loại", sop_callout_text:"Nội dung",
+    sop_role:"Vai trò", sop_resp:"Trách nhiệm", sop_add_row:"Thêm dòng",
+    sop_mat_group:"Nhóm", sop_mat_name:"Tên", sop_mat_qty:"SL", sop_mat_note:"Ghi chú", sop_add_item:"Thêm mục",
+    sop_ts_problem:"Sự cố", sop_ts_cause:"Nguyên nhân", sop_ts_action:"Cách xử lý",
+    sop_doc_name:"Tên tài liệu", sop_doc_type:"Loại", sop_final_check:"Danh mục kiểm tra cuối",
+    sop_add_check:"Thêm mục kiểm", sop_signoff:"Xác nhận", sop_rev_history:"Lịch sử sửa đổi",
+    sop_rev:"Rev", sop_rev_date:"Ngày", sop_rev_by:"Người thực hiện", sop_rev_desc:"Nội dung thay đổi",
+    sop_preview:"Xem trước", sop_export:"Tải PDF", sop_no_sops:"Chưa có SOP nào. Bấm “Tạo SOP”.",
+    sop_search:"Tìm SOP…", sop_verify:"[KIỂM TRA THEO THÔNG SỐ NHÀ SẢN XUẤT]",
+    sop_doc_title:"QUY TRÌNH VẬN HÀNH CHUẨN", sop_doc_control:"KIỂM SOÁT TÀI LIỆU", sop_toc:"MỤC LỤC",
+    sop_controlled:"Tài liệu được kiểm soát", sop_caption:"Chú thích", sop_untitled:"SOP chưa đặt tên",
+    sop_deletesec:"Xóa mục này?", sop_all_cats:"Tất cả nhóm", sop_all_status:"Tất cả trạng thái",
     dash_title:"Bảng điều khiển", dash_sub:"Tổng quan hoạt động dịch vụ kỹ thuật",
     stat_total:"Tổng báo cáo", stat_progress:"Đang xử lý", stat_waiting:"Chờ phản hồi",
     stat_done:"Đã hoàn thành", stat_sent:"Đã gửi khách hàng",
@@ -222,6 +248,32 @@ const DICT = {
     appName:"Service Report", brand:"Kiên Thịnh Eco",
     nav_dashboard:"Dashboard", nav_reports:"Reports", nav_customers:"Customers",
     nav_equipment:"Equipment", nav_templates:"Templates", nav_history:"Service History", nav_settings:"Settings",
+    nav_sop:"SOP", grp_service:"SERVICE", grp_documents:"DOCUMENTS", grp_system:"SYSTEM",
+    sop_module:"SOP — Standard Procedures", sop_module_desc:"Create, manage and export standard operating procedures.",
+    sop_open:"Open SOP Library", svc_module:"Service Report", svc_module_desc:"Create and manage technical service reports.", svc_open:"Open Reports",
+    sop_lib_title:"SOP Library", sop_lib_sub:"Company standard operating procedures",
+    sop_create:"Create SOP", sop_new:"New SOP", sop_from_tpl:"From template", sop_duplicate:"Duplicate",
+    sop_total:"Total SOP", sop_recent:"Recent SOP",
+    sop_st_draft:"Draft", sop_st_review:"Under Review", sop_st_approved:"Approved", sop_st_published:"Published", sop_st_archived:"Archived",
+    sop_no:"SOP No.", sop_code:"SOP Code", sop_title:"SOP Title", sop_category:"Category", sop_version:"Version",
+    sop_effective:"Effective Date", sop_review:"Review Date", sop_status:"Status",
+    sop_docinfo:"Document Information", sop_department:"Department", sop_prepared:"Prepared By", sop_checked:"Checked By", sop_approved:"Approved By",
+    sop_site:"Applicable Site", sop_equipment:"Applicable Equipment", sop_mfr:"Manufacturer", sop_model:"Model", sop_owner:"Document Owner",
+    sop_basic:"Basic Information", sop_sections:"SOP Content", sop_add_section:"Add section", sop_section:"Section",
+    sop_step:"Step", sop_add_step:"Add step", sop_step_title:"Step title", sop_instruction:"Instruction",
+    sop_expected:"Expected Result", sop_step_warning:"Warning", sop_measurement:"Measurement",
+    sop_ppe:"PPE", sop_add_callout:"Add notice", sop_callout_type:"Type", sop_callout_text:"Content",
+    sop_role:"Role", sop_resp:"Responsibility", sop_add_row:"Add row",
+    sop_mat_group:"Group", sop_mat_name:"Name", sop_mat_qty:"Qty", sop_mat_note:"Note", sop_add_item:"Add item",
+    sop_ts_problem:"Problem", sop_ts_cause:"Cause", sop_ts_action:"Action",
+    sop_doc_name:"Document name", sop_doc_type:"Type", sop_final_check:"Final Checklist",
+    sop_add_check:"Add check item", sop_signoff:"Verification", sop_rev_history:"Revision History",
+    sop_rev:"Rev", sop_rev_date:"Date", sop_rev_by:"By", sop_rev_desc:"Change description",
+    sop_preview:"Preview", sop_export:"Export PDF", sop_no_sops:"No SOP yet. Click “Create SOP”.",
+    sop_search:"Search SOP…", sop_verify:"[VERIFY AGAINST MANUFACTURER SPECIFICATION]",
+    sop_doc_title:"STANDARD OPERATING PROCEDURE", sop_doc_control:"DOCUMENT CONTROL", sop_toc:"TABLE OF CONTENTS",
+    sop_controlled:"Controlled Document", sop_caption:"Caption", sop_untitled:"Untitled SOP",
+    sop_deletesec:"Delete this section?", sop_all_cats:"All categories", sop_all_status:"All statuses",
     dash_title:"Dashboard", dash_sub:"Overview of technical service activity",
     stat_total:"Total reports", stat_progress:"In progress", stat_waiting:"Awaiting reply",
     stat_done:"Completed", stat_sent:"Sent to customer",
@@ -544,6 +596,126 @@ const DEFAULT_SETTINGS = {
   email:"info@kienthinh-eco.com", phone:"", tax:"", hotline:"", logo:LOGO_MARK, apiKey:"",
 };
 
+/* ============================================================
+   SOP MODULE (Document Platform) — data model & constants
+   ============================================================ */
+const SOP_CATEGORIES = [
+  {id:'operation', vi:'Vận hành thiết bị', en:'Equipment Operation'},
+  {id:'calibration', vi:'Hiệu chuẩn', en:'Calibration'},
+  {id:'adjustment', vi:'Cân chỉnh', en:'Adjustment'},
+  {id:'verification', vi:'Xác nhận giá trị đo', en:'Measurement Verification'},
+  {id:'cleaning', vi:'Vệ sinh sensor', en:'Sensor Cleaning'},
+  {id:'replacement', vi:'Thay sensor', en:'Sensor Replacement'},
+  {id:'maintenance', vi:'Bảo trì định kỳ', en:'Preventive Maintenance'},
+  {id:'troubleshooting', vi:'Xử lý sự cố', en:'Troubleshooting'},
+  {id:'installation', vi:'Lắp đặt', en:'Installation'},
+  {id:'commissioning', vi:'Chạy thử / Nghiệm thu', en:'Commissioning'},
+  {id:'sampling', vi:'Lấy mẫu', en:'Sampling'},
+  {id:'inspection', vi:'Kiểm tra', en:'Inspection'},
+  {id:'safety', vi:'An toàn', en:'Safety'},
+  {id:'other', vi:'Khác', en:'Other'},
+];
+const sopCatLabel = (id, lang='vi') => { const c = SOP_CATEGORIES.find(x=>x.id===id); return c ? c[lang] : id; };
+const SOP_STATUS = {
+  draft:      {k:'sop_st_draft',    c:'#8A6D3B', bg:'#FBF3DF'},
+  review:     {k:'sop_st_review',   c:'#1F6FB2', bg:'#E4F0F8'},
+  approved:   {k:'sop_st_approved', c:'#0B7A47', bg:'#E3F3EA'},
+  published:  {k:'sop_st_published',c:'#0B7A47', bg:'#D8EFE0'},
+  archived:   {k:'sop_st_archived', c:'#6B7280', bg:'#EEF0F2'},
+};
+const CALLOUT_TYPES = [
+  {id:'warning', vi:'CẢNH BÁO', en:'WARNING', c:'#B23A2E', bg:'#FBEBE8', bd:'#E0A79F'},
+  {id:'caution', vi:'THẬN TRỌNG', en:'CAUTION', c:'#A5760A', bg:'#FBF3DF', bd:'#E4CE93'},
+  {id:'danger', vi:'NGUY HIỂM', en:'DANGER', c:'#8A1A12', bg:'#F7E0DD', bd:'#D99A92'},
+  {id:'important', vi:'QUAN TRỌNG', en:'IMPORTANT', c:'#1F6FB2', bg:'#E4F0F8', bd:'#A9CBE6'},
+  {id:'note', vi:'GHI CHÚ', en:'NOTE', c:'#0B7A47', bg:'#E3F3EA', bd:'#A3D5B8'},
+];
+const calloutType = (id)=> CALLOUT_TYPES.find(c=>c.id===id) || CALLOUT_TYPES[0];
+
+// The 10 default SOP sections (每 section: id, key type, content). Extensible.
+const sopDefaultSections = () => ([
+  {id:uid(), type:'rich', title:'Mục đích', title_en:'Purpose', body:''},
+  {id:uid(), type:'rich', title:'Phạm vi áp dụng', title_en:'Scope', body:''},
+  {id:uid(), type:'responsibility', title:'Trách nhiệm', title_en:'Responsibility', rows:[]},
+  {id:uid(), type:'materials', title:'Thiết bị / Dụng cụ / Vật tư', title_en:'Equipment & Materials', items:[]},
+  {id:uid(), type:'safety', title:'Yêu cầu an toàn', title_en:'Safety Requirements', callouts:[], ppe:[]},
+  {id:uid(), type:'steps', title:'Quy trình thực hiện', title_en:'Procedure', steps:[]},
+  {id:uid(), type:'verification', title:'Kiểm tra và xác nhận', title_en:'Verification', checklist:[], signoff:true},
+  {id:uid(), type:'troubleshooting', title:'Xử lý sự cố', title_en:'Troubleshooting', rows:[]},
+  {id:uid(), type:'documents', title:'Hồ sơ / Biểu mẫu liên quan', title_en:'Related Documents', docs:[]},
+  {id:uid(), type:'revisions', title:'Lịch sử sửa đổi', title_en:'Revision History'},
+]);
+// A blank step
+const sopBlankStep = () => ({id:uid(), title:'', instruction:'', expected:'', warning:'', photos:[], checklist:[], measurement:''});
+
+const nextSopNo = (sops) => {
+  const yr = new Date().getFullYear();
+  const nums = (sops||[]).map(s=>{ const m=(s.sopNo||'').match(/SOP-(\d{4})-(\d+)/); return (m && +m[1]===yr) ? +m[2] : 0; });
+  const n = (nums.length?Math.max(...nums):0) + 1;
+  return `SOP-${yr}-${String(n).padStart(3,'0')}`;
+};
+
+const blankSOP = (sops) => ({
+  id:uid(), createdAt:Date.now(), status:'draft',
+  sopNo: nextSopNo(sops||[]), code:'', title:'', category:'operation',
+  version:'Rev. 00', effectiveDate: todayISO(), reviewDate:'',
+  doc:{ department:'', preparedBy:'', checkedBy:'', approvedBy:'', site:'', equipment:'', manufacturer:'', model:'', owner:'' },
+  sections: sopDefaultSections(),
+  revisions:[{rev:0, date:todayISO(), by:'', desc:'Bản phát hành đầu tiên'}],
+  pdfLang:'vi',
+});
+
+// Demo SOP: pH sensor calibration — pre-filled so the user can experience the workflow immediately
+function buildDemoSOP(){
+  const s = blankSOP([]);
+  s.sopNo='SOP-2026-001'; s.code='SOP-PH-001';
+  s.title='Quy trình hiệu chuẩn cảm biến pH';
+  s.category='calibration'; s.version='Rev. 00'; s.status='published';
+  s.effectiveDate='2026-08-09'; s.reviewDate='2027-08-09';
+  s.doc={ department:'Kỹ thuật Dịch vụ', preparedBy:'Đội Dịch vụ Kỹ thuật', checkedBy:'Trần Đình Thịnh', approvedBy:'Nguyễn Thị Xon',
+          site:'Nhà máy khách hàng', equipment:'Cảm biến pH', manufacturer:'Endress+Hauser', model:'Memosens CPS11D', owner:'Phòng Kỹ thuật' };
+  const S = s.sections;
+  S[0].body='Quy trình này hướng dẫn nhân viên kỹ thuật thực hiện việc kiểm tra và hiệu chuẩn cảm biến pH nhằm đảm bảo thiết bị hoạt động ổn định và kết quả đo đáp ứng yêu cầu kỹ thuật.';
+  S[1].body='Áp dụng cho cảm biến pH lắp đặt tại hệ thống quan trắc nước thải, do bộ phận Kỹ thuật Dịch vụ thực hiện trong điều kiện vận hành bình thường.';
+  S[2].rows=[
+    {id:uid(), role:'Kỹ thuật viên', resp:'Thực hiện hiệu chuẩn theo quy trình, ghi nhận kết quả.'},
+    {id:uid(), role:'Trưởng nhóm kỹ thuật', resp:'Kiểm tra và xác nhận kết quả hiệu chuẩn.'},
+  ];
+  S[3].items=[
+    {id:uid(), grp:'Thiết bị', name:'Máy đo/analyzer pH', mfr:'Endress+Hauser', model:'Liquiline CM442', part:'', qty:'1', note:''},
+    {id:uid(), grp:'Dụng cụ', name:'Dung dịch chuẩn pH 4.01', mfr:'', model:'', part:'', qty:'1', note:'Lô còn hạn'},
+    {id:uid(), grp:'Dụng cụ', name:'Dung dịch chuẩn pH 7.00', mfr:'', model:'', part:'', qty:'1', note:'Lô còn hạn'},
+    {id:uid(), grp:'Vật tư', name:'Nước cất / dung dịch vệ sinh', mfr:'', model:'', part:'', qty:'1', note:''},
+  ];
+  S[4].callouts=[
+    {id:uid(), type:'warning', text:'Ngắt nguồn thiết bị trước khi tháo lắp cảm biến để tránh nguy cơ điện giật.'},
+    {id:uid(), type:'caution', text:'Dung dịch chuẩn và dung dịch vệ sinh có thể gây kích ứng — thao tác cẩn thận.'},
+  ];
+  S[4].ppe=['Kính bảo hộ','Găng tay','Giày bảo hộ'];
+  S[5].steps=[
+    {id:uid(), title:'Chuẩn bị thiết bị', instruction:'Kiểm tra tình trạng tổng thể của thiết bị và cảm biến trước khi thực hiện hiệu chuẩn.', expected:'Thiết bị và cảm biến không có hư hỏng cơ khí rõ rệt.', warning:'', photos:[], checklist:[{id:uid(),text:'Vỏ thiết bị nguyên vẹn',done:false},{id:uid(),text:'Cáp/đầu nối chắc chắn',done:false}], measurement:''},
+    {id:uid(), title:'Kiểm tra nguồn cấp', instruction:'Kiểm tra nguồn cấp 24 VDC cho thiết bị trước khi bắt đầu.', expected:'Điện áp nguồn nằm trong dải cho phép của nhà sản xuất [VERIFY AGAINST MANUFACTURER SPECIFICATION].', warning:'', photos:[], checklist:[], measurement:''},
+    {id:uid(), title:'Chuẩn bị dung dịch chuẩn', instruction:'Chuẩn bị dung dịch chuẩn pH 4.01 và pH 7.00 còn hạn sử dụng, ở nhiệt độ ổn định.', expected:'Dung dịch chuẩn đúng giá trị, còn hạn.', warning:'', photos:[], checklist:[], measurement:''},
+    {id:uid(), title:'Hiệu chuẩn 2 điểm', instruction:'Nhúng cảm biến vào dung dịch pH 7.00, chờ ổn định rồi xác nhận; lặp lại với pH 4.01.', expected:'Giá trị hiển thị ổn định tại mỗi điểm chuẩn.', warning:'Rửa sạch cảm biến bằng nước cất giữa hai lần đo.', photos:[], checklist:[], measurement:''},
+    {id:uid(), title:'Xác nhận sau hiệu chuẩn', instruction:'Đo lại dung dịch chuẩn để xác nhận sai số nằm trong tiêu chí chấp nhận đã cấu hình.', expected:'Sai số đạt tiêu chí chấp nhận do người dùng/nhà sản xuất quy định.', warning:'', photos:[], checklist:[], measurement:''},
+  ];
+  S[6].checklist=[
+    {id:uid(),text:'Tất cả các bước đã hoàn thành',done:false},
+    {id:uid(),text:'Thiết bị hoạt động bình thường',done:false},
+    {id:uid(),text:'Giá trị đo đã được xác nhận',done:false},
+    {id:uid(),text:'Yêu cầu an toàn được đáp ứng',done:false},
+  ];
+  S[7].rows=[
+    {id:uid(), problem:'Giá trị đo dao động không ổn định', cause:'Cảm biến bám bẩn hoặc dung dịch chuẩn kém', action:'Vệ sinh cảm biến, thay dung dịch chuẩn mới, đo lại.'},
+    {id:uid(), problem:'Sai số vượt tiêu chí sau hiệu chuẩn', cause:'Cảm biến lão hóa hoặc lắp đặt chưa đúng', action:'Kiểm tra tình trạng cảm biến và điều kiện lắp đặt; cân nhắc thay cảm biến.'},
+  ];
+  S[8].docs=[
+    {id:uid(), name:'Giấy chứng nhận dung dịch chuẩn', type:'Certificate'},
+    {id:uid(), name:'Datasheet cảm biến pH', type:'Datasheet'},
+  ];
+  return s;
+}
+
 const initDB = () => {
   const existing = loadDB();
   if (existing) {
@@ -551,6 +723,8 @@ const initDB = () => {
     if (existing.settings && !existing.settings.logo) existing.settings.logo = LOGO_MARK;
     // migration: seed the equipment library if missing
     if (!Array.isArray(existing.equipmentLib)) existing.equipmentLib = EQUIP_LIB_SEED.map(e=>({...e}));
+    // migration: seed SOP module (Document Platform) if missing — does not touch Service Report data
+    if (!Array.isArray(existing.sops)) existing.sops = [buildDemoSOP()];
     return existing;
   }
   const settings = {...DEFAULT_SETTINGS};
@@ -558,6 +732,7 @@ const initDB = () => {
   const db = {
     settings,
     reports:[demo],
+    sops:[buildDemoSOP()],
     equipmentLib: EQUIP_LIB_SEED.map(e=>({...e})),
     customers:[
       {id:uid(),company:"ABC Manufacturing Vietnam",address:"KCN Sóng Thần, Bình Dương",contact:"Nguyễn Văn A",position:"Trưởng phòng Môi trường",phone:"0901 234 567",email:"moitruong@abc-mfg.vn"},
@@ -600,6 +775,13 @@ const I = {
   spark:<><path d="M12 3l1.6 4.6L18 9l-4.4 1.4L12 15l-1.6-4.6L6 9l4.4-1.4L12 3z"/><path d="M19 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></>,
   layers:<><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></>,
   save:<><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></>,
+  sop:<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6M9 9h1"/></>,
+  book:<><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></>,
+  gripV:<><circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/></>,
+  up:<><path d="m18 15-6-6-6 6"/></>,
+  down:<><path d="m6 9 6 6 6-6"/></>,
+  shield:<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></>,
+  list:<><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></>,
 };
 
 function Badge({children, c, bg}) {
@@ -1111,7 +1293,32 @@ function App(){
     persist({...db, reports:[copy, ...db.reports]});
   };
 
+  // ---- SOP module state & actions ----
+  const [activeSOP, setActiveSOP] = useState(null);
+  const sops = db.sops || [];
+  const updateSOP = useCallback((sid, patch)=>{
+    setDB(prev=>{
+      const list = (prev.sops||[]).map(s=> s.id===sid ? {...s, ...(typeof patch==='function'?patch(s):patch)} : s);
+      const next = {...prev, sops:list}; saveDB(next); return next;
+    });
+  },[]);
+  const createSOP = (seed)=>{
+    const s = seed ? {...seed, id:uid(), createdAt:Date.now(), sopNo:nextSopNo(sops), status:'draft'} : blankSOP(sops);
+    persist({...db, sops:[s, ...sops]});
+    setActiveSOP(s.id); setView('sopBuilder');
+  };
+  const openSOP = (sid)=>{ setActiveSOP(sid); setView('sopBuilder'); };
+  const deleteSOP = (sid)=> persist({...db, sops: sops.filter(s=>s.id!==sid)});
+  const duplicateSOP = (sid)=>{
+    const src = sops.find(s=>s.id===sid); if(!src) return;
+    const copy = JSON.parse(JSON.stringify(src));
+    copy.id=uid(); copy.createdAt=Date.now(); copy.status='draft';
+    copy.sopNo=nextSopNo(sops); copy.title=(src.title||'')+' (Bản sao)';
+    persist({...db, sops:[copy, ...sops]});
+  };
+
   const report = db.reports.find(r=>r.id===activeReport);
+  const sop = sops.find(s=>s.id===activeSOP);
 
   return (
     <LangCtx.Provider value={t}>
@@ -1119,6 +1326,9 @@ function App(){
         <Sidebar view={view} setView={(v)=>{setView(v);}} settings={db.settings} lang={lang} setLang={setLangAndSave}/>
         <main className="flex-1 overflow-y-auto bg-[var(--paper)]">
           {view==='dashboard' && <Dashboard db={db} onNew={createReport} onOpen={openReport} setView={setView}/>}
+          {view==='sop' && <SOPLibrary db={db} onOpen={openSOP} onNew={createSOP} onDelete={deleteSOP} onDup={duplicateSOP}/>}
+          {view==='sopBuilder' && sop && <SOPBuilder sop={sop} update={(p)=>updateSOP(sop.id,p)} db={db} persist={persist} onExit={()=>setView('sop')} onPreview={()=>setView('sopPreview')} onNeedKey={()=>setView('settings')}/>}
+          {view==='sopPreview' && sop && <SOPPreview sop={sop} settings={db.settings} lang={lang} onBack={()=>setView('sopBuilder')} update={(p)=>updateSOP(sop.id,p)}/>}
           {view==='reports' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.nav_reports}/>}
           {view==='history' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.history_title} sub={t.history_sub}/>}
           {view==='customers' && <Customers db={db} persist={persist}/>}
@@ -1147,16 +1357,23 @@ function Sidebar({view, setView, settings, lang, setLang}){
     return ()=>window.removeEventListener('beforeinstallprompt', h);
   },[]);
   const install = async ()=>{ if(!deferred) return; deferred.prompt(); await deferred.userChoice; setDeferred(null); };
-  const items = [
-    {id:'dashboard', k:'nav_dashboard', icon:I.dash},
-    {id:'reports', k:'nav_reports', icon:I.reports},
-    {id:'customers', k:'nav_customers', icon:I.customers},
-    {id:'equipment', k:'nav_equipment', icon:I.equipment},
-    {id:'templates', k:'nav_templates', icon:I.templates},
-    {id:'history', k:'nav_history', icon:I.history},
-    {id:'settings', k:'nav_settings', icon:I.settings},
+  const groups = [
+    {items:[{id:'dashboard', k:'nav_dashboard', icon:I.dash}]},
+    {label:'grp_service', items:[
+      {id:'reports', k:'nav_reports', icon:I.reports},
+      {id:'customers', k:'nav_customers', icon:I.customers},
+      {id:'equipment', k:'nav_equipment', icon:I.equipment},
+      {id:'history', k:'nav_history', icon:I.history},
+    ]},
+    {label:'grp_documents', items:[
+      {id:'sop', k:'nav_sop', icon:I.sop},
+      {id:'templates', k:'nav_templates', icon:I.templates},
+    ]},
+    {label:'grp_system', items:[{id:'settings', k:'nav_settings', icon:I.settings}]},
   ];
-  const isActive = (id)=> view===id || (view==='builder'&&id==='reports') || (view==='preview'&&id==='reports');
+  const isActive = (id)=> view===id
+    || ((view==='builder'||view==='preview')&&id==='reports')
+    || ((view==='sopBuilder'||view==='sopPreview')&&id==='sop');
   return (
     <aside className="w-[248px] shrink-0 bg-[var(--navy)] text-white flex flex-col no-print" style={{background:'linear-gradient(180deg,#1A2E24 0%,#16261E 100%)'}}>
       <div className="px-5 pt-6 pb-5 border-b border-white/8">
@@ -1170,20 +1387,25 @@ function Sidebar({view, setView, settings, lang, setLang}){
           </div>
         </div>
       </div>
-      <nav className="flex-1 px-3 pt-3 space-y-0.5">
-        {items.map(it=>{
-          const on = isActive(it.id);
-          return (
-            <button key={it.id} onClick={()=>setView(it.id)}
-              className={"relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-medium transition "+
-                (on ? "text-white" : "text-white/55 hover:text-white hover:bg-white/5")}
-              style={on?{background:'rgba(184,134,11,.14)'}:{}}>
-              {on && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r" style={{background:'linear-gradient(180deg,#D9B85C,#B8860B)'}}></span>}
-              <span style={on?{color:'var(--gold-bright)'}:{}}><Icon d={it.icon} s={19}/></span>
-              {t[it.k]}
-            </button>
-          );
-        })}
+      <nav className="flex-1 px-3 pt-3 space-y-0.5 overflow-y-auto">
+        {groups.map((g,gi)=>(
+          <div key={gi} className={gi>0?"pt-3":""}>
+            {g.label && <div className="px-3 pb-1.5 text-[10px] font-bold tracking-widest text-white/35">{t[g.label]}</div>}
+            {g.items.map(it=>{
+              const on = isActive(it.id);
+              return (
+                <button key={it.id} onClick={()=>setView(it.id)}
+                  className={"relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-medium transition "+
+                    (on ? "text-white" : "text-white/55 hover:text-white hover:bg-white/5")}
+                  style={on?{background:'rgba(184,134,11,.14)'}:{}}>
+                  {on && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r" style={{background:'linear-gradient(180deg,#D9B85C,#B8860B)'}}></span>}
+                  <span style={on?{color:'var(--gold-bright)'}:{}}><Icon d={it.icon} s={19}/></span>
+                  {t[it.k]}
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </nav>
       <div className="p-3 border-t border-white/10 space-y-1">
         {deferred && !installed && (
@@ -1229,12 +1451,40 @@ function Dashboard({db, onNew, onOpen, setView}){
     {label:t.new_trouble, icon:I.alert, st:'trouble'},
     {label:t.new_check, icon:I.check, st:'pm'},
   ];
+  const sopCount = (db.sops||[]).length;
   return (
     <div className="p-8 max-w-[1200px] mx-auto fade-in">
       <header className="mb-7">
         <h1 className="app-title text-[27px] font-bold tracking-tight text-[var(--ink)]">{t.dash_title}</h1>
         <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.dash_sub}</p>
       </header>
+
+      {/* Document Platform modules */}
+      <div className="grid md:grid-cols-2 gap-4 mb-8">
+        <button onClick={()=>setView('reports')}
+          className="group text-left rounded-2xl p-6 text-white card-shadow relative overflow-hidden hover:brightness-105 transition"
+          style={{background:'linear-gradient(135deg,#1A2E24,#23402F)'}}>
+          <div className="absolute -right-6 -bottom-6 opacity-10"><Icon d={I.reports} s={130} sw={1}/></div>
+          <div className="relative">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{background:'linear-gradient(135deg,#A5760A,#C99A2E)'}}><Icon d={I.reports} s={22}/></div>
+            <div className="app-title text-[19px] font-bold mb-1">{t.svc_module}</div>
+            <p className="text-[13px] text-white/70 mb-4 max-w-[85%]">{t.svc_module_desc}</p>
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold" style={{color:'var(--gold-bright)'}}>{t.svc_open} <Icon d={I.chevR} s={16}/></span>
+            <span className="absolute top-0 right-0 text-[12px] font-bold mono text-white/40">{r.length}</span>
+          </div>
+        </button>
+        <button onClick={()=>setView('sop')}
+          className="group text-left rounded-2xl p-6 card-shadow relative overflow-hidden bg-white border border-[var(--line)] hover:border-[var(--gold)] transition">
+          <div className="absolute -right-6 -bottom-6 opacity-[0.06] text-[var(--ink)]"><Icon d={I.sop} s={130} sw={1}/></div>
+          <div className="relative">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 bg-[var(--gold-soft)] text-[var(--gold-3)]"><Icon d={I.sop} s={22}/></div>
+            <div className="app-title text-[19px] font-bold mb-1 text-[var(--ink)]">{t.sop_module}</div>
+            <p className="text-[13px] text-[var(--ink-3)] mb-4 max-w-[85%]">{t.sop_module_desc}</p>
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[var(--gold-3)]">{t.sop_open} <Icon d={I.chevR} s={16}/></span>
+            <span className="absolute top-0 right-0 text-[12px] font-bold mono text-[var(--ink-3)]/50">{sopCount}</span>
+          </div>
+        </button>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-7">
         {stats.map(s=>(
@@ -2954,6 +3204,1048 @@ function ReportDocument({report, settings, lang, pdfLang='vi'}){
   );
 
   return <div>{pages}</div>;
+}
+
+
+/* ============================================================
+   SOP MODULE — Library, Builder, Section editors, Preview, PDF
+   Reuses: RichEditor, RichField, ImageUploader, AIButton, Field,
+   Btn, Card, Icon, useT, compressImage, PhotoAnnotator, Settings.
+   ============================================================ */
+
+function SopStatusBadge({status}){
+  const t = useT(); const st = SOP_STATUS[status]||SOP_STATUS.draft;
+  return <span className="inline-block text-[11px] font-bold px-2 py-0.5 rounded" style={{color:st.c,background:st.bg}}>{t[st.k]}</span>;
+}
+
+/* ---------- SOP LIBRARY ---------- */
+function SOPLibrary({db, onOpen, onNew, onDelete, onDup}){
+  const t = useT();
+  const sops = db.sops || [];
+  const [q, setQ] = useState("");
+  const [fCat, setFCat] = useState("");
+  const [fStatus, setFStatus] = useState("");
+  const [tplOpen, setTplOpen] = useState(false);
+
+  const cnt = (s)=> sops.filter(x=>x.status===s).length;
+  const stats = [
+    {k:'sop_total', v:sops.length, c:'var(--gold-3)'},
+    {k:'sop_st_draft', v:cnt('draft'), c:SOP_STATUS.draft.c},
+    {k:'sop_st_review', v:cnt('review'), c:SOP_STATUS.review.c},
+    {k:'sop_st_published', v:cnt('published'), c:SOP_STATUS.published.c},
+    {k:'sop_st_archived', v:cnt('archived'), c:SOP_STATUS.archived.c},
+  ];
+  const filtered = sops.filter(s=>{
+    const hay = `${s.sopNo} ${s.code} ${s.title} ${s.doc?.equipment} ${s.doc?.model} ${sopCatLabel(s.category)} ${s.doc?.department}`.toLowerCase();
+    return hay.includes(q.toLowerCase()) && (!fCat||s.category===fCat) && (!fStatus||s.status===fStatus);
+  });
+
+  return (
+    <div className="p-8 max-w-[1150px] mx-auto fade-in">
+      <header className="flex items-start justify-between mb-6 flex-wrap gap-3">
+        <div>
+          <h1 className="app-title text-[27px] font-bold tracking-tight">{t.sop_lib_title}</h1>
+          <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.sop_lib_sub}</p>
+        </div>
+        <div className="flex gap-2">
+          <Btn variant="outline" onClick={()=>setTplOpen(true)}><Icon d={I.templates} s={17}/>{t.sop_from_tpl}</Btn>
+          <Btn variant="gold" onClick={()=>onNew()}><Icon d={I.plus} s={17} sw={2}/>{t.sop_create}</Btn>
+        </div>
+      </header>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        {stats.map(s=>(
+          <div key={s.k} className="bg-white rounded-xl border border-[var(--line)] p-4 card-shadow">
+            <div className="text-[30px] font-extrabold leading-none mono" style={{color:s.c}}>{s.v}</div>
+            <div className="text-[11.5px] font-semibold text-[var(--ink-3)] mt-2 uppercase tracking-wide">{t[s.k]}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        <div className="relative flex-1 min-w-[220px]">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
+          <input value={q} onChange={e=>setQ(e.target.value)} placeholder={t.sop_search}
+            className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] focus:border-[var(--gold)]"/>
+        </div>
+        <select value={fCat} onChange={e=>setFCat(e.target.value)} className="px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
+          <option value="">{t.sop_all_cats}</option>
+          {SOP_CATEGORIES.map(c=><option key={c.id} value={c.id}>{c.vi}</option>)}
+        </select>
+        <select value={fStatus} onChange={e=>setFStatus(e.target.value)} className="px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
+          <option value="">{t.sop_all_status}</option>
+          {Object.keys(SOP_STATUS).map(k=><option key={k} value={k}>{t[SOP_STATUS[k].k]}</option>)}
+        </select>
+      </div>
+
+      {filtered.length===0 && <div className="text-[14px] text-[var(--ink-3)] py-16 text-center border border-dashed border-[var(--line)] rounded-xl bg-white">{t.sop_no_sops}</div>}
+
+      <div className="space-y-2.5">
+        {filtered.map(s=>(
+          <div key={s.id} className="group bg-white rounded-xl border border-[var(--line)] card-shadow px-5 py-4 hover:border-[var(--gold)] transition flex items-center gap-4 cursor-pointer" onClick={()=>onOpen(s.id)}>
+            <div className="w-10 h-10 rounded-lg bg-[var(--gold-soft)] text-[var(--gold-3)] flex items-center justify-center shrink-0"><Icon d={I.sop} s={20}/></div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="mono text-[12px] font-bold text-[var(--gold-3)]">{s.code||s.sopNo}</span>
+                <SopStatusBadge status={s.status}/>
+              </div>
+              <div className="font-bold text-[15px] truncate mt-0.5">{s.title||t.sop_untitled}</div>
+              <div className="text-[12.5px] text-[var(--ink-3)] mt-0.5">{sopCatLabel(s.category)} · {s.version}{s.doc?.equipment?` · ${s.doc.equipment}`:''}</div>
+            </div>
+            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition" onClick={e=>e.stopPropagation()}>
+              <button onClick={()=>onDup(s.id)} title={t.sop_duplicate} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--gold-3)] hover:bg-[var(--gold-soft)]"><Icon d={I.copy} s={16}/></button>
+              <button onClick={()=>{if(confirm(t.delete+'?'))onDelete(s.id);}} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {tplOpen && <SOPTemplateModal onPick={(seed)=>{setTplOpen(false); onNew(seed);}} onClose={()=>setTplOpen(false)}/>}
+    </div>
+  );
+}
+
+/* ---------- SOP TEMPLATES ---------- */
+const SOP_TEMPLATES = [
+  {id:'operation', cat:'operation', icon:'wrench', title:'Quy trình vận hành thiết bị', desc:'Vận hành thiết bị đo / phân tích'},
+  {id:'maintenance', cat:'maintenance', icon:'wrench', title:'Quy trình bảo trì định kỳ', desc:'Bảo trì phòng ngừa'},
+  {id:'calibration', cat:'calibration', icon:'spark', title:'Quy trình hiệu chuẩn', desc:'Hiệu chuẩn thiết bị đo (10 bước)'},
+  {id:'troubleshooting', cat:'troubleshooting', icon:'alert', title:'Quy trình xử lý sự cố', desc:'Chẩn đoán và khắc phục'},
+  {id:'inspection', cat:'inspection', icon:'check', title:'Quy trình kiểm tra', desc:'Kiểm tra định kỳ thiết bị'},
+  {id:'sampling', cat:'sampling', icon:'layers', title:'Quy trình lấy mẫu', desc:'Lấy mẫu quan trắc'},
+  {id:'installation', cat:'installation', icon:'equipment', title:'Quy trình lắp đặt', desc:'Lắp đặt thiết bị mới'},
+];
+// Steps auto-suggested for calibration/adjustment SOPs (spec update §3)
+const CALIB_STEPS = ['Chuẩn bị (Preparation)','Kiểm tra ngoại quan (Visual Inspection)','Kiểm tra điều kiện đo (Check Condition)','Chuẩn bị chuẩn/tham chiếu (Reference Preparation)','Đo ban đầu (Initial Measurement)','Hiệu chuẩn / Cân chỉnh (Calibration / Adjustment)','Xác nhận (Verification)','Ghi nhận kết quả (Record Results)','Đánh giá cuối (Final Assessment)','Lập hồ sơ (Documentation)'];
+
+function buildSOPFromTemplate(tpl){
+  const s = blankSOP([]);
+  s.category = tpl.cat;
+  s.title = tpl.title;
+  const stepsSec = s.sections.find(x=>x.type==='steps');
+  if(stepsSec){
+    if(tpl.cat==='calibration' || tpl.cat==='adjustment'){
+      stepsSec.steps = CALIB_STEPS.map(title=>({...sopBlankStep(), title}));
+      // add pre-calibration checklist into the first step
+      stepsSec.steps[0].checklist = ['Kiểm tra tình trạng thiết bị','Kiểm tra tình trạng sensor','Kiểm tra cáp/đầu nối','Kiểm tra nguồn cấp','Kiểm tra điều kiện mẫu','Chuẩn tham chiếu sẵn sàng','Kiểm tra hạn dùng dung dịch chuẩn','Thiết bị đã khởi động ổn định','Điều kiện môi trường phù hợp'].map(text=>({id:uid(),text,done:false}));
+    } else {
+      stepsSec.steps = [ {...sopBlankStep(), title:'Chuẩn bị'}, {...sopBlankStep(), title:'Thực hiện'}, {...sopBlankStep(), title:'Kiểm tra và hoàn tất'} ];
+    }
+  }
+  return s;
+}
+
+function SOPTemplateModal({onPick, onClose}){
+  const t = useT();
+  return (
+    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
+          <h3 className="app-title font-bold text-[17px]">{t.sop_from_tpl}</h3>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="p-5 overflow-y-auto grid md:grid-cols-2 gap-3">
+          {SOP_TEMPLATES.map(tpl=>(
+            <button key={tpl.id} onClick={()=>onPick(buildSOPFromTemplate(tpl))}
+              className="text-left p-4 rounded-xl border border-[var(--line)] hover:border-[var(--gold)] hover:bg-[var(--gold-soft)]/40 transition flex gap-3 items-start">
+              <div className="w-9 h-9 rounded-lg bg-[var(--gold-soft)] text-[var(--gold-3)] flex items-center justify-center shrink-0"><Icon d={I[tpl.icon]||I.sop} s={18}/></div>
+              <div>
+                <div className="font-bold text-[14px]">{tpl.title}</div>
+                <div className="text-[12.5px] text-[var(--ink-3)] mt-0.5">{tpl.desc}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- SOP BUILDER ---------- */
+function SOPBuilder({sop, update, db, persist, onExit, onPreview, onNeedKey}){
+  const t = useT();
+  const [active, setActive] = useState('basic'); // basic | <sectionId>
+  const apiKey = db.settings.apiKey;
+
+  const up = (patch)=> update(patch);
+  const upSection = (sid, patch)=> update(s=>({sections: s.sections.map(x=> x.id===sid ? {...x, ...(typeof patch==='function'?patch(x):patch)} : x)}));
+
+  const moveSection = (idx, dir)=>{
+    const arr = [...sop.sections]; const j = idx+dir;
+    if(j<0||j>=arr.length) return;
+    [arr[idx],arr[j]]=[arr[j],arr[idx]];
+    update({sections:arr});
+  };
+  const dupSection = (idx)=>{
+    const arr=[...sop.sections]; const copy=JSON.parse(JSON.stringify(arr[idx])); copy.id=uid();
+    if(copy.title) copy.title=copy.title+' (sao chép)';
+    arr.splice(idx+1,0,copy); update({sections:arr});
+  };
+  const delSection = (idx)=>{
+    if(!confirm(t.sop_deletesec)) return;
+    const arr=sop.sections.filter((_,i)=>i!==idx); update({sections:arr});
+    setActive('basic');
+  };
+  const addSection = ()=>{
+    const ns={id:uid(), type:'rich', title:'Mục mới', title_en:'New Section', body:''};
+    update({sections:[...sop.sections, ns]});
+    setActive(ns.id);
+  };
+
+  const activeSec = sop.sections.find(s=>s.id===active);
+
+  return (
+    <div className="h-full flex flex-col">
+      {/* top bar */}
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--line)] bg-white sticky top-0 z-20">
+        <div className="flex items-center gap-3 min-w-0">
+          <button onClick={onExit} className="p-1.5 rounded-md hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={20}/></button>
+          <div className="min-w-0">
+            <div className="mono text-[12px] font-bold text-[var(--gold-3)]">{sop.code||sop.sopNo}</div>
+            <div className="text-[13px] text-[var(--ink-3)] truncate">{sop.title||t.sop_untitled} · {sopCatLabel(sop.category)}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[12px] text-[var(--ink-3)] mr-1 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]"></span>{t.autosaved}</span>
+          <select value={sop.status} onChange={e=>up({status:e.target.value})} className="text-[12.5px] px-2.5 py-1.5 rounded-lg border border-[var(--line)] bg-white">
+            {Object.keys(SOP_STATUS).map(k=><option key={k} value={k}>{t[SOP_STATUS[k].k]}</option>)}
+          </select>
+          <Btn variant="outline" size="sm" onClick={onPreview}><Icon d={I.eye} s={16}/>{t.sop_preview}</Btn>
+          <Btn variant="gold" size="sm" onClick={onPreview}><Icon d={I.download} s={16}/>{t.sop_export}</Btn>
+        </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+        {/* LEFT nav */}
+        <div className="w-[248px] shrink-0 border-r border-[var(--line)] bg-white overflow-y-auto py-3">
+          <button onClick={()=>setActive('basic')}
+            className={"w-full text-left px-4 py-2.5 text-[13.5px] font-medium flex items-center gap-2.5 "+(active==='basic'?"text-[var(--gold-3)] bg-[var(--gold-soft)]":"text-[var(--ink-2)] hover:bg-[var(--paper)]")}>
+            <Icon d={I.settings} s={16}/>{t.sop_basic}
+          </button>
+          <div className="px-4 pt-3 pb-1.5 text-[10px] font-bold tracking-widest text-[var(--ink-3)]">{t.sop_sections}</div>
+          {sop.sections.map((s,idx)=>(
+            <div key={s.id} className={"group flex items-center pr-2 "+(active===s.id?"bg-[var(--gold-soft)]":"hover:bg-[var(--paper)]")}>
+              <button onClick={()=>setActive(s.id)}
+                className={"flex-1 text-left pl-4 py-2.5 text-[13px] flex items-center gap-2 min-w-0 "+(active===s.id?"text-[var(--gold-3)] font-semibold":"text-[var(--ink-2)]")}>
+                <span className="mono text-[10.5px] opacity-70">{String(idx+1).padStart(2,'0')}</span>
+                <span className="truncate">{s.title}</span>
+              </button>
+              <div className="flex opacity-0 group-hover:opacity-100 transition shrink-0">
+                <button onClick={()=>moveSection(idx,-1)} className="p-1 text-[var(--ink-3)] hover:text-[var(--ink)]"><Icon d={I.up} s={14}/></button>
+                <button onClick={()=>moveSection(idx,1)} className="p-1 text-[var(--ink-3)] hover:text-[var(--ink)]"><Icon d={I.down} s={14}/></button>
+                <button onClick={()=>dupSection(idx)} className="p-1 text-[var(--ink-3)] hover:text-[var(--gold-3)]"><Icon d={I.copy} s={13}/></button>
+                <button onClick={()=>delSection(idx)} className="p-1 text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.trash} s={13}/></button>
+              </div>
+            </div>
+          ))}
+          <button onClick={addSection} className="w-full text-left px-4 py-2.5 mt-1 text-[13px] text-[var(--gold-3)] font-semibold flex items-center gap-2 hover:bg-[var(--gold-soft)]/50">
+            <Icon d={I.plus} s={15} sw={2.5}/>{t.sop_add_section}
+          </button>
+        </div>
+
+        {/* CENTER editor */}
+        <div className="flex-1 overflow-y-auto bg-[var(--paper)]">
+          <div className="max-w-[760px] mx-auto p-7">
+            {active==='basic'
+              ? <SOPBasicInfo sop={sop} up={up} db={db} apiKey={apiKey} onNeedKey={onNeedKey}/>
+              : activeSec ? <SOPSectionEditor sop={sop} sec={activeSec} up={(p)=>upSection(activeSec.id,p)} apiKey={apiKey} onNeedKey={onNeedKey}/> : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- BASIC INFO + DOCUMENT INFO ---------- */
+function SOPBasicInfo({sop, up, db, apiKey, onNeedKey}){
+  const t = useT();
+  const d = sop.doc||{};
+  const setDoc = (k,v)=> up({doc:{...d,[k]:v}});
+  const lib = db.equipmentLib||[];
+  const isCalib = sop.category==='calibration'||sop.category==='adjustment';
+
+  const applyEquip = (l)=> up({doc:{...d, equipment:l.name, manufacturer:l.mfr, model:l.model}});
+
+  return (
+    <div className="space-y-5 fade-in">
+      <SecHead no="i" title={t.sop_basic}/>
+      <Card>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label={t.sop_no} value={sop.sopNo} onChange={v=>up({sopNo:v})} mono/>
+          <Field label={t.sop_code} value={sop.code} onChange={v=>up({code:v})} mono placeholder="SOP-PH-001"/>
+          <div className="col-span-2"><Field label={t.sop_title} value={sop.title} onChange={v=>up({title:v})} full placeholder="Quy trình hiệu chuẩn cảm biến pH"/></div>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{t.sop_category}</span>
+            <select value={sop.category} onChange={e=>up({category:e.target.value})} className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px]">
+              {SOP_CATEGORIES.map(c=><option key={c.id} value={c.id}>{c.vi} ({c.en})</option>)}
+            </select>
+          </label>
+          <Field label={t.sop_version} value={sop.version} onChange={v=>up({version:v})} placeholder="Rev. 00"/>
+          <Field label={t.sop_effective} type="date" value={sop.effectiveDate} onChange={v=>up({effectiveDate:v})}/>
+          <Field label={t.sop_review} type="date" value={sop.reviewDate} onChange={v=>up({reviewDate:v})}/>
+        </div>
+        {isCalib && (
+          <div className="mt-4 text-[12.5px] text-[var(--gold-3)] bg-[var(--gold-soft)] rounded-lg px-3 py-2 flex items-start gap-2">
+            <span className="shrink-0 mt-0.5"><Icon d={I.spark} s={15}/></span>
+            <span>Nhóm Hiệu chuẩn/Cân chỉnh: khi tạo từ mẫu, hệ thống gợi ý cấu trúc 10 bước chuẩn. Mọi tiêu chí kỹ thuật do bạn nhập — phần mềm không tự suy đoán.</span>
+          </div>
+        )}
+      </Card>
+
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-[14px] font-bold text-[var(--ink)]">{t.sop_docinfo}</h3>
+          {lib.length>0 && (
+            <select onChange={e=>{const l=lib.find(x=>x.id===e.target.value); if(l)applyEquip(l); e.target.value='';}}
+              className="text-[12.5px] px-3 py-1.5 rounded-lg border border-[var(--line)] bg-white text-[var(--ink-2)]">
+              <option value="">{t.chooseFromLib}…</option>
+              {lib.map(l=><option key={l.id} value={l.id}>{l.mfr?`${l.mfr} `:''}{l.model||l.name}</option>)}
+            </select>
+          )}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label={t.sop_department} value={d.department} onChange={v=>setDoc('department',v)}/>
+          <Field label={t.sop_owner} value={d.owner} onChange={v=>setDoc('owner',v)}/>
+          <Field label={t.sop_prepared} value={d.preparedBy} onChange={v=>setDoc('preparedBy',v)}/>
+          <Field label={t.sop_checked} value={d.checkedBy} onChange={v=>setDoc('checkedBy',v)}/>
+          <Field label={t.sop_approved} value={d.approvedBy} onChange={v=>setDoc('approvedBy',v)}/>
+          <Field label={t.sop_site} value={d.site} onChange={v=>setDoc('site',v)}/>
+          <Field label={t.sop_equipment} value={d.equipment} onChange={v=>setDoc('equipment',v)}/>
+          <Field label={t.sop_mfr} value={d.manufacturer} onChange={v=>setDoc('manufacturer',v)}/>
+          <Field label={t.sop_model} value={d.model} onChange={v=>setDoc('model',v)} mono/>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* ---------- SECTION EDITOR (dispatch by type) ---------- */
+function SOPSectionEditor({sop, sec, up, apiKey, onNeedKey}){
+  const t = useT();
+  return (
+    <div className="space-y-4 fade-in">
+      <div className="flex items-center gap-2 mb-1">
+        <input value={sec.title} onChange={e=>up({title:e.target.value})}
+          className="app-title text-[20px] font-bold tracking-tight bg-transparent border-b-2 border-transparent focus:border-[var(--gold)] outline-none flex-1"/>
+      </div>
+      <div className="h-0.5 w-14 rounded" style={{background:'linear-gradient(90deg,#B8860B,#EAD9A8)'}}></div>
+
+      {sec.type==='rich' && <Card><RichField label="" value={sec.body} onChange={v=>up({body:v})} placeholder={t.sop_instruction} minH={140} ai apiKey={apiKey} onNeedKey={onNeedKey}/></Card>}
+      {sec.type==='responsibility' && <SOPResponsibility sec={sec} up={up}/>}
+      {sec.type==='materials' && <SOPMaterials sec={sec} up={up}/>}
+      {sec.type==='safety' && <SOPSafety sec={sec} up={up}/>}
+      {sec.type==='steps' && <SOPSteps sop={sop} sec={sec} up={up} apiKey={apiKey} onNeedKey={onNeedKey}/>}
+      {sec.type==='verification' && <SOPVerification sec={sec} up={up}/>}
+      {sec.type==='troubleshooting' && <SOPTrouble sec={sec} up={up}/>}
+      {sec.type==='documents' && <SOPDocs sec={sec} up={up}/>}
+      {sec.type==='revisions' && <SOPRevisions sop={sop} sec={sec}/>}
+    </div>
+  );
+}
+
+const RowBtn = ({children, onClick})=> <button onClick={onClick} className="text-[13px] font-semibold text-[var(--gold-3)] hover:underline flex items-center gap-1 mt-2"><Icon d={I.plus} s={14} sw={2.5}/>{children}</button>;
+const XBtn = ({onClick})=> <button onClick={onClick} className="p-1.5 rounded text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={15}/></button>;
+
+/* 03 Responsibility — table */
+function SOPResponsibility({sec, up}){
+  const t = useT(); const rows = sec.rows||[];
+  const set=(id,k,v)=>up({rows:rows.map(r=>r.id===id?{...r,[k]:v}:r)});
+  return (
+    <Card>
+      <div className="space-y-2">
+        <div className="grid grid-cols-[1fr_2fr_auto] gap-2 text-[11px] font-bold text-[var(--ink-3)] uppercase tracking-wide px-1">
+          <span>{t.sop_role}</span><span>{t.sop_resp}</span><span></span>
+        </div>
+        {rows.map(r=>(
+          <div key={r.id} className="grid grid-cols-[1fr_2fr_auto] gap-2 items-start">
+            <input value={r.role} onChange={e=>set(r.id,'role',e.target.value)} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)]"/>
+            <textarea value={r.resp} onChange={e=>set(r.id,'resp',e.target.value)} rows={1} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)] resize-y"/>
+            <XBtn onClick={()=>up({rows:rows.filter(x=>x.id!==r.id)})}/>
+          </div>
+        ))}
+      </div>
+      <RowBtn onClick={()=>up({rows:[...rows,{id:uid(),role:'',resp:''}]})}>{t.sop_add_row}</RowBtn>
+    </Card>
+  );
+}
+
+/* 04 Materials — grouped list */
+function SOPMaterials({sec, up}){
+  const t = useT(); const items = sec.items||[];
+  const set=(id,k,v)=>up({items:items.map(r=>r.id===id?{...r,[k]:v}:r)});
+  return (
+    <Card>
+      <div className="space-y-2">
+        <div className="grid grid-cols-[1fr_1.6fr_1fr_1fr_0.6fr_auto] gap-2 text-[11px] font-bold text-[var(--ink-3)] uppercase tracking-wide px-1">
+          <span>{t.sop_mat_group}</span><span>{t.sop_mat_name}</span><span>{t.sop_mfr}</span><span>{t.sop_model}</span><span>{t.sop_mat_qty}</span><span></span>
+        </div>
+        {items.map(r=>(
+          <div key={r.id} className="grid grid-cols-[1fr_1.6fr_1fr_1fr_0.6fr_auto] gap-2 items-center">
+            <input value={r.grp} onChange={e=>set(r.id,'grp',e.target.value)} placeholder="Thiết bị/Dụng cụ/Vật tư" className="px-2 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)]"/>
+            <input value={r.name} onChange={e=>set(r.id,'name',e.target.value)} className="px-2 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)]"/>
+            <input value={r.mfr} onChange={e=>set(r.id,'mfr',e.target.value)} className="px-2 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)]"/>
+            <input value={r.model} onChange={e=>set(r.id,'model',e.target.value)} className="px-2 py-2 rounded-lg border border-[var(--line)] text-[13px] mono focus:border-[var(--gold)]"/>
+            <input value={r.qty} onChange={e=>set(r.id,'qty',e.target.value)} className="px-2 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)]"/>
+            <XBtn onClick={()=>up({items:items.filter(x=>x.id!==r.id)})}/>
+          </div>
+        ))}
+      </div>
+      <RowBtn onClick={()=>up({items:[...items,{id:uid(),grp:'',name:'',mfr:'',model:'',part:'',qty:'',note:''}]})}>{t.sop_add_item}</RowBtn>
+    </Card>
+  );
+}
+
+/* 05 Safety — callouts + PPE */
+function SOPSafety({sec, up}){
+  const t = useT(); const callouts=sec.callouts||[]; const ppe=sec.ppe||[];
+  const setC=(id,k,v)=>up({callouts:callouts.map(c=>c.id===id?{...c,[k]:v}:c)});
+  return (
+    <div className="space-y-4">
+      <Card>
+        <h3 className="text-[13px] font-bold mb-3">{t.sop_add_callout}</h3>
+        <div className="space-y-3">
+          {callouts.map(c=>{
+            const ct = calloutType(c.type);
+            return (
+              <div key={c.id} className="rounded-lg border overflow-hidden" style={{borderColor:ct.bd}}>
+                <div className="flex items-center gap-2 px-3 py-2" style={{background:ct.bg}}>
+                  <select value={c.type} onChange={e=>setC(c.id,'type',e.target.value)} className="text-[12px] font-bold px-2 py-1 rounded border bg-white" style={{color:ct.c,borderColor:ct.bd}}>
+                    {CALLOUT_TYPES.map(x=><option key={x.id} value={x.id}>{x.vi} / {x.en}</option>)}
+                  </select>
+                  <div className="flex-1"></div>
+                  <XBtn onClick={()=>up({callouts:callouts.filter(x=>x.id!==c.id)})}/>
+                </div>
+                <textarea value={c.text} onChange={e=>setC(c.id,'text',e.target.value)} rows={2} placeholder={t.sop_callout_text}
+                  className="w-full px-3 py-2.5 text-[13.5px] focus:outline-none resize-y"/>
+              </div>
+            );
+          })}
+        </div>
+        <RowBtn onClick={()=>up({callouts:[...callouts,{id:uid(),type:'warning',text:''}]})}>{t.sop_add_callout}</RowBtn>
+      </Card>
+      <Card>
+        <h3 className="text-[13px] font-bold mb-3">{t.sop_ppe}</h3>
+        <div className="space-y-2">
+          {ppe.map((p,i)=>(
+            <div key={i} className="flex items-center gap-2">
+              <span className="w-4 h-4 rounded border-2 border-[var(--line-strong)] shrink-0"></span>
+              <input value={p} onChange={e=>up({ppe:ppe.map((x,j)=>j===i?e.target.value:x)})} className="flex-1 px-2.5 py-1.5 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)]"/>
+              <XBtn onClick={()=>up({ppe:ppe.filter((_,j)=>j!==i)})}/>
+            </div>
+          ))}
+        </div>
+        <RowBtn onClick={()=>up({ppe:[...ppe,'']})}>{t.sop_add_item}</RowBtn>
+      </Card>
+    </div>
+  );
+}
+
+/* 06 Steps — the step builder (most important) */
+function SOPSteps({sop, sec, up, apiKey, onNeedKey}){
+  const t = useT(); const steps=sec.steps||[];
+  const setStep=(id,patch)=>up({steps:steps.map(s=>s.id===id?{...s,...patch}:s)});
+  const move=(idx,dir)=>{const a=[...steps];const j=idx+dir;if(j<0||j>=a.length)return;[a[idx],a[j]]=[a[j],a[idx]];up({steps:a});};
+  const dup=(idx)=>{const a=[...steps];const c=JSON.parse(JSON.stringify(a[idx]));c.id=uid();c.photos=(c.photos||[]).map(p=>({...p,id:uid()}));c.checklist=(c.checklist||[]).map(x=>({...x,id:uid()}));a.splice(idx+1,0,c);up({steps:a});};
+  return (
+    <div className="space-y-3">
+      {steps.map((s,idx)=>(
+        <Card key={s.id} className="!p-0 overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-[var(--paper)] border-b border-[var(--line)]">
+            <span className="mono text-[12px] font-bold text-white px-2 py-0.5 rounded" style={{background:'linear-gradient(135deg,#A5760A,#C99A2E)'}}>{t.sop_step} {String(idx+1).padStart(2,'0')}</span>
+            <input value={s.title} onChange={e=>setStep(s.id,{title:e.target.value})} placeholder={t.sop_step_title}
+              className="flex-1 bg-transparent text-[14px] font-bold outline-none focus:border-b focus:border-[var(--gold)]"/>
+            <button onClick={()=>move(idx,-1)} className="p-1 text-[var(--ink-3)] hover:text-[var(--ink)]"><Icon d={I.up} s={15}/></button>
+            <button onClick={()=>move(idx,1)} className="p-1 text-[var(--ink-3)] hover:text-[var(--ink)]"><Icon d={I.down} s={15}/></button>
+            <button onClick={()=>dup(idx)} className="p-1 text-[var(--ink-3)] hover:text-[var(--gold-3)]"><Icon d={I.copy} s={14}/></button>
+            <button onClick={()=>up({steps:steps.filter(x=>x.id!==s.id)})} className="p-1 text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.trash} s={14}/></button>
+          </div>
+          <div className="p-4 space-y-3">
+            <RichField label={t.sop_instruction} value={s.instruction} onChange={v=>setStep(s.id,{instruction:v})} minH={54} ai apiKey={apiKey} onNeedKey={onNeedKey}/>
+            <RichField label={t.sop_expected} value={s.expected} onChange={v=>setStep(s.id,{expected:v})} minH={44}/>
+            <div>
+              <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.sop_step_warning}</div>
+              <input value={s.warning} onChange={e=>setStep(s.id,{warning:e.target.value})} placeholder={t.sop_step_warning}
+                className="w-full px-3 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)]"/>
+            </div>
+            <SOPStepChecklist step={s} setStep={(p)=>setStep(s.id,p)}/>
+            <div>
+              <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">{t.photos}</div>
+              <ImageUploader photos={s.photos||[]} onChange={ph=>setStep(s.id,{photos:ph})} compact/>
+            </div>
+          </div>
+        </Card>
+      ))}
+      <Btn variant="outline" onClick={()=>up({steps:[...steps, sopBlankStep()]})}><Icon d={I.plus} s={16} sw={2}/>{t.sop_add_step}</Btn>
+    </div>
+  );
+}
+
+function SOPStepChecklist({step, setStep}){
+  const t = useT(); const cl=step.checklist||[];
+  return (
+    <div>
+      <div className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-1.5">Checklist</div>
+      <div className="space-y-1.5">
+        {cl.map((c,i)=>(
+          <div key={c.id} className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded border-2 border-[var(--line-strong)] shrink-0"></span>
+            <input value={c.text} onChange={e=>setStep({checklist:cl.map((x,j)=>j===i?{...x,text:e.target.value}:x)})} className="flex-1 px-2.5 py-1.5 rounded-md border border-[var(--line)] text-[13px] focus:border-[var(--gold)]"/>
+            <button onClick={()=>setStep({checklist:cl.filter((_,j)=>j!==i)})} className="p-1 text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.x} s={14}/></button>
+          </div>
+        ))}
+      </div>
+      <button onClick={()=>setStep({checklist:[...cl,{id:uid(),text:'',done:false}]})} className="text-[12.5px] font-semibold text-[var(--gold-3)] hover:underline flex items-center gap-1 mt-1.5"><Icon d={I.plus} s={13} sw={2.5}/>{t.sop_add_check}</button>
+    </div>
+  );
+}
+
+/* 07 Verification — final checklist + signoff */
+function SOPVerification({sec, up}){
+  const t = useT(); const cl=sec.checklist||[];
+  return (
+    <Card>
+      <h3 className="text-[13px] font-bold mb-3">{t.sop_final_check}</h3>
+      <div className="space-y-1.5">
+        {cl.map((c,i)=>(
+          <div key={c.id} className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded border-2 border-[var(--line-strong)] shrink-0"></span>
+            <input value={c.text} onChange={e=>up({checklist:cl.map((x,j)=>j===i?{...x,text:e.target.value}:x)})} className="flex-1 px-2.5 py-1.5 rounded-md border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)]"/>
+            <button onClick={()=>up({checklist:cl.filter((_,j)=>j!==i)})} className="p-1 text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.x} s={14}/></button>
+          </div>
+        ))}
+      </div>
+      <RowBtn onClick={()=>up({checklist:[...cl,{id:uid(),text:'',done:false}]})}>{t.sop_add_check}</RowBtn>
+    </Card>
+  );
+}
+
+/* 08 Troubleshooting — table */
+function SOPTrouble({sec, up}){
+  const t = useT(); const rows=sec.rows||[];
+  const set=(id,k,v)=>up({rows:rows.map(r=>r.id===id?{...r,[k]:v}:r)});
+  return (
+    <Card>
+      <div className="space-y-2">
+        <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 text-[11px] font-bold text-[var(--ink-3)] uppercase tracking-wide px-1">
+          <span>{t.sop_ts_problem}</span><span>{t.sop_ts_cause}</span><span>{t.sop_ts_action}</span><span></span>
+        </div>
+        {rows.map(r=>(
+          <div key={r.id} className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 items-start">
+            <textarea value={r.problem} onChange={e=>set(r.id,'problem',e.target.value)} rows={2} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)] resize-y"/>
+            <textarea value={r.cause} onChange={e=>set(r.id,'cause',e.target.value)} rows={2} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)] resize-y"/>
+            <textarea value={r.action} onChange={e=>set(r.id,'action',e.target.value)} rows={2} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13px] focus:border-[var(--gold)] resize-y"/>
+            <XBtn onClick={()=>up({rows:rows.filter(x=>x.id!==r.id)})}/>
+          </div>
+        ))}
+      </div>
+      <RowBtn onClick={()=>up({rows:[...rows,{id:uid(),problem:'',cause:'',action:''}]})}>{t.sop_add_row}</RowBtn>
+    </Card>
+  );
+}
+
+/* 09 Related documents */
+function SOPDocs({sec, up}){
+  const t = useT(); const docs=sec.docs||[];
+  const set=(id,k,v)=>up({docs:docs.map(r=>r.id===id?{...r,[k]:v}:r)});
+  return (
+    <Card>
+      <div className="space-y-2">
+        {docs.map(r=>(
+          <div key={r.id} className="grid grid-cols-[2fr_1fr_auto] gap-2 items-center">
+            <input value={r.name} onChange={e=>set(r.id,'name',e.target.value)} placeholder={t.sop_doc_name} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)]"/>
+            <input value={r.type} onChange={e=>set(r.id,'type',e.target.value)} placeholder={t.sop_doc_type} className="px-2.5 py-2 rounded-lg border border-[var(--line)] text-[13.5px] focus:border-[var(--gold)]"/>
+            <XBtn onClick={()=>up({docs:docs.filter(x=>x.id!==r.id)})}/>
+          </div>
+        ))}
+      </div>
+      <RowBtn onClick={()=>up({docs:[...docs,{id:uid(),name:'',type:''}]})}>{t.sop_add_item}</RowBtn>
+    </Card>
+  );
+}
+
+/* 10 Revision history — read from sop.revisions + add */
+function SOPRevisions({sop, sec}){
+  const t = useT();
+  return (
+    <Card>
+      <table className="w-full text-[13px]">
+        <thead>
+          <tr className="text-[11px] font-bold text-[var(--ink-3)] uppercase tracking-wide text-left border-b border-[var(--line)]">
+            <th className="py-2 pr-2">{t.sop_rev}</th><th className="py-2 pr-2">{t.sop_rev_date}</th><th className="py-2 pr-2">{t.sop_rev_by}</th><th className="py-2">{t.sop_rev_desc}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(sop.revisions||[]).map((r,i)=>(
+            <tr key={i} className="border-b border-[var(--line)]/60">
+              <td className="py-2 pr-2 mono font-bold">{String(r.rev).padStart(2,'0')}</td>
+              <td className="py-2 pr-2">{fmtDate(r.date)}</td>
+              <td className="py-2 pr-2">{r.by||'—'}</td>
+              <td className="py-2">{r.desc||'—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="text-[12px] text-[var(--ink-3)] mt-3">Lịch sử sửa đổi được ghi nhận tự động khi bạn tạo phiên bản mới (Phase 2).</p>
+    </Card>
+  );
+}
+
+/* ---------- SOP PREVIEW (reuses html2canvas export pattern) ---------- */
+function SOPPreview({sop, settings, lang, onBack, update}){
+  const t = useT();
+  const [gen, setGen] = useState(false);
+  const paperRef = useRef();
+  const pdfLang = sop.pdfLang || 'vi';
+  const setPdfLang = (v)=> update && update({pdfLang:v});
+
+  useEffect(()=>{
+    if(!paperRef.current) return;
+    const id = setTimeout(()=>{
+      const pages = [...paperRef.current.querySelectorAll('.pdf-page')];
+      const withFooter = pages.filter(p=>p.querySelector('.pdf-pageno'));
+      const total = withFooter.length;
+      withFooter.forEach((p,i)=>{
+        const el = p.querySelector('.pdf-pageno');
+        if(el) el.textContent = `${String(i+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+      });
+    }, 140);
+    return ()=>clearTimeout(id);
+  });
+
+  const noDiacritics = (s)=> (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D');
+  const exportPDF = async ()=>{
+    setGen(true);
+    try {
+      if(document.fonts && document.fonts.ready){ try{ await document.fonts.ready; }catch(e){} }
+      await new Promise(r=>setTimeout(r,350));
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({orientation:'p',unit:'mm',format:'a4',compress:true});
+      const pages = paperRef.current.querySelectorAll('.pdf-page');
+      for(let i=0;i<pages.length;i++){
+        const canvas = await html2canvas(pages[i], {
+          scale:2.5, useCORS:true, backgroundColor:'#ffffff', logging:false, imageTimeout:0,
+          width: pages[i].offsetWidth, height: pages[i].offsetHeight,
+          windowWidth: pages[i].offsetWidth, windowHeight: pages[i].offsetHeight, scrollX:0, scrollY:0,
+          onclone: (doc)=>{
+            doc.querySelectorAll('.pdf-page, .pdf-page *').forEach(el=>{ el.style.textRendering='geometricPrecision'; el.style.webkitFontSmoothing='antialiased'; });
+            doc.querySelectorAll('.prose-report li').forEach(el=>{ el.style.lineHeight='1.55'; });
+          }
+        });
+        const img = canvas.toDataURL('image/jpeg',0.95);
+        if(i>0) pdf.addPage();
+        pdf.addImage(img,'JPEG',0,0,210,297,undefined,'SLOW');
+      }
+      const clean = (s)=> noDiacritics(s).replace(/[^\w]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+      const revTag = (sop.version||'Rev00').replace(/[^\w]+/g,'');
+      const fn = `${sop.code||sop.sopNo}_${revTag}_${clean(sop.title||'SOP')}.pdf`.replace(/_+/g,'_');
+      pdf.save(fn);
+    } catch(err){ alert('PDF error: '+err.message); }
+    setGen(false);
+  };
+
+  return (
+    <div className="flex flex-col h-full bg-[#4A5568]">
+      <div className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-[var(--line)] no-print">
+        <div className="flex items-center gap-3">
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={18}/></button>
+          <div>
+            <div className="font-bold text-[15px]">{t.sop_preview}</div>
+            <div className="text-[12px] text-[var(--ink-3)] mono">{sop.code||sop.sopNo}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex bg-[var(--paper)] rounded-lg p-0.5 border border-[var(--line)]">
+            {[['vi',t.bi_vi],['en',t.bi_en],['both',t.bi_both]].map(([v,label])=>(
+              <button key={v} onClick={()=>setPdfLang(v)}
+                className={"text-[12.5px] font-semibold px-3 py-1.5 rounded-md transition "+(pdfLang===v?"bg-[var(--navy)] text-white":"text-[var(--ink-2)] hover:bg-white")}>{label}</button>
+            ))}
+          </div>
+          <Btn variant="gold" onClick={exportPDF} disabled={gen}>
+            {gen ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full spin"></span>{t.genPdf}</> : <><Icon d={I.download} s={17}/>{t.downloadPdf}</>}
+          </Btn>
+        </div>
+      </div>
+      <div className="flex-1 overflow-y-auto py-8 px-4">
+        <div ref={paperRef} className="mx-auto" style={{width:'210mm'}}>
+          <SOPDocument sop={sop} settings={settings} pdfLang={pdfLang}/>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- SOP PDF DOCUMENT (Corporate Technical Manual style) ---------- */
+function SOPDocument({sop, settings, pdfLang='vi'}){
+  const primary = pdfLang==='en' ? 'en' : 'vi';
+  const both = pdfLang==='both';
+  const logo = settings.logo || LOGO_MARK;
+  const d = sop.doc||{};
+
+  const INK='#1E2A22', SUB='#5B6157', MUT='#8A8F82', LINE='#E6E3D8', LINE2='#D3CFBE';
+  const GOLD='#B8860B', GOLDD='#A5760A', GOLDL='#EAD9A8', GOLDSOFT='#FBF3DF';
+  const GREEN='#0B7A47', GREEND='#095C36', GREENSOFT='#E3F3EA', DARK='#1A2E24';
+  const SERIF="'Noto Serif',Georgia,serif", SANS="'Noto Sans',Arial,sans-serif", MONO="'JetBrains Mono',monospace";
+
+  const rh = (v)=> isHtml(v) ? v : textToHtml(v);
+  const hasRich = (v)=> v && htmlToText(v).trim();
+  const RichOut = ({v, style})=> hasRich(v) ? <div className="prose-report" style={style} dangerouslySetInnerHTML={{__html:rh(v)}}/> : null;
+
+  const secTitle = (s)=> both ? `${s.title}${s.title_en?` / ${s.title_en}`:''}` : (primary==='en' && s.title_en ? s.title_en : s.title);
+  const catLabel = both ? `${sopCatLabel(sop.category,'vi')} / ${sopCatLabel(sop.category,'en')}` : sopCatLabel(sop.category, primary);
+  const T = (vi,en)=> both ? `${vi} / ${en}` : (primary==='en'?en:vi);
+  const isCalib = sop.category==='calibration'||sop.category==='adjustment';
+
+  const Watermark = ()=> (
+    <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',pointerEvents:'none',zIndex:0}}>
+      <img src={logo} style={{width:'120mm',opacity:0.04,filter:'grayscale(30%)'}}/>
+    </div>
+  );
+  const Header = ()=> (
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',padding:'9mm 16mm 4mm',borderBottom:`1px solid ${LINE}`,position:'relative',zIndex:2}}>
+      <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
+        <img src={logo} style={{height:'9mm',width:'9mm',objectFit:'contain'}}/>
+        <div>
+          <div style={{fontFamily:SERIF,fontWeight:700,fontSize:'9.5pt',color:INK}}>{settings.company}</div>
+          <div style={{fontSize:'6.8pt',color:MUT,whiteSpace:'nowrap'}}>{settings.website}</div>
+        </div>
+      </div>
+      <div style={{textAlign:'right'}}>
+        <div style={{fontSize:'6.8pt',color:GOLDD,fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',whiteSpace:'nowrap'}}>{T('QUY TRÌNH CHUẨN','SOP')}</div>
+        <div style={{fontSize:'8pt',color:SUB,fontFamily:MONO,marginTop:'1px'}}>{sop.code||sop.sopNo}</div>
+      </div>
+    </div>
+  );
+  const Footer = ()=> (
+    <div style={{position:'absolute',bottom:'8mm',left:'16mm',right:'16mm',display:'flex',justifyContent:'space-between',alignItems:'center',fontSize:'7pt',color:MUT,borderTop:`1px solid ${LINE}`,paddingTop:'2mm',fontFamily:MONO}}>
+      <span style={{whiteSpace:'nowrap'}}>{sop.code||sop.sopNo} | {sop.version} | {T('Tài liệu kiểm soát','Controlled')}</span>
+      <span className="pdf-pageno"></span>
+    </div>
+  );
+  const Page = ({children, cover})=> (
+    <div className="pdf-page" style={{width:'210mm',minHeight:'297mm',height:'297mm',background:'#fff',position:'relative',overflow:'hidden',marginBottom:'8mm',boxShadow:'0 3px 18px rgba(0,0,0,.14)'}}>
+      {!cover && <Watermark/>}
+      {children}
+    </div>
+  );
+  const H = ({no, children})=> (
+    <div style={{display:'flex',alignItems:'baseline',gap:'8px',marginBottom:'3mm',marginTop:'1mm'}}>
+      <span style={{fontFamily:MONO,fontSize:'8.5pt',fontWeight:700,color:GREEN}}>{no}</span>
+      <span style={{fontFamily:SERIF,fontSize:'15pt',fontWeight:700,color:INK,flex:1}}>{children}</span>
+      <span style={{flex:1,height:'1px',background:LINE2,alignSelf:'center'}}></span>
+    </div>
+  );
+  const SubH = ({children})=> <div style={{fontSize:'8pt',fontWeight:700,color:GOLDD,textTransform:'uppercase',letterSpacing:'.5px',margin:'3mm 0 1.5mm'}}>{children}</div>;
+
+  const pages = [];
+
+  /* ---- COVER ---- */
+  pages.push(
+    <Page cover key="cover">
+      <div style={{height:'297mm',display:'flex',flexDirection:'column',position:'relative',overflow:'hidden',background:`linear-gradient(160deg,${DARK} 0%,#22402F 55%,${GREEND} 100%)`}}>
+        <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',opacity:0.07,pointerEvents:'none'}}>
+          <img src={logo} style={{width:'165mm'}}/>
+        </div>
+        <div style={{position:'absolute',top:'62mm',left:'20mm',width:'28mm',height:'2.5mm',background:`linear-gradient(90deg,${GOLD},${GOLDL})`,borderRadius:'2px'}}></div>
+        <div style={{position:'relative',padding:'20mm 20mm 0',color:'#fff',flex:1,display:'flex',flexDirection:'column'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'11px',marginBottom:'30mm'}}>
+            <div style={{background:'#fff',borderRadius:'10px',padding:'4px 8px',display:'flex',alignItems:'center'}}><img src={logo} style={{height:'16mm',objectFit:'contain'}}/></div>
+            <div>
+              <div style={{fontFamily:SERIF,fontWeight:700,fontSize:'13pt'}}>{settings.company}</div>
+              <div style={{fontSize:'8pt',opacity:.7,marginTop:'1mm'}}>{settings.website}{settings.hotline?`  ·  ${settings.hotline}`:''}</div>
+            </div>
+          </div>
+          <div style={{fontSize:'8.5pt',letterSpacing:'5px',color:GOLDL,fontWeight:600,marginBottom:'4mm',marginTop:'6mm'}}>{T('QUY TRÌNH VẬN HÀNH CHUẨN','STANDARD OPERATING PROCEDURE')}</div>
+          <div style={{fontFamily:SERIF,fontSize:'29pt',fontWeight:700,lineHeight:1.12,marginBottom:'5mm',maxWidth:'155mm'}}>{sop.title||T('SOP chưa đặt tên','Untitled SOP')}</div>
+          <div style={{fontSize:'11pt',opacity:.9,fontWeight:500}}>{catLabel}</div>
+        </div>
+        <div style={{position:'relative',padding:'0 20mm 22mm',color:'#fff'}}>
+          <div style={{background:'rgba(255,255,255,.06)',border:`1px solid rgba(234,217,168,.35)`,borderRadius:'12px',padding:'8mm',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5mm 10mm'}}>
+            {[[T('Số SOP','SOP No.'),sop.code||sop.sopNo,MONO],[T('Phiên bản','Revision'),sop.version,SANS],[T('Ngày hiệu lực','Effective Date'),fmtDateLong(sop.effectiveDate,primary),SANS],[T('Bộ phận','Department'),d.department,SANS],[T('Thiết bị','Equipment'),d.equipment,SANS],[T('Người soạn','Prepared by'),d.preparedBy,SANS]].map((r,i)=>(
+              <div key={i}>
+                <div style={{fontSize:'7pt',color:GOLDL,fontWeight:700,textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'1.5mm'}}>{r[0]}</div>
+                <div style={{fontSize:'10pt',fontWeight:700,color:'#fff',fontFamily:r[2]}}>{r[1]||'—'}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Page>
+  );
+
+  /* ---- DOCUMENT CONTROL + TOC ---- */
+  const numbered = sop.sections.map((s,i)=>({...s, no:String(i+1).padStart(2,'0')}));
+  pages.push(
+    <Page key="control">
+      <Header/>
+      <div style={{padding:'7mm 16mm'}}>
+        <H no="">{T('KIỂM SOÁT TÀI LIỆU','DOCUMENT CONTROL')}</H>
+        <table style={{width:'100%',borderCollapse:'collapse',fontSize:'8.5pt',marginBottom:'7mm'}}>
+          <tbody>
+            {[[T('Số SOP','SOP No.'),sop.code||sop.sopNo,T('Phiên bản','Version'),sop.version],
+              [T('Nhóm','Category'),catLabel,T('Trạng thái','Status'),T(DICT.vi[SOP_STATUS[sop.status]?.k]||'',DICT.en[SOP_STATUS[sop.status]?.k]||'')],
+              [T('Ngày hiệu lực','Effective'),fmtDate(sop.effectiveDate),T('Ngày rà soát','Review'),fmtDate(sop.reviewDate)||'—'],
+              [T('Bộ phận','Department'),d.department||'—',T('Chủ tài liệu','Owner'),d.owner||'—'],
+              [T('Thiết bị','Equipment'),d.equipment||'—',T('Model','Model'),d.model||'—']].map((row,i)=>(
+              <tr key={i}>
+                <td style={{border:`1px solid ${LINE2}`,padding:'2.2mm 3mm',background:GOLDSOFT,fontWeight:700,color:GOLDD,fontSize:'7.5pt',width:'22%'}}>{row[0]}</td>
+                <td style={{border:`1px solid ${LINE2}`,padding:'2.2mm 3mm',width:'28%'}}>{row[1]}</td>
+                <td style={{border:`1px solid ${LINE2}`,padding:'2.2mm 3mm',background:GOLDSOFT,fontWeight:700,color:GOLDD,fontSize:'7.5pt',width:'22%'}}>{row[2]}</td>
+                <td style={{border:`1px solid ${LINE2}`,padding:'2.2mm 3mm'}}>{row[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Approval */}
+        <SubH>{T('PHÊ DUYỆT','APPROVAL')}</SubH>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'6mm',marginBottom:'8mm',marginTop:'2mm'}}>
+          {[[T('Người soạn','Prepared By'),d.preparedBy],[T('Người kiểm tra','Checked By'),d.checkedBy],[T('Người duyệt','Approved By'),d.approvedBy]].map((c,i)=>(
+            <div key={i} style={{textAlign:'center'}}>
+              <div style={{fontSize:'7pt',color:GOLDD,fontWeight:700,textTransform:'uppercase',letterSpacing:'.5px',marginBottom:'11mm'}}>{c[0]}</div>
+              <div style={{borderTop:`1px solid ${LINE2}`,paddingTop:'2mm',fontSize:'9pt',fontWeight:700,color:INK}}>{c[1]||'—'}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* TOC */}
+        <SubH>{T('MỤC LỤC','TABLE OF CONTENTS')}</SubH>
+        <div style={{marginTop:'2mm'}}>
+          {numbered.map((s)=>(
+            <div key={s.id} style={{display:'flex',alignItems:'baseline',fontSize:'9pt',color:INK,padding:'1.4mm 0',borderBottom:`1px dotted ${LINE2}`}}>
+              <span style={{fontFamily:MONO,color:GREEN,fontWeight:700,marginRight:'4mm',fontSize:'8pt'}}>{s.no}</span>
+              <span style={{fontWeight:600}}>{secTitle(s)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Footer/>
+    </Page>
+  );
+
+  /* ---- SECTION CONTENT: pack sections onto pages (one page per heavy section) ---- */
+  numbered.forEach((s)=>{
+    pages.push(
+      <Page key={s.id}>
+        <Header/>
+        <div style={{padding:'7mm 16mm'}}>
+          <H no={s.no}>{secTitle(s)}</H>
+          <SOPSectionPDF sec={s} both={both} primary={primary} T={T} tokens={{INK,SUB,MUT,LINE,LINE2,GOLD,GOLDD,GOLDL,GOLDSOFT,GREEN,GREEND,GREENSOFT,DARK,SERIF,SANS,MONO}}
+            RichOut={RichOut} hasRich={hasRich} SubH={SubH} sop={sop} isCalib={isCalib}/>
+        </div>
+        <Footer/>
+      </Page>
+    );
+  });
+
+  /* ---- END / thank-you ---- */
+  pages.push(
+    <Page key="end">
+      <Header/>
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:'220mm',position:'relative',zIndex:2}}>
+        <div style={{fontFamily:SERIF,fontSize:'15pt',fontWeight:700,color:INK}}>{T('— HẾT —','— END OF DOCUMENT —')}</div>
+        <div style={{width:'24mm',height:'2px',background:`linear-gradient(90deg,${GOLDD},${GOLDL})`,margin:'3mm 0 5mm'}}></div>
+        <div style={{fontSize:'8.5pt',color:MUT,textAlign:'center',maxWidth:'120mm',lineHeight:1.6}}>{T('Tài liệu được kiểm soát bởi','Controlled by')} {settings.company}. {T('Không sao chép khi chưa được phép.','Do not copy without authorization.')}</div>
+      </div>
+      <div style={{position:'absolute',bottom:0,left:0,right:0,background:`linear-gradient(135deg,${DARK},#23402F)`,color:'#fff',padding:'6mm 16mm',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+        <div>
+          <div style={{fontFamily:SERIF,fontWeight:700,fontSize:'11pt'}}>{settings.company}</div>
+          <div style={{fontSize:'7.5pt',opacity:.75,marginTop:'1mm'}}>{settings.address}</div>
+        </div>
+        <div style={{textAlign:'right',fontSize:'7.5pt',opacity:.85,lineHeight:1.7}}>
+          <div>{settings.website}</div><div>{settings.email}</div>{settings.hotline&&<div>Hotline: {settings.hotline}</div>}
+        </div>
+      </div>
+    </Page>
+  );
+
+  return <div>{pages}</div>;
+}
+
+/* ---------- SOP SECTION → PDF body ---------- */
+function SOPSectionPDF({sec, both, primary, T, tokens, RichOut, hasRich, SubH, sop, isCalib}){
+  const {INK,SUB,MUT,LINE,LINE2,GOLD,GOLDD,GOLDL,GOLDSOFT,GREEN,GREEND,GREENSOFT,DARK,SERIF,SANS,MONO} = tokens;
+  const rh = (v)=> isHtml(v) ? v : textToHtml(v);
+  const RichInline = ({v})=> <span dangerouslySetInnerHTML={{__html:rh(v)}}/>;
+
+  const th = {border:`1px solid ${LINE2}`,padding:'2mm 3mm',background:DARK,color:'#fff',fontSize:'7.5pt',fontWeight:700,textAlign:'left',textTransform:'uppercase',letterSpacing:'.3px'};
+  const td = {border:`1px solid ${LINE2}`,padding:'2mm 3mm',fontSize:'8.5pt',color:INK,verticalAlign:'top'};
+
+  // SOP step image gallery (reuse Service Report image layout logic)
+  const StepGallery = ({photos, startFig})=>{
+    if(!photos||!photos.length) return null;
+    const rows=[]; const list=photos;
+    if(list.length===1) rows.push([list[0]]);
+    else if(list.length===2) rows.push([list[0],list[1]]);
+    else if(list.length===3){rows.push([list[0]]);rows.push([list[1],list[2]]);}
+    else for(let k=0;k<list.length;k+=2) rows.push(list.slice(k,k+2));
+    let fig=startFig;
+    return (
+      <div style={{marginTop:'2mm'}}>
+        {rows.map((row,ri)=>(
+          <div key={ri} style={{display:'flex',gap:'4mm',marginBottom:'3mm'}}>
+            {row.map(p=>{
+              const cur=++fig; const big = list.length===1;
+              return (
+                <div key={p.id} style={{flex:row.length===1&&big?'1 1 100%':(row.length===1?'0 1 calc(50% - 2mm)':'1 1 50%'),minWidth:0}}>
+                  <div style={{border:`1px solid ${LINE2}`,borderRadius:'5px',overflow:'hidden',background:'#fff',padding:'2px'}}>
+                    <div style={{borderRadius:'3px',overflow:'hidden',height:big?'70mm':'44mm',background:'#F2F1EA'}}>
+                      <img src={p.annotated||p.src} style={{width:'100%',height:'100%',objectFit:'contain',display:'block'}}/>
+                    </div>
+                  </div>
+                  {p.caption && <div style={{fontSize:'7pt',color:SUB,marginTop:'1mm',lineHeight:1.3}}><span style={{fontFamily:MONO,color:GOLDD,fontWeight:700}}>{T('Hình','Figure')} {String(cur).padStart(2,'0')}</span> — {p.caption}</div>}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  switch(sec.type){
+    case 'rich':
+      return <RichOut v={sec.body} style={{fontSize:'9.5pt',lineHeight:1.65,color:SUB}}/>;
+
+    case 'responsibility':
+      return (
+        <table style={{width:'100%',borderCollapse:'collapse',marginTop:'2mm'}}>
+          <thead><tr><th style={{...th,width:'32%'}}>{T('Vai trò','Role')}</th><th style={th}>{T('Trách nhiệm','Responsibility')}</th></tr></thead>
+          <tbody>{(sec.rows||[]).map(r=><tr key={r.id}><td style={{...td,fontWeight:700}}>{r.role}</td><td style={td}>{r.resp}</td></tr>)}</tbody>
+        </table>
+      );
+
+    case 'materials':{
+      const groups={};
+      (sec.items||[]).forEach(it=>{ const g=it.grp||T('Khác','Other'); (groups[g]=groups[g]||[]).push(it); });
+      return (
+        <div style={{marginTop:'1mm'}}>
+          {Object.keys(groups).map(g=>(
+            <div key={g} style={{marginBottom:'3mm'}}>
+              <SubH>{g}</SubH>
+              <table style={{width:'100%',borderCollapse:'collapse'}}>
+                <thead><tr><th style={th}>{T('Tên','Name')}</th><th style={{...th,width:'22%'}}>{T('Hãng','Mfr')}</th><th style={{...th,width:'22%'}}>Model</th><th style={{...th,width:'10%'}}>{T('SL','Qty')}</th></tr></thead>
+                <tbody>{groups[g].map(it=><tr key={it.id}><td style={{...td,fontWeight:600}}>{it.name}{it.note?<span style={{color:MUT,fontWeight:400}}> — {it.note}</span>:''}</td><td style={td}>{it.mfr||'—'}</td><td style={{...td,fontFamily:MONO}}>{it.model||'—'}</td><td style={{...td,textAlign:'center'}}>{it.qty||'—'}</td></tr>)}</tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    case 'safety':
+      return (
+        <div style={{marginTop:'1mm'}}>
+          {(sec.callouts||[]).map(c=>{
+            const ct=calloutType(c.type);
+            return (
+              <div key={c.id} style={{border:`1.5px solid ${ct.bd}`,borderRadius:'7px',overflow:'hidden',marginBottom:'3mm',background:ct.bg}}>
+                <div style={{display:'flex',alignItems:'center',padding:'1.8mm 3.5mm',borderBottom:`1px solid ${ct.bd}`}}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={ct.c} strokeWidth="2.4" style={{marginRight:'5px'}}><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                  <span style={{fontSize:'8pt',fontWeight:800,color:ct.c,letterSpacing:'.5px'}}>{both?`${ct.vi} / ${ct.en}`:(primary==='en'?ct.en:ct.vi)}</span>
+                </div>
+                <div style={{padding:'2.2mm 3.5mm',fontSize:'8.8pt',color:INK,lineHeight:1.55}}>{c.text}</div>
+              </div>
+            );
+          })}
+          {(sec.ppe&&sec.ppe.length>0) && (
+            <div style={{marginTop:'3mm'}}>
+              <SubH>{T('Trang bị bảo hộ (PPE)','Personal Protective Equipment')}</SubH>
+              <div style={{display:'flex',flexWrap:'wrap',gap:'3mm 6mm'}}>
+                {sec.ppe.map((p,i)=>(
+                  <div key={i} style={{display:'flex',alignItems:'center',fontSize:'8.8pt',color:INK}}>
+                    <span style={{display:'inline-block',width:'3.5mm',height:'3.5mm',border:`1.5px solid ${SUB}`,borderRadius:'1px',marginRight:'2mm',verticalAlign:'middle'}}></span>{p}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+
+    case 'steps':
+      return (
+        <div style={{marginTop:'1mm'}}>
+          {(sec.steps||[]).map((s,idx)=>(
+            <div key={s.id} style={{marginBottom:'4mm',breakInside:'avoid',borderLeft:`2.5px solid ${GOLDL}`,paddingLeft:'4mm'}}>
+              <div style={{fontFamily:SERIF,fontSize:'10.5pt',fontWeight:700,color:INK,marginBottom:'1.2mm'}}>
+                <span style={{display:'inline-block',fontFamily:MONO,fontSize:'6.5pt',fontWeight:700,color:'#fff',background:GREEN,borderRadius:'3px',padding:'1.4mm 1.8mm 1mm',lineHeight:1,marginRight:'2mm',verticalAlign:'1.2mm',whiteSpace:'nowrap'}}>{T('BƯỚC','STEP')} {String(idx+1).padStart(2,'0')}</span>
+                {s.title}
+              </div>
+              {hasRich(s.instruction) && <div style={{marginBottom:'1mm'}}><span style={{fontSize:'7pt',fontWeight:700,color:GOLDD,textTransform:'uppercase'}}>{T('Hướng dẫn','Instruction')}: </span><span className="prose-report" style={{fontSize:'8.8pt',color:SUB,lineHeight:1.5}} dangerouslySetInnerHTML={{__html:rh(s.instruction)}}/></div>}
+              {hasRich(s.expected) && <div style={{marginBottom:'1mm',background:GREENSOFT,borderRadius:'4px',padding:'1.5mm 2.5mm'}}><span style={{fontSize:'7pt',fontWeight:700,color:GREEND,textTransform:'uppercase'}}>{T('Kết quả mong đợi','Expected Result')}: </span><span className="prose-report" style={{fontSize:'8.8pt',color:INK,lineHeight:1.5}} dangerouslySetInnerHTML={{__html:rh(s.expected)}}/></div>}
+              {s.warning && (
+                <div style={{display:'flex',alignItems:'flex-start',gap:'4px',background:'#FBEBE8',border:`1px solid #E0A79F`,borderRadius:'4px',padding:'1.5mm 2.5mm',marginBottom:'1mm'}}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B23A2E" strokeWidth="2.4" style={{marginTop:'0.5mm',flexShrink:0}}><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                  <span style={{fontSize:'8.3pt',color:'#8A1A12',lineHeight:1.45}}>{s.warning}</span>
+                </div>
+              )}
+              {(s.checklist&&s.checklist.length>0) && (
+                <div style={{marginTop:'1mm',marginBottom:'1mm'}}>
+                  {s.checklist.map(c=>(
+                    <div key={c.id} style={{display:'flex',alignItems:'center',fontSize:'8.3pt',color:INK,marginBottom:'0.6mm'}}>
+                      <span style={{display:'inline-block',width:'3mm',height:'3mm',border:`1.3px solid ${SUB}`,borderRadius:'1px',marginRight:'2mm'}}></span>{c.text}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <StepGallery photos={s.photos} startFig={0}/>
+            </div>
+          ))}
+        </div>
+      );
+
+    case 'verification':
+      return (
+        <div style={{marginTop:'1mm'}}>
+          {(sec.checklist||[]).map(c=>(
+            <div key={c.id} style={{display:'flex',alignItems:'center',fontSize:'9pt',color:INK,marginBottom:'1.5mm'}}>
+              <span style={{display:'inline-block',width:'3.5mm',height:'3.5mm',border:`1.5px solid ${SUB}`,borderRadius:'1px',marginRight:'2.5mm'}}></span>{c.text}
+            </div>
+          ))}
+          {sec.signoff && (
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'6mm',marginTop:'8mm'}}>
+              {[[T('Người thực hiện','Performed by'),''],[T('Người kiểm tra','Checked by'),'']].map((c,i)=>(
+                <div key={i}>
+                  <div style={{fontSize:'7pt',color:GOLDD,fontWeight:700,textTransform:'uppercase',marginBottom:'10mm'}}>{c[0]}</div>
+                  <div style={{borderTop:`1px solid ${LINE2}`,paddingTop:'1.5mm',fontSize:'7.5pt',color:MUT,display:'flex',justifyContent:'space-between'}}><span>{T('Chữ ký','Signature')}</span><span>{T('Ngày','Date')}: ______</span></div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+
+    case 'troubleshooting':
+      return (
+        <table style={{width:'100%',borderCollapse:'collapse',marginTop:'2mm'}}>
+          <thead><tr><th style={{...th,width:'30%'}}>{T('Sự cố','Problem')}</th><th style={{...th,width:'32%'}}>{T('Nguyên nhân','Cause')}</th><th style={th}>{T('Cách xử lý','Action')}</th></tr></thead>
+          <tbody>{(sec.rows||[]).map(r=><tr key={r.id}><td style={{...td,fontWeight:600}}>{r.problem}</td><td style={td}>{r.cause}</td><td style={td}>{r.action}</td></tr>)}</tbody>
+        </table>
+      );
+
+    case 'documents':
+      return (
+        <div style={{marginTop:'1mm'}}>
+          {(sec.docs||[]).map(r=>(
+            <div key={r.id} style={{display:'flex',alignItems:'center',gap:'3mm',fontSize:'9pt',color:INK,padding:'1.6mm 0',borderBottom:`1px dotted ${LINE2}`}}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GOLDD} strokeWidth="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+              <span style={{fontWeight:600,flex:1}}>{r.name}</span>
+              {r.type && <span style={{fontSize:'7.5pt',color:GOLDD,background:GOLDSOFT,padding:'0.5mm 2mm',borderRadius:'3px',fontWeight:700}}>{r.type}</span>}
+            </div>
+          ))}
+        </div>
+      );
+
+    case 'revisions':
+      return (
+        <table style={{width:'100%',borderCollapse:'collapse',marginTop:'2mm'}}>
+          <thead><tr><th style={{...th,width:'12%'}}>Rev</th><th style={{...th,width:'22%'}}>{T('Ngày','Date')}</th><th style={{...th,width:'26%'}}>{T('Người thực hiện','By')}</th><th style={th}>{T('Nội dung thay đổi','Change description')}</th></tr></thead>
+          <tbody>{(sop.revisions||[]).map((r,i)=><tr key={i}><td style={{...td,fontFamily:MONO,fontWeight:700,textAlign:'center'}}>{String(r.rev).padStart(2,'0')}</td><td style={td}>{fmtDate(r.date)}</td><td style={td}>{r.by||'—'}</td><td style={td}>{r.desc||'—'}</td></tr>)}</tbody>
+        </table>
+      );
+
+    default: return null;
+  }
 }
 
 
