@@ -6,7 +6,7 @@
 <title>Service Report — Kiên Thịnh Eco</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
@@ -54,38 +54,60 @@
 <style>
   :root{
     /* Brand palette derived from Kiên Thịnh logo — Gold & Green */
-    --gold:#B8860B; --gold-2:#CD9B38; --gold-3:#A5760A; --gold-bright:#D9B85C;
+    --gold:#B8860B; --gold-2:#CD9B38; --gold-3:#8A6608; --gold-bright:#D9B85C;
     --gold-soft:#FBF3DF; --gold-line:#EAD9A8;
     --green:#0B7A47; --green-2:#0E8A50; --green-3:#095C36; --green-soft:#E3F3EA;
     /* "navy" name kept for compatibility — now a deep charcoal-green that pairs with gold */
-    --navy:#1A2E24; --navy-2:#23402F; --navy-3:#2E5140;
-    --steel:#6E7F73; --ice:#F0F1EC; --paper:#F7F6F1;
-    --line:#E6E3D8; --line-strong:#D3CFBE;
+    --navy:#16261E; --navy-2:#1F3527; --navy-3:#2E5140;
+    --steel:#5F6E64; --ice:#EEF0EA; --paper:#F6F7F3;
+    --surface:#FFFFFF;
+    --line:#E4E2D6; --line-strong:#CFCBBB;
     --accent:#0B7A47; --accent-soft:#E3F3EA;
     --amber:#B8860B; --amber-soft:#FBF3DF;
-    --red:#B23A2E; --red-soft:#FbE9E7;
+    --red:#B23A2E; --red-soft:#FBE9E7;
     --blue:#1F6FB2; --blue-soft:#E5F0F9;
-    --ink:#22271F; --ink-2:#4A4E43; --ink-3:#7A7D70;
-    /* PDF-specific brand tokens */
+    /* Ink scale — WCAG AAA on paper/surface */
+    --ink:#1C211A; --ink-2:#43483E; --ink-3:#6B6F63;
+    /* Swiss Modernism mathematical spacing scale (8px base unit) */
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+    --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+    /* Radius scale */
+    --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:20px;
+    /* Elevation — restrained, single-hue */
+    --sh-1:0 1px 2px rgba(22,38,30,.05);
+    --sh-2:0 1px 3px rgba(22,38,30,.07),0 1px 2px rgba(22,38,30,.04);
+    --sh-3:0 4px 16px rgba(22,38,30,.08),0 1px 3px rgba(22,38,30,.05);
+    --sh-4:0 12px 34px rgba(22,38,30,.12),0 2px 6px rgba(22,38,30,.06);
+    --ease:cubic-bezier(.2,.7,.3,1);
+    /* PDF-specific brand tokens — DO NOT CHANGE (PDF pipeline depends on these) */
     --pdf-ink:#1E2A22;
   }
-  *{-webkit-font-smoothing:antialiased;}
-  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--paper);color:var(--ink);margin:0;}
-  .mono{font-family:'JetBrains Mono',monospace;}
+  *{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  *,*::before,*::after{box-sizing:border-box;}
+  body{font-family:'Plus Jakarta Sans','Noto Sans',Arial,sans-serif;background:var(--paper);color:var(--ink);margin:0;font-feature-settings:'cv11','ss01';letter-spacing:-0.006em;}
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0;}
   .serif{font-family:'Noto Serif',Georgia,serif;}
-  ::-webkit-scrollbar{width:9px;height:9px;}
-  ::-webkit-scrollbar-thumb{background:#cfcabb;border-radius:9px;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-thumb{background:#d3cfbe;border-radius:10px;border:2px solid var(--paper);}
+  ::-webkit-scrollbar-thumb:hover{background:#c2bda8;}
   ::-webkit-scrollbar-track{background:transparent;}
-  .fade-in{animation:fade .35s ease both;}
+  .fade-in{animation:fade .3s var(--ease) both;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-  .slide-in{animation:slide .3s cubic-bezier(.2,.7,.3,1) both;}
+  .slide-in{animation:slide .28s var(--ease) both;}
   @keyframes slide{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:none;}}
   .spin{animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
   [contenteditable]:focus{outline:none;}
-  .card-shadow{box-shadow:0 1px 2px rgba(34,39,31,.04),0 1px 3px rgba(34,39,31,.06);}
-  .card-shadow-lg{box-shadow:0 6px 24px rgba(34,39,31,.09),0 1px 3px rgba(34,39,31,.06);}
-  .gold-text{background:linear-gradient(135deg,#A5760A 0%,#D9B85C 45%,#B8860B 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .card-shadow{box-shadow:var(--sh-2);}
+  .card-shadow-lg{box-shadow:var(--sh-4);}
+  .gold-text{background:linear-gradient(135deg,#8A6608 0%,#B8860B 45%,#D9B85C 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  /* Swiss Modernism: crisp focus-visible ring for keyboard nav (a11y) */
+  :focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:3px;}
+  button{cursor:pointer;}
+  button:disabled{cursor:not-allowed;}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;animation-iteration-count:1!important;}
+  }
   .no-print{}
   @media print{.no-print{display:none!important;}}
   .prose-report h3{font-size:11pt;font-weight:700;margin:14px 0 6px;color:var(--pdf-ink);}
@@ -102,10 +124,17 @@
   .pdf-page li{break-inside:avoid;}
   .pdf-page span{overflow:visible;}
   .drag-over{border-color:var(--gold)!important;background:var(--gold-soft)!important;}
-  input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:-1px;}
-  .tab-btn{transition:all .15s;}
-  /* Serif for report-facing headings in the app */
-  .app-title{font-family:'Noto Serif',Georgia,serif;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(11,122,71,.12);}
+  .tab-btn{transition:all .18s var(--ease);}
+  /* Swiss Modernism headings: tight tracking, strong weight (Plus Jakarta Sans) */
+  .app-title{font-family:'Plus Jakarta Sans','Noto Sans',sans-serif;letter-spacing:-0.022em;font-feature-settings:'ss01';}
+  .u-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);}
+  .u-press{transition:transform .12s var(--ease),background .18s var(--ease),border-color .18s var(--ease),box-shadow .18s var(--ease);}
+  .u-press:active{transform:translateY(1px);}
+  .u-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-2);}
+  .u-grid-lines{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:32px 32px;}
+  .hover-lift{transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);}
+  .hover-lift:hover{transform:translateY(-2px);box-shadow:var(--sh-3);}
 </style>
 </head>
 <body>
@@ -163,6 +192,24 @@ const DICT = {
     empty_reports:"Chưa có báo cáo nào. Nhấn “Báo cáo mới” để bắt đầu.",
     st_draft:"Nháp", st_progress:"Đang xử lý", st_completed:"Hoàn thành", st_reviewed:"Đã duyệt", st_sent:"Đã gửi", st_archived:"Lưu trữ",
     sec_info:"Thông tin chung", sec_overview:"Tổng quan & Hiện trạng", sec_work:"Công việc thực hiện",
+    sections:"Các mục",
+    nav_schedule:"Lịch làm việc", sched_title:"Lịch làm việc kỹ thuật", sched_sub:"Theo dõi & sắp xếp lịch công tác theo ngày, tuần, tháng",
+    sc_month:"Tháng", sc_week:"Tuần", sc_today:"Hôm nay", sc_add:"Thêm lịch", sc_new:"Lịch công tác mới", sc_edit:"Sửa lịch",
+    sc_all_tech:"Tất cả KTV", sc_none_day:"Chưa có lịch trong ngày này.", sc_none_week:"Tuần này chưa có lịch.",
+    sc_title:"Nội dung công việc", sc_type:"Loại công việc", sc_status:"Trạng thái", sc_tech:"Kỹ thuật viên",
+    sc_customer:"Khách hàng", sc_location:"Địa điểm", sc_start:"Giờ bắt đầu", sc_end:"Giờ kết thúc", sc_note:"Ghi chú",
+    sc_link_report:"Liên kết báo cáo", sc_from_customer:"Chọn khách hàng…",
+    sc_st_planned:"Dự kiến", sc_st_progress:"Đang làm", sc_st_done:"Hoàn thành", sc_st_urgent:"Khẩn", sc_st_cancelled:"Đã hủy",
+    sc_count_day:"lịch", sc_jobs:"công việc", sc_upcoming:"Sắp tới", sc_stat_month:"Trong tháng", sc_stat_week:"Trong tuần", sc_stat_today:"Hôm nay", sc_stat_urgent:"Khẩn",
+    sc_manage_tech:"Quản lý KTV", sc_add_tech:"Thêm KTV", sc_tech_name:"Tên kỹ thuật viên", sc_delete_confirm:"Xóa lịch này?",
+    sc_wk_all:"Cả ngày",
+    cloud_title:"Dữ liệu chung (Cloud)", cloud_sub:"Đồng bộ dữ liệu cho cả đội qua Supabase",
+    cloud_url:"Supabase URL", cloud_key:"Khóa công khai (anon key)", cloud_gate:"Mật khẩu chung (để vào phần mềm)",
+    cloud_enable:"Bật đồng bộ", cloud_disable:"Tắt đồng bộ", cloud_test:"Kiểm tra kết nối", cloud_save_reload:"Lưu & tải lại",
+    cloud_on:"Đang đồng bộ", cloud_off:"Chưa bật (lưu cục bộ)", cloud_help:"Dán 2 thông tin từ Supabase (Project URL và anon public key). Đặt thêm mật khẩu chung để bảo vệ. Sau khi lưu, app sẽ tải lại.",
+    cloud_ok:"Kết nối thành công!", cloud_fail:"Kết nối thất bại. Kiểm tra lại URL/Key và bảng app_state.",
+    cloud_pending:"Chờ lưu…", cloud_saving:"Đang lưu…", cloud_saved:"Đã đồng bộ", cloud_error:"Lỗi đồng bộ", cloud_local:"Cục bộ",
+    gate_title:"Nhập mật khẩu", gate_sub:"Phần mềm được bảo vệ bằng mật khẩu chung của đội.", gate_ph:"Mật khẩu", gate_enter:"Vào phần mềm", gate_wrong:"Sai mật khẩu, thử lại.",
     sec_results:"Kết quả & Khuyến nghị", sec_photos:"Hình ảnh hiện trường",
     step:"Phần", back:"Quay lại", saveExit:"Lưu & thoát", preview:"Xem trước", exportPdf:"Xuất PDF",
     autosaved:"Đã lưu tự động", saving:"Đang lưu…",
@@ -284,6 +331,24 @@ const DICT = {
     empty_reports:"No reports yet. Click “New report” to begin.",
     st_draft:"Draft", st_progress:"In progress", st_completed:"Completed", st_reviewed:"Reviewed", st_sent:"Sent", st_archived:"Archived",
     sec_info:"General information", sec_overview:"Overview & Condition", sec_work:"Work performed",
+    sections:"Sections",
+    nav_schedule:"Schedule", sched_title:"Technician Schedule", sched_sub:"Track & plan field work by day, week and month",
+    sc_month:"Month", sc_week:"Week", sc_today:"Today", sc_add:"Add job", sc_new:"New field job", sc_edit:"Edit job",
+    sc_all_tech:"All techs", sc_none_day:"No jobs on this day.", sc_none_week:"No jobs this week.",
+    sc_title:"Job description", sc_type:"Job type", sc_status:"Status", sc_tech:"Technician",
+    sc_customer:"Customer", sc_location:"Location", sc_start:"Start time", sc_end:"End time", sc_note:"Note",
+    sc_link_report:"Link report", sc_from_customer:"Pick customer…",
+    sc_st_planned:"Planned", sc_st_progress:"In progress", sc_st_done:"Done", sc_st_urgent:"Urgent", sc_st_cancelled:"Cancelled",
+    sc_count_day:"jobs", sc_jobs:"jobs", sc_upcoming:"Upcoming", sc_stat_month:"This month", sc_stat_week:"This week", sc_stat_today:"Today", sc_stat_urgent:"Urgent",
+    sc_manage_tech:"Manage techs", sc_add_tech:"Add tech", sc_tech_name:"Technician name", sc_delete_confirm:"Delete this job?",
+    sc_wk_all:"All day",
+    cloud_title:"Shared data (Cloud)", cloud_sub:"Sync data for the whole team via Supabase",
+    cloud_url:"Supabase URL", cloud_key:"Public anon key", cloud_gate:"Shared password (to open the app)",
+    cloud_enable:"Enable sync", cloud_disable:"Disable sync", cloud_test:"Test connection", cloud_save_reload:"Save & reload",
+    cloud_on:"Syncing", cloud_off:"Off (local only)", cloud_help:"Paste your Supabase Project URL and anon public key. Add a shared password to protect access. The app reloads after saving.",
+    cloud_ok:"Connected successfully!", cloud_fail:"Connection failed. Check URL/Key and the app_state table.",
+    cloud_pending:"Pending…", cloud_saving:"Saving…", cloud_saved:"Synced", cloud_error:"Sync error", cloud_local:"Local",
+    gate_title:"Enter password", gate_sub:"This app is protected by a shared team password.", gate_ph:"Password", gate_enter:"Open app", gate_wrong:"Wrong password, try again.",
     sec_results:"Results & Recommendation", sec_photos:"Site photos",
     step:"Section", back:"Back", saveExit:"Save & exit", preview:"Preview", exportPdf:"Export PDF",
     autosaved:"Autosaved", saving:"Saving…",
@@ -375,7 +440,65 @@ const useT = () => useContext(LangCtx);
    ============================================================ */
 const DB_KEY = "kt_service_report_v1";
 const loadDB = () => { try { return JSON.parse(localStorage.getItem(DB_KEY)) || null; } catch { return null; } };
-const saveDB = (d) => { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch {} };
+
+/* ============================================================
+   CLOUD SYNC (Supabase) — shared data for the whole team
+   Stores the entire DB as one JSON row (id='main') in table `app_state`.
+   Config lives in localStorage (URL + anon key + gate password), set in Settings.
+   Strategy: local-first + debounced push + periodic pull (last-write-wins).
+   ============================================================ */
+const CLOUD_CFG_KEY = "kt_cloud_cfg_v1";
+const loadCloudCfg = () => { try { return JSON.parse(localStorage.getItem(CLOUD_CFG_KEY)) || {}; } catch { return {}; } };
+const saveCloudCfg = (c) => { try { localStorage.setItem(CLOUD_CFG_KEY, JSON.stringify(c)); } catch {} };
+const cloudEnabled = () => { const c = loadCloudCfg(); return !!(c.url && c.key); };
+
+const cloudBus = (typeof window!=='undefined') ? (window.__ktBus = window.__ktBus || new EventTarget()) : null;
+let __cloudRev = 0;
+let __pushTimer = null;
+let __pushing = false;
+const cloudEmit = (type, detail)=>{ try{ cloudBus && cloudBus.dispatchEvent(new CustomEvent(type,{detail})); }catch{} };
+
+const cloudHeaders = (cfg)=>({ 'apikey': cfg.key, 'Authorization': `Bearer ${cfg.key}`, 'Content-Type': 'application/json' });
+const cloudBase = (cfg)=> `${(cfg.url||'').replace(/\/$/,'')}/rest/v1/app_state`;
+
+async function cloudPull(){
+  const cfg = loadCloudCfg(); if(!cfg.url || !cfg.key) return null;
+  try{
+    const res = await fetch(`${cloudBase(cfg)}?id=eq.main&select=data,updated_at`, { headers: cloudHeaders(cfg) });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const rows = await res.json();
+    if(Array.isArray(rows) && rows.length){ return rows[0]; }
+    return null;
+  }catch(e){ cloudEmit('cloud:error',{op:'pull',msg:String(e.message||e)}); return null; }
+}
+
+async function cloudPush(db){
+  const cfg = loadCloudCfg(); if(!cfg.url || !cfg.key) return false;
+  __pushing = true; cloudEmit('cloud:status',{state:'saving'});
+  try{
+    const body = JSON.stringify([{ id:'main', data:db, updated_at:new Date().toISOString() }]);
+    const res = await fetch(`${cloudBase(cfg)}?on_conflict=id`, {
+      method:'POST',
+      headers:{ ...cloudHeaders(cfg), 'Prefer':'resolution=merge-duplicates,return=representation' },
+      body,
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const rows = await res.json().catch(()=>[]);
+    if(Array.isArray(rows)&&rows[0]&&rows[0].updated_at) __cloudRev = new Date(rows[0].updated_at).getTime();
+    cloudEmit('cloud:status',{state:'saved'});
+    return true;
+  }catch(e){ cloudEmit('cloud:error',{op:'push',msg:String(e.message||e)}); cloudEmit('cloud:status',{state:'error'}); return false; }
+  finally{ __pushing = false; }
+}
+
+const saveDB = (d) => {
+  try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch {}
+  if(cloudEnabled()){
+    cloudEmit('cloud:status',{state:'pending'});
+    clearTimeout(__pushTimer);
+    __pushTimer = setTimeout(()=>{ cloudPush(d); }, 1200);
+  }
+};
 
 const uid = () => Math.random().toString(36).slice(2,9);
 const escHtml = (s)=> (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -716,6 +839,50 @@ function buildDemoSOP(){
   return s;
 }
 
+/* ============================================================
+   WORK SCHEDULE MODULE (Lịch làm việc kỹ thuật) — data model
+   ============================================================ */
+const SCHED_TYPES = [
+  {id:'service',    vi:'Bảo trì / Dịch vụ',   en:'Service / Maintenance', c:'#0B7A47', bg:'#E3F3EA'},
+  {id:'install',    vi:'Lắp đặt',              en:'Installation',          c:'#1F6FB2', bg:'#E5F0F9'},
+  {id:'calibration',vi:'Hiệu chuẩn',           en:'Calibration',           c:'#8A6608', bg:'#FBF3DF'},
+  {id:'survey',     vi:'Khảo sát',             en:'Site Survey',           c:'#6D4AA5', bg:'#EFE9F7'},
+  {id:'delivery',   vi:'Giao hàng / Bàn giao', en:'Delivery / Handover',   c:'#0E7490', bg:'#E0F2F6'},
+  {id:'meeting',    vi:'Họp / Làm việc KH',    en:'Meeting',               c:'#B45309', bg:'#FBEEDF'},
+  {id:'other',      vi:'Khác',                 en:'Other',                 c:'#5F6E64', bg:'#EEF0EA'},
+];
+const schedType = (id)=> SCHED_TYPES.find(x=>x.id===id) || SCHED_TYPES[SCHED_TYPES.length-1];
+const SCHED_STATUS = {
+  planned:    {k:'sc_st_planned',    c:'#8A6608', bg:'#FBF3DF', dot:'#E0A100'},
+  progress:   {k:'sc_st_progress',   c:'#1F6FB2', bg:'#E5F0F9', dot:'#2F88D6'},
+  done:       {k:'sc_st_done',       c:'#0B7A47', bg:'#E3F3EA', dot:'#0B7A47'},
+  urgent:     {k:'sc_st_urgent',     c:'#B23A2E', bg:'#FBE9E7', dot:'#E23D2E'},
+  cancelled:  {k:'sc_st_cancelled',  c:'#6B7280', bg:'#EEF0F2', dot:'#9AA1A9'},
+};
+const DEFAULT_TECHS = [
+  {id:'t1', name:'Trần Đình Thịnh',    color:'#0B7A47'},
+  {id:'t2', name:'Nguyễn Phan Anh Tuấn',color:'#1F6FB2'},
+  {id:'t3', name:'Đội Dịch vụ Kỹ thuật', color:'#8A6608'},
+];
+const blankSchedule = (date)=>({
+  id:uid(), date: date||todayISO(), start:'08:00', end:'',
+  title:'', type:'service', status:'planned',
+  techId:'t1', customer:'', location:'', note:'',
+});
+function buildDemoSchedule(){
+  const d = new Date(); const y=d.getFullYear(), m=d.getMonth();
+  const iso = (day)=> new Date(y,m,day).toISOString().slice(0,10);
+  const today = d.getDate();
+  const day1 = Math.min(today+1, 27), day2 = Math.max(today-1,1), day3 = Math.min(today+3,27);
+  return [
+    {id:uid(), date:iso(today), start:'08:30', end:'11:30', title:'Bảo trì hệ thống quan trắc nước thải', type:'service', status:'progress', techId:'t1', customer:'ABC Manufacturing Vietnam', location:'Nhà máy ABC – Bình Dương', note:'Mang theo sensor pH dự phòng'},
+    {id:uid(), date:iso(today), start:'14:00', end:'16:00', title:'Hiệu chuẩn cảm biến pH', type:'calibration', status:'planned', techId:'t2', customer:'ABC Manufacturing Vietnam', location:'Nhà máy ABC – Bình Dương', note:''},
+    {id:uid(), date:iso(day1), start:'09:00', end:'', title:'Lắp đặt thiết bị đo TSS', type:'install', status:'planned', techId:'t1', customer:'Công ty Lâm Tuệ Đức', location:'KCN Tây Ninh', note:'Cần xe tải nhỏ'},
+    {id:uid(), date:iso(day2), start:'08:00', end:'', title:'Khảo sát hiện trường lắp trạm', type:'survey', status:'done', techId:'t3', customer:'Nhà máy giấy Miền Nam', location:'Long An', note:''},
+    {id:uid(), date:iso(day3), start:'10:00', end:'', title:'Xử lý sự cố analyzer báo lỗi', type:'service', status:'urgent', techId:'t2', customer:'ABC Manufacturing Vietnam', location:'Bình Dương', note:'Khách báo gấp'},
+  ];
+}
+
 const initDB = () => {
   const existing = loadDB();
   if (existing) {
@@ -725,6 +892,9 @@ const initDB = () => {
     if (!Array.isArray(existing.equipmentLib)) existing.equipmentLib = EQUIP_LIB_SEED.map(e=>({...e}));
     // migration: seed SOP module (Document Platform) if missing — does not touch Service Report data
     if (!Array.isArray(existing.sops)) existing.sops = [buildDemoSOP()];
+    // migration: seed Work Schedule module if missing
+    if (!Array.isArray(existing.schedule)) existing.schedule = buildDemoSchedule();
+    if (!Array.isArray(existing.technicians)) existing.technicians = DEFAULT_TECHS.map(x=>({...x}));
     return existing;
   }
   const settings = {...DEFAULT_SETTINGS};
@@ -733,6 +903,8 @@ const initDB = () => {
     settings,
     reports:[demo],
     sops:[buildDemoSOP()],
+    schedule: buildDemoSchedule(),
+    technicians: DEFAULT_TECHS.map(x=>({...x})),
     equipmentLib: EQUIP_LIB_SEED.map(e=>({...e})),
     customers:[
       {id:uid(),company:"ABC Manufacturing Vietnam",address:"KCN Sóng Thần, Bình Dương",contact:"Nguyễn Văn A",position:"Trưởng phòng Môi trường",phone:"0901 234 567",email:"moitruong@abc-mfg.vn"},
@@ -756,6 +928,13 @@ const I = {
   equipment:<><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></>,
   templates:<><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>,
   history:<><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></>,
+  calendar:<><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></>,
+  clock:<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>,
+  mapPin:<><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></>,
+  userTech:<><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></>,
+  cloud:<><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 8.5 4 4 0 0 0 6.5 19h11z"/></>,
+  lock:<><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></>,
+  refresh:<><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></>,
   settings:<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></>,
   plus:<><path d="M12 5v14M5 12h14"/></>,
   chevR:<><path d="m9 18 6-6-6-6"/></>,
@@ -794,33 +973,33 @@ function StatusBadge({status}) {
 function Field({label, value, onChange, placeholder, type='text', full, mono}) {
   return (
     <label className={"flex flex-col gap-1.5 " + (full?"col-span-2":"")}>
-      <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{label}</span>
+      <span className="u-label">{label}</span>
       <input type={type} value={value||""} onChange={e=>onChange(e.target.value)} placeholder={placeholder}
-        className={"w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] text-[var(--ink)] placeholder:text-[var(--ink-3)] focus:border-[var(--accent)] transition "+(mono?"mono":"")}/>
+        className={"w-full px-3.5 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px] text-[var(--ink)] placeholder:text-[var(--ink-3)] transition "+(mono?"mono":"")}/>
     </label>
   );
 }
 function Area({label, value, onChange, placeholder, rows=3, hint}) {
   return (
     <label className="flex flex-col gap-1.5 col-span-2">
-      <span className="text-[12px] font-semibold text-[var(--ink-3)] uppercase tracking-wide">{label}</span>
+      <span className="u-label">{label}</span>
       <textarea rows={rows} value={value||""} onChange={e=>onChange(e.target.value)} placeholder={placeholder||hint}
-        className="w-full px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] text-[var(--ink)] leading-relaxed placeholder:text-[var(--ink-3)] focus:border-[var(--accent)] transition resize-y"/>
+        className="w-full px-3.5 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px] text-[var(--ink)] leading-relaxed placeholder:text-[var(--ink-3)] transition resize-y"/>
     </label>
   );
 }
 function Btn({children, onClick, variant='primary', size='md', className='', ...p}) {
-  const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition active:scale-[.98] disabled:opacity-50 disabled:cursor-not-allowed";
+  const base = "u-press inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--r-md)] disabled:opacity-50 disabled:cursor-not-allowed";
   const sizes = {sm:"text-[13px] px-3 py-2", md:"text-[14px] px-4 py-2.5", lg:"text-[15px] px-5 py-3"};
   const variants = {
-    primary:"bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] card-shadow",
-    accent:"bg-[var(--accent)] text-white hover:brightness-110 card-shadow",
-    gold:"text-white card-shadow hover:brightness-105",
+    primary:"bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] shadow-[var(--sh-2)]",
+    accent:"bg-[var(--accent)] text-white hover:brightness-110 shadow-[var(--sh-2)]",
+    gold:"text-white shadow-[var(--sh-2)] hover:brightness-105",
     ghost:"bg-transparent text-[var(--ink-2)] hover:bg-[var(--ice)]",
     outline:"bg-white text-[var(--ink)] border border-[var(--line-strong)] hover:border-[var(--gold)] hover:bg-[var(--gold-soft)]",
     danger:"bg-white text-[var(--red)] border border-[#E4C4BF] hover:bg-[var(--red-soft)]",
   };
-  const style = variant==='gold' ? {background:'linear-gradient(135deg,#A5760A,#C99A2E)'} : undefined;
+  const style = variant==='gold' ? {background:'linear-gradient(135deg,#8A6608,#B8860B)'} : undefined;
   return <button onClick={onClick} style={style} className={`${base} ${sizes[size]} ${variants[variant]} ${className}`} {...p}>{children}</button>;
 }
 
@@ -1016,7 +1195,7 @@ function AIModal({apiKey, mode, sourceText, onApply, onClose}){
     setBusy(false);
   };
   return (
-    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="font-bold text-[16px] flex items-center gap-2"><span className="text-[var(--accent)]"><Icon d={I.spark} s={18} sw={2}/></span>{t.ai_title}</h3>
@@ -1194,7 +1373,7 @@ function SignatureModal({sig, roleLabel, onSave, onClose}){
   const save = ()=>{ onSave({name, pos, img: canvasRef.current.toDataURL('image/png')}); };
 
   return (
-    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl w-full max-w-md card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="font-bold text-[16px]">{roleLabel}</h3>
@@ -1249,6 +1428,48 @@ function App(){
   const [view, setView] = useState('dashboard'); // dashboard|reports|customers|equipment|templates|history|settings|builder|preview
   const [activeReport, setActiveReport] = useState(null);
   const t = DICT[lang];
+
+  // ---- Cloud sync state ----
+  const [cloudOn] = useState(cloudEnabled());
+  const [syncState, setSyncState] = useState('idle');
+  const [unlocked, setUnlocked] = useState(()=>{
+    const c = loadCloudCfg();
+    if(!c.url || !c.key || !c.gate) return true;
+    return sessionStorage.getItem('kt_gate_ok')==='1';
+  });
+  const lastPulledRef = useRef(0);
+
+  const applyCloud = useCallback((data, rev)=>{
+    if(!data) return;
+    __cloudRev = rev || Date.now();
+    lastPulledRef.current = __cloudRev;
+    try{ localStorage.setItem(DB_KEY, JSON.stringify(data)); }catch{}
+    setDB(data);
+    if(data.lang) setLang(data.lang);
+  },[]);
+
+  useEffect(()=>{
+    if(!cloudOn) return;
+    let alive = true;
+    const pull = async ()=>{
+      const row = await cloudPull();
+      if(!alive || !row) return;
+      const rev = new Date(row.updated_at).getTime();
+      if(rev > (__cloudRev||0) && !__pushing){ applyCloud(row.data, rev); }
+      else if(!__cloudRev){ __cloudRev = rev; }
+    };
+    (async ()=>{
+      const row = await cloudPull();
+      if(!alive) return;
+      if(row && row.data){ applyCloud(row.data, new Date(row.updated_at).getTime()); }
+      else { cloudPush(db); }
+      setSyncState('saved');
+    })();
+    const id = setInterval(pull, 4000);
+    const onStatus = (e)=> setSyncState(e.detail.state);
+    cloudBus.addEventListener('cloud:status', onStatus);
+    return ()=>{ alive=false; clearInterval(id); cloudBus.removeEventListener('cloud:status', onStatus); };
+  },[cloudOn]);
 
   const persist = useCallback((next)=>{ setDB(next); saveDB(next); },[]);
   const setLangAndSave = (l)=>{ setLang(l); persist({...db, lang:l}); };
@@ -1319,24 +1540,52 @@ function App(){
 
   const report = db.reports.find(r=>r.id===activeReport);
   const sop = sops.find(s=>s.id===activeSOP);
+  const [navOpen, setNavOpen] = useState(false);
+  const go = (v)=>{ setView(v); setNavOpen(false); };
+  // hide the mobile top bar on full-screen editor/preview views (they have their own top bars)
+  const immersive = ['builder','preview','sopBuilder','sopPreview'].includes(view);
+
+  if(!unlocked){
+    return <LangCtx.Provider value={t}><GateScreen onUnlock={()=>{ sessionStorage.setItem('kt_gate_ok','1'); setUnlocked(true); }} settings={db.settings}/></LangCtx.Provider>;
+  }
 
   return (
     <LangCtx.Provider value={t}>
       <div className="flex h-screen overflow-hidden text-[var(--ink)]">
-        <Sidebar view={view} setView={(v)=>{setView(v);}} settings={db.settings} lang={lang} setLang={setLangAndSave}/>
-        <main className="flex-1 overflow-y-auto bg-[var(--paper)]">
-          {view==='dashboard' && <Dashboard db={db} onNew={createReport} onOpen={openReport} setView={setView}/>}
+        {/* Sidebar: static on desktop, off-canvas drawer on mobile */}
+        <div className={"fixed inset-y-0 left-0 z-50 transition-transform duration-300 md:static md:translate-x-0 "+(navOpen?"translate-x-0":"-translate-x-full")}>
+          <Sidebar view={view} setView={go} settings={db.settings} lang={lang} setLang={setLangAndSave} cloudOn={cloudOn} syncState={syncState}/>
+        </div>
+        {navOpen && <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-[2px] md:hidden" onClick={()=>setNavOpen(false)}></div>}
+
+        <main className="flex-1 overflow-y-auto bg-[var(--paper)] flex flex-col">
+          {/* Mobile top bar */}
+          {!immersive && (
+            <div className="md:hidden sticky top-0 z-30 flex items-center gap-3 px-4 h-14 bg-white/90 backdrop-blur border-b border-[var(--line)]">
+              <button onClick={()=>setNavOpen(true)} aria-label="Menu" className="u-press p-2 -ml-2 rounded-[var(--r-md)] hover:bg-[var(--ice)] text-[var(--ink-2)] min-w-[44px] min-h-[44px] flex items-center justify-center">
+                <Icon d={I.list} s={22}/>
+              </button>
+              <div className="flex items-center gap-2 min-w-0">
+                <img src={db.settings.logo||LOGO_MARK} className="w-7 h-7 object-contain shrink-0" alt=""/>
+                <span className="app-title font-extrabold text-[15px] truncate">Documentation System</span>
+              </div>
+            </div>
+          )}
+          <div className="flex-1 min-h-0">
+          {view==='dashboard' && <Dashboard db={db} onNew={createReport} onOpen={openReport} setView={go}/>}
           {view==='sop' && <SOPLibrary db={db} onOpen={openSOP} onNew={createSOP} onDelete={deleteSOP} onDup={duplicateSOP}/>}
           {view==='sopBuilder' && sop && <SOPBuilder sop={sop} update={(p)=>updateSOP(sop.id,p)} db={db} persist={persist} onExit={()=>setView('sop')} onPreview={()=>setView('sopPreview')} onNeedKey={()=>setView('settings')}/>}
           {view==='sopPreview' && sop && <SOPPreview sop={sop} settings={db.settings} lang={lang} onBack={()=>setView('sopBuilder')} update={(p)=>updateSOP(sop.id,p)}/>}
           {view==='reports' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.nav_reports}/>}
           {view==='history' && <ReportsList db={db} onOpen={openReport} onNew={createReport} onDelete={deleteReport} onDup={duplicateReport} title={t.history_title} sub={t.history_sub}/>}
           {view==='customers' && <Customers db={db} persist={persist}/>}
+          {view==='schedule' && <ScheduleView db={db} persist={persist}/>}
           {view==='equipment' && <EquipmentLib db={db} persist={persist}/>}
           {view==='templates' && <Templates onCreate={createReport}/>}
           {view==='settings' && <Settings db={db} persist={persist}/>}
           {view==='builder' && report && <Builder report={report} update={(p)=>updateReport(report.id,p)} db={db} persist={persist} onExit={()=>setView('dashboard')} onPreview={()=>setView('preview')} onNeedKey={()=>setView('settings')}/>}
           {view==='preview' && report && <PreviewScreen report={report} settings={db.settings} lang={lang} onBack={()=>setView('builder')} update={(p)=>updateReport(report.id,p)}/>}
+          </div>
         </main>
       </div>
     </LangCtx.Provider>
@@ -1346,7 +1595,7 @@ function App(){
 /* ============================================================
    SIDEBAR
    ============================================================ */
-function Sidebar({view, setView, settings, lang, setLang}){
+function Sidebar({view, setView, settings, lang, setLang, cloudOn, syncState}){
   const t = useT();
   const [deferred, setDeferred] = useState(null);
   const [installed, setInstalled] = useState(false);
@@ -1361,6 +1610,7 @@ function Sidebar({view, setView, settings, lang, setLang}){
     {items:[{id:'dashboard', k:'nav_dashboard', icon:I.dash}]},
     {label:'grp_service', items:[
       {id:'reports', k:'nav_reports', icon:I.reports},
+      {id:'schedule', k:'nav_schedule', icon:I.calendar},
       {id:'customers', k:'nav_customers', icon:I.customers},
       {id:'equipment', k:'nav_equipment', icon:I.equipment},
       {id:'history', k:'nav_history', icon:I.history},
@@ -1375,31 +1625,38 @@ function Sidebar({view, setView, settings, lang, setLang}){
     || ((view==='builder'||view==='preview')&&id==='reports')
     || ((view==='sopBuilder'||view==='sopPreview')&&id==='sop');
   return (
-    <aside className="w-[248px] shrink-0 bg-[var(--navy)] text-white flex flex-col no-print" style={{background:'linear-gradient(180deg,#1A2E24 0%,#16261E 100%)'}}>
-      <div className="px-5 pt-6 pb-5 border-b border-white/8">
+    <aside className="w-[256px] shrink-0 text-white flex flex-col no-print relative" style={{background:'var(--navy)'}}>
+      {/* gold hairline on right edge */}
+      <div className="absolute top-0 right-0 w-px h-full" style={{background:'linear-gradient(180deg,transparent,rgba(184,134,11,.35),transparent)'}}></div>
+      <div className="px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center overflow-hidden shrink-0">
-            <img src={settings.logo||LOGO_MARK} className="w-9 h-9 object-contain"/>
+          <div className="w-11 h-11 rounded-[var(--r-md)] bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-[var(--sh-2)]">
+            <img src={settings.logo||LOGO_MARK} className="w-9 h-9 object-contain" alt="Logo Kiên Thịnh"/>
           </div>
-          <div>
-            <div className="app-title font-bold text-[15.5px] tracking-tight leading-none">Service Report</div>
-            <div className="text-[11px] mt-1" style={{color:'var(--gold-bright)'}}>{settings.brand}</div>
+          <div className="min-w-0">
+            <div className="app-title font-extrabold text-[15px] leading-tight">Documentation<br/>System</div>
           </div>
         </div>
+        <div className="mt-3.5 flex items-center gap-2">
+          <span className="h-px flex-1" style={{background:'rgba(255,255,255,.1)'}}></span>
+          <span className="text-[10px] font-bold tracking-[.14em]" style={{color:'var(--gold-bright)'}}>{(settings.brand||'').toUpperCase()}</span>
+          <span className="h-px flex-1" style={{background:'rgba(255,255,255,.1)'}}></span>
+        </div>
       </div>
-      <nav className="flex-1 px-3 pt-3 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-3 pt-1 space-y-0.5 overflow-y-auto">
         {groups.map((g,gi)=>(
-          <div key={gi} className={gi>0?"pt-3":""}>
-            {g.label && <div className="px-3 pb-1.5 text-[10px] font-bold tracking-widest text-white/35">{t[g.label]}</div>}
+          <div key={gi} className={gi>0?"pt-4":""}>
+            {g.label && <div className="px-3 pb-2 text-[10px] font-extrabold tracking-[.16em] text-white/30">{t[g.label]}</div>}
             {g.items.map(it=>{
               const on = isActive(it.id);
               return (
                 <button key={it.id} onClick={()=>setView(it.id)}
-                  className={"relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-medium transition "+
-                    (on ? "text-white" : "text-white/55 hover:text-white hover:bg-white/5")}
-                  style={on?{background:'rgba(184,134,11,.14)'}:{}}>
-                  {on && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r" style={{background:'linear-gradient(180deg,#D9B85C,#B8860B)'}}></span>}
-                  <span style={on?{color:'var(--gold-bright)'}:{}}><Icon d={it.icon} s={19}/></span>
+                  aria-current={on?'page':undefined}
+                  className={"u-press relative w-full flex items-center gap-3 px-3 py-2.5 rounded-[var(--r-md)] text-[14px] transition min-h-[44px] "+
+                    (on ? "text-white font-semibold" : "text-white/60 font-medium hover:text-white hover:bg-white/[.06]")}
+                  style={on?{background:'rgba(184,134,11,.16)'}:{}}>
+                  {on && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full" style={{background:'linear-gradient(180deg,#D9B85C,#B8860B)'}}></span>}
+                  <span style={on?{color:'var(--gold-bright)'}:{}}><Icon d={it.icon} s={19} sw={on?2:1.8}/></span>
                   {t[it.k]}
                 </button>
               );
@@ -1407,23 +1664,44 @@ function Sidebar({view, setView, settings, lang, setLang}){
           </div>
         ))}
       </nav>
-      <div className="p-3 border-t border-white/10 space-y-1">
+      <div className="p-3 mt-2 border-t border-white/[.08] space-y-1">
+        {cloudOn && (()=>{
+          const map = {
+            saved:  {c:'#3DBF7E', label:t.cloud_saved,   pulse:false},
+            saving: {c:'#E0A100', label:t.cloud_saving,  pulse:true},
+            pending:{c:'#E0A100', label:t.cloud_pending, pulse:true},
+            error:  {c:'#E23D2E', label:t.cloud_error,   pulse:false},
+            idle:   {c:'#3DBF7E', label:t.cloud_saved,   pulse:false},
+          };
+          const st = map[syncState]||map.idle;
+          return (
+            <div className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[var(--r-md)] text-[12px] font-semibold text-white/60">
+              <span className={"w-2 h-2 rounded-full "+(st.pulse?"animate-pulse":"")} style={{background:st.c}}></span>
+              <Icon d={I.cloud} s={15}/>{st.label}
+            </div>
+          );
+        })()}
+        {!cloudOn && (
+          <div className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[var(--r-md)] text-[12px] font-semibold text-white/45">
+            <Icon d={I.cloud} s={15}/>{t.cloud_local}
+          </div>
+        )}
         {deferred && !installed && (
           <button onClick={install}
-            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] font-semibold text-white hover:brightness-105 transition"
-            style={{background:'linear-gradient(135deg,#A5760A,#C99A2E)'}}>
+            className="u-press w-full flex items-center gap-2.5 px-3 py-2.5 rounded-[var(--r-md)] text-[13px] font-semibold text-white hover:brightness-105 min-h-[44px]"
+            style={{background:'linear-gradient(135deg,#8A6608,#B8860B)'}}>
             <Icon d={I.download} s={17}/>{t.install_app}
           </button>
         )}
         {installed && (
-          <div className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[12px] font-semibold text-white/60">
+          <div className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[var(--r-md)] text-[12px] font-semibold text-white/55">
             <Icon d={I.check} s={16}/>{t.offline_ready}
           </div>
         )}
         <button onClick={()=>setLang(lang==='vi'?'en':'vi')}
-          className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/5 transition">
+          className="u-press w-full flex items-center justify-between px-3 py-2.5 rounded-[var(--r-md)] text-[13px] font-medium text-white/65 hover:text-white hover:bg-white/[.06] min-h-[44px]">
           <span className="flex items-center gap-2.5"><Icon d={I.globe} s={17}/>{t.langFull}</span>
-          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-white/10">{t.lang}</span>
+          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-white/10">{t.lang}</span>
         </button>
       </div>
     </aside>
@@ -1453,69 +1731,91 @@ function Dashboard({db, onNew, onOpen, setView}){
   ];
   const sopCount = (db.sops||[]).length;
   return (
-    <div className="p-8 max-w-[1200px] mx-auto fade-in">
-      <header className="mb-7">
-        <h1 className="app-title text-[27px] font-bold tracking-tight text-[var(--ink)]">{t.dash_title}</h1>
-        <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.dash_sub}</p>
+    <div className="p-8 lg:p-10 max-w-[1200px] mx-auto fade-in">
+      <header className="mb-8 flex items-end justify-between flex-wrap gap-4">
+        <div>
+          <div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{t.dash_sub}</div>
+          <h1 className="app-title text-[30px] font-extrabold text-[var(--ink)] leading-none">{t.dash_title}</h1>
+        </div>
+        <Btn variant="gold" onClick={()=>onNew('inspection')}><Icon d={I.plus} s={17} sw={2.2}/>{t.new_report}</Btn>
       </header>
 
       {/* Document Platform modules */}
-      <div className="grid md:grid-cols-2 gap-4 mb-8">
+      <div className="grid md:grid-cols-3 gap-5 mb-9">
         <button onClick={()=>setView('reports')}
-          className="group text-left rounded-2xl p-6 text-white card-shadow relative overflow-hidden hover:brightness-105 transition"
-          style={{background:'linear-gradient(135deg,#1A2E24,#23402F)'}}>
-          <div className="absolute -right-6 -bottom-6 opacity-10"><Icon d={I.reports} s={130} sw={1}/></div>
+          className="hover-lift group text-left rounded-[var(--r-xl)] p-6 text-white relative overflow-hidden shadow-[var(--sh-3)]"
+          style={{background:'var(--navy)'}}>
+          <div className="absolute inset-0 u-grid-lines opacity-[0.04]"></div>
+          <div className="absolute -right-8 -bottom-8 opacity-[0.08]"><Icon d={I.reports} s={150} sw={1}/></div>
           <div className="relative">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{background:'linear-gradient(135deg,#A5760A,#C99A2E)'}}><Icon d={I.reports} s={22}/></div>
-            <div className="app-title text-[19px] font-bold mb-1">{t.svc_module}</div>
-            <p className="text-[13px] text-white/70 mb-4 max-w-[85%]">{t.svc_module_desc}</p>
-            <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold" style={{color:'var(--gold-bright)'}}>{t.svc_open} <Icon d={I.chevR} s={16}/></span>
-            <span className="absolute top-0 right-0 text-[12px] font-bold mono text-white/40">{r.length}</span>
+            <div className="flex items-center justify-between mb-5">
+              <div className="w-12 h-12 rounded-[var(--r-md)] flex items-center justify-center shadow-[var(--sh-2)]" style={{background:'linear-gradient(135deg,#8A6608,#B8860B)'}}><Icon d={I.reports} s={23}/></div>
+              <span className="mono text-[13px] font-bold text-white/40 tabular-nums">{String(r.length).padStart(2,'0')}</span>
+            </div>
+            <div className="app-title text-[18px] font-extrabold mb-1.5">{t.svc_module}</div>
+            <p className="text-[12.5px] leading-relaxed text-white/65 mb-5">{t.svc_module_desc}</p>
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-bold" style={{color:'var(--gold-bright)'}}>{t.svc_open}<Icon d={I.chevR} s={16} sw={2.2}/></span>
           </div>
         </button>
         <button onClick={()=>setView('sop')}
-          className="group text-left rounded-2xl p-6 card-shadow relative overflow-hidden bg-white border border-[var(--line)] hover:border-[var(--gold)] transition">
-          <div className="absolute -right-6 -bottom-6 opacity-[0.06] text-[var(--ink)]"><Icon d={I.sop} s={130} sw={1}/></div>
+          className="hover-lift group text-left rounded-[var(--r-xl)] p-6 relative overflow-hidden bg-white border border-[var(--line)] shadow-[var(--sh-2)]">
+          <div className="absolute -right-8 -bottom-8 opacity-[0.05] text-[var(--navy)]"><Icon d={I.sop} s={150} sw={1}/></div>
           <div className="relative">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 bg-[var(--gold-soft)] text-[var(--gold-3)]"><Icon d={I.sop} s={22}/></div>
-            <div className="app-title text-[19px] font-bold mb-1 text-[var(--ink)]">{t.sop_module}</div>
-            <p className="text-[13px] text-[var(--ink-3)] mb-4 max-w-[85%]">{t.sop_module_desc}</p>
-            <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[var(--gold-3)]">{t.sop_open} <Icon d={I.chevR} s={16}/></span>
-            <span className="absolute top-0 right-0 text-[12px] font-bold mono text-[var(--ink-3)]/50">{sopCount}</span>
+            <div className="flex items-center justify-between mb-5">
+              <div className="w-12 h-12 rounded-[var(--r-md)] flex items-center justify-center bg-[var(--gold-soft)] text-[var(--gold-3)] border border-[var(--gold-line)]"><Icon d={I.sop} s={23}/></div>
+              <span className="mono text-[13px] font-bold text-[var(--ink-3)] tabular-nums">{String(sopCount).padStart(2,'0')}</span>
+            </div>
+            <div className="app-title text-[18px] font-extrabold mb-1.5 text-[var(--ink)]">{t.sop_module}</div>
+            <p className="text-[12.5px] leading-relaxed text-[var(--ink-3)] mb-5">{t.sop_module_desc}</p>
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[var(--gold-3)]">{t.sop_open}<Icon d={I.chevR} s={16} sw={2.2}/></span>
+          </div>
+        </button>
+        <button onClick={()=>setView('schedule')}
+          className="hover-lift group text-left rounded-[var(--r-xl)] p-6 relative overflow-hidden bg-white border border-[var(--line)] shadow-[var(--sh-2)]">
+          <div className="absolute -right-8 -bottom-8 opacity-[0.05] text-[var(--navy)]"><Icon d={I.calendar} s={150} sw={1}/></div>
+          <div className="relative">
+            <div className="flex items-center justify-between mb-5">
+              <div className="w-12 h-12 rounded-[var(--r-md)] flex items-center justify-center bg-[var(--blue-soft)] text-[var(--blue)] border border-[#C7DEF0]"><Icon d={I.calendar} s={23}/></div>
+              <span className="mono text-[13px] font-bold text-[var(--ink-3)] tabular-nums">{String((db.schedule||[]).length).padStart(2,'0')}</span>
+            </div>
+            <div className="app-title text-[18px] font-extrabold mb-1.5 text-[var(--ink)]">{t.sched_title}</div>
+            <p className="text-[12.5px] leading-relaxed text-[var(--ink-3)] mb-5">{t.sched_sub}</p>
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[var(--blue)]">{t.nav_schedule}<Icon d={I.chevR} s={16} sw={2.2}/></span>
           </div>
         </button>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-7">
+      {/* Stats — Swiss grid, hairline dividers */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-px mb-9 rounded-[var(--r-lg)] overflow-hidden border border-[var(--line)] bg-[var(--line)]">
         {stats.map(s=>(
-          <div key={s.k} className="bg-white rounded-xl border border-[var(--line)] p-4 card-shadow">
-            <div className="text-[32px] font-extrabold leading-none mono" style={{color:s.c}}>{s.v}</div>
-            <div className="text-[12px] font-semibold text-[var(--ink-3)] mt-2 uppercase tracking-wide">{t[s.k]}</div>
+          <div key={s.k} className="bg-white p-5">
+            <div className="text-[34px] font-extrabold leading-none mono tabular-nums" style={{color:s.c}}>{String(s.v).padStart(2,'0')}</div>
+            <div className="u-label mt-2.5">{t[s.k]}</div>
           </div>
         ))}
       </div>
 
-      <div className="mb-7">
-        <h2 className="text-[13px] font-bold text-[var(--ink-3)] uppercase tracking-wider mb-3">{t.quick}</h2>
+      <div className="mb-9">
+        <h2 className="u-label mb-3.5">{t.quick}</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {quick.map((q,i)=>(
             <button key={i} onClick={q.fn||(()=>onNew(q.st))}
-              className={"group rounded-xl p-4 text-left transition card-shadow "+
-                (q.primary ? "text-white hover:brightness-105" : "bg-white border border-[var(--line)] hover:border-[var(--gold)]")}
-              style={q.primary?{background:'linear-gradient(135deg,#1A2E24,#23402F)'}:{}}>
-              <div className={"w-9 h-9 rounded-lg flex items-center justify-center mb-3 "+(q.primary?"":"bg-[var(--gold-soft)] text-[var(--gold-3)]")}
-                style={q.primary?{background:'linear-gradient(135deg,#A5760A,#C99A2E)'}:{}}>
+              className={"hover-lift group rounded-[var(--r-lg)] p-4 text-left min-h-[104px] flex flex-col "+
+                (q.primary ? "text-white shadow-[var(--sh-2)]" : "bg-white border border-[var(--line)] shadow-[var(--sh-1)]")}
+              style={q.primary?{background:'var(--navy)'}:{}}>
+              <div className={"w-9 h-9 rounded-[var(--r-sm)] flex items-center justify-center mb-auto "+(q.primary?"":"bg-[var(--gold-soft)] text-[var(--gold-3)]")}
+                style={q.primary?{background:'linear-gradient(135deg,#8A6608,#B8860B)'}:{}}>
                 <Icon d={q.icon} s={18} sw={2}/>
               </div>
-              <div className={"text-[13.5px] font-bold "+(q.primary?"text-white":"text-[var(--ink)]")}>{q.label}</div>
+              <div className={"text-[13.5px] font-bold mt-3 "+(q.primary?"text-white":"text-[var(--ink)]")}>{q.label}</div>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-[var(--line)] card-shadow overflow-hidden">
+      <div className="u-card overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--line)]">
-          <h2 className="text-[15px] font-bold text-[var(--ink)]">{t.recent}</h2>
+          <h2 className="text-[15px] font-extrabold text-[var(--ink)]">{t.recent}</h2>
           <Btn variant="ghost" size="sm" onClick={()=>setView('reports')}>{t.nav_reports}<Icon d={I.chevR} s={16}/></Btn>
         </div>
         <ReportTable reports={r.slice(0,8)} onOpen={onOpen}/>
@@ -1580,20 +1880,20 @@ function ReportsList({db, onOpen, onNew, onDelete, onDup, title, sub}){
     return s.includes(q.toLowerCase());
   });
   return (
-    <div className="p-8 max-w-[1200px] mx-auto fade-in">
-      <header className="flex items-center justify-between mb-6 flex-wrap gap-3">
+    <div className="p-8 lg:p-10 max-w-[1200px] mx-auto fade-in">
+      <header className="flex items-end justify-between mb-6 flex-wrap gap-3">
         <div>
-          <h1 className="app-title text-[27px] font-bold tracking-tight">{title}</h1>
-          {sub && <p className="text-[var(--ink-3)] text-[14px] mt-1">{sub}</p>}
+          {sub && <div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{sub}</div>}
+          <h1 className="app-title text-[30px] font-extrabold leading-none">{title}</h1>
         </div>
-        <Btn variant="primary" onClick={()=>onNew('inspection')}><Icon d={I.plus} s={17} sw={2}/>{t.new_report}</Btn>
+        <Btn variant="gold" onClick={()=>onNew('inspection')}><Icon d={I.plus} s={17} sw={2.2}/>{t.new_report}</Btn>
       </header>
       <div className="relative mb-4 max-w-md">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
+        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder={t.search}
-          className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] focus:border-[var(--accent)]"/>
+          className="w-full pl-11 pr-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px]"/>
       </div>
-      <div className="bg-white rounded-xl border border-[var(--line)] card-shadow overflow-hidden">
+      <div className="u-card overflow-hidden">
         <ReportTable reports={filtered} onOpen={onOpen} onDelete={onDelete} onDup={onDup}/>
       </div>
     </div>
@@ -1629,9 +1929,9 @@ function Builder({report, update, db, persist, onExit, onPreview, onNeedKey}){
   return (
     <div className="flex flex-col h-full">
       {/* top bar */}
-      <div className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-[var(--line)] no-print">
+      <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-[var(--line)] no-print">
         <div className="flex items-center gap-3 min-w-0">
-          <button onClick={onExit} className="p-2 rounded-lg hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={18}/></button>
+          <button onClick={onExit} aria-label={t.back} className="u-press p-2 rounded-[var(--r-md)] hover:bg-[var(--ice)] text-[var(--ink-2)] min-w-[40px] min-h-[40px] flex items-center justify-center"><Icon d={I.chevL} s={18}/></button>
           <div className="min-w-0">
             <div className="flex items-center gap-2.5">
               <span className="font-extrabold mono text-[15px] text-[var(--navy)]">{report.info.reportNo}</span>
@@ -1646,26 +1946,32 @@ function Builder({report, update, db, persist, onExit, onPreview, onNeedKey}){
             {saved?t.autosaved:t.saving}
           </span>
           <select value={report.status} onChange={e=>up({status:e.target.value})}
-            className="text-[13px] font-semibold px-3 py-2 rounded-lg border border-[var(--line)] bg-white">
+            className="text-[13px] font-semibold px-3 py-2 rounded-[var(--r-md)] border border-[var(--line)] bg-white">
             {Object.keys(STATUS).map(s=><option key={s} value={s}>{t[STATUS[s].k]}</option>)}
           </select>
           <Btn variant="outline" size="sm" onClick={onPreview}><Icon d={I.eye} s={16}/>{t.preview}</Btn>
-          <Btn variant="accent" size="sm" onClick={onPreview}><Icon d={I.download} s={16}/>{t.exportPdf}</Btn>
+          <Btn variant="gold" size="sm" onClick={onPreview}><Icon d={I.download} s={16}/>{t.exportPdf}</Btn>
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* section nav */}
-        <div className="w-[230px] shrink-0 border-r border-[var(--line)] bg-white p-3 overflow-y-auto no-print hidden md:block">
-          {SECTIONS.map((s,i)=>(
-            <button key={s.id} onClick={()=>setSection(s.id)}
-              className={"w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left mb-1 transition "+
-                (section===s.id?"bg-[var(--navy)] text-white":"hover:bg-[var(--paper)] text-[var(--ink-2)]")}>
-              <span className={"mono text-[12px] font-bold w-6 h-6 rounded flex items-center justify-center shrink-0 "+
-                (section===s.id?"bg-white/15 text-white":"bg-[var(--ice)] text-[var(--navy)]")}>{String(i+1).padStart(2,'0')}</span>
-              <span className="text-[13.5px] font-semibold leading-tight">{t[s.k]}</span>
-            </button>
-          ))}
+        {/* section nav — progress rail */}
+        <div className="w-[236px] shrink-0 border-r border-[var(--line)] bg-white p-3 overflow-y-auto no-print hidden md:block">
+          <div className="u-label px-2 pb-2.5">{t.sections||'Sections'} · {String(idx+1).padStart(2,'0')}/{String(SECTIONS.length).padStart(2,'0')}</div>
+          {SECTIONS.map((s,i)=>{
+            const on = section===s.id, done = i<idx;
+            return (
+              <button key={s.id} onClick={()=>setSection(s.id)}
+                aria-current={on?'step':undefined}
+                className={"u-press relative w-full flex items-center gap-3 px-3 py-3 rounded-[var(--r-md)] text-left mb-1 min-h-[48px] "+
+                  (on?"bg-[var(--navy)] text-white":"hover:bg-[var(--paper)] text-[var(--ink-2)]")}>
+                <span className={"mono text-[11px] font-bold w-6 h-6 rounded-md flex items-center justify-center shrink-0 "+
+                  (on?"bg-white/15 text-white":done?"bg-[var(--green-soft)] text-[var(--green-3)]":"bg-[var(--ice)] text-[var(--ink-3)]")}>
+                  {done?<Icon d={I.check} s={13} sw={2.5}/>:String(i+1).padStart(2,'0')}</span>
+                <span className="text-[13.5px] font-semibold leading-tight">{t[s.k]}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* editor */}
@@ -1685,7 +1991,7 @@ function Builder({report, update, db, persist, onExit, onPreview, onNeedKey}){
               </Btn>
               {idx<SECTIONS.length-1
                 ? <Btn variant="primary" onClick={()=>setSection(SECTIONS[idx+1].id)}>{t[SECTIONS[idx+1].k]}<Icon d={I.chevR} s={16}/></Btn>
-                : <Btn variant="accent" onClick={onPreview}><Icon d={I.eye} s={16}/>{t.preview}</Btn>}
+                : <Btn variant="gold" onClick={onPreview}><Icon d={I.eye} s={16}/>{t.preview}</Btn>}
             </div>
           </div>
         </div>
@@ -1697,15 +2003,15 @@ function Builder({report, update, db, persist, onExit, onPreview, onNeedKey}){
 function SecHead({no, title, desc}){
   return (
     <div className="mb-5">
-      <div className="flex items-center gap-2.5 mb-1">
-        <span className="mono text-[12px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] px-2 py-0.5 rounded">{no}</span>
-        <h2 className="app-title text-[20px] font-bold tracking-tight">{title}</h2>
+      <div className="flex items-center gap-3 mb-1">
+        <span className="mono text-[12px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] px-2 py-1 rounded-md leading-none">{no}</span>
+        <h2 className="app-title text-[20px] font-extrabold">{title}</h2>
       </div>
-      {desc && <p className="text-[13px] text-[var(--ink-3)]">{desc}</p>}
+      {desc && <p className="text-[13px] text-[var(--ink-3)] pl-[38px]">{desc}</p>}
     </div>
   );
 }
-function Card({children, className=''}){ return <div className={"bg-white rounded-xl border border-[var(--line)] card-shadow p-5 "+className}>{children}</div>; }
+function Card({children, className=''}){ return <div className={"bg-white rounded-[var(--r-lg)] border border-[var(--line)] card-shadow p-5 "+className}>{children}</div>; }
 
 /* ---- Section: Info ---- */
 function SectionInfo({report, up, db, persist}){
@@ -2259,9 +2565,9 @@ function Customers({db, persist}){
   };
   const del = (id)=> persist({...db, customers:db.customers.filter(c=>c.id!==id)});
   return (
-    <div className="p-8 max-w-[1000px] mx-auto fade-in">
+    <div className="p-8 lg:p-10 max-w-[1000px] mx-auto fade-in">
       <header className="flex items-center justify-between mb-6">
-        <div><h1 className="app-title text-[27px] font-bold tracking-tight">{t.customers_title}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.customers_sub}</p></div>
+        <div><div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{t.customers_sub}</div><h1 className="app-title text-[30px] font-extrabold leading-none">{t.customers_title}</h1></div>
         <Btn variant="primary" onClick={()=>setEdit({company:"",address:"",contact:"",position:"",phone:"",email:""})}><Icon d={I.plus} s={17} sw={2}/>{t.addCustomer}</Btn>
       </header>
       <div className="grid md:grid-cols-2 gap-4">
@@ -2294,7 +2600,7 @@ function CustomerModal({customer, onSave, onClose}){
   const [c, setC] = useState(customer);
   const s = (k,v)=>setC({...c,[k]:v});
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl w-full max-w-lg card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="font-bold text-[16px]">{t.addCustomer}</h3>
@@ -2340,7 +2646,7 @@ function EquipmentLib({db, persist}){
     <div className="p-8 max-w-[1100px] mx-auto fade-in">
       <header className="flex items-start justify-between mb-6 flex-wrap gap-3">
         <div>
-          <h1 className="app-title text-[27px] font-bold tracking-tight">{t.equipment_lib}</h1>
+          <h1 className="app-title text-[30px] font-extrabold leading-none">{t.equipment_lib}</h1>
           <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.equipment_sub}</p>
         </div>
         <Btn variant="gold" onClick={()=>setEdit({name:"",mfr:"",model:"",cat:"",checklist:'generic',customChecklist:null})}><Icon d={I.plus} s={17} sw={2}/>{t.addEquipLib}</Btn>
@@ -2424,7 +2730,7 @@ function EquipmentModal({equip, onSave, onClose}){
   };
 
   return (
-    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[92vh] flex flex-col" onClick={ev=>ev.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="app-title font-bold text-[17px]">{equip.id ? t.editEquip : t.addEquipLib}</h3>
@@ -2518,8 +2824,8 @@ function Templates({onCreate}){
     {st:'commission', k:'stype_commission', icon:I.reports},
   ];
   return (
-    <div className="p-8 max-w-[1000px] mx-auto fade-in">
-      <header className="mb-6"><h1 className="app-title text-[27px] font-bold tracking-tight">{t.templates_title}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.templates_sub}</p></header>
+    <div className="p-8 lg:p-10 max-w-[1000px] mx-auto fade-in">
+      <header className="mb-6"><div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{t.templates_sub}</div><h1 className="app-title text-[30px] font-extrabold leading-none">{t.templates_title}</h1></header>
       <div className="grid md:grid-cols-3 gap-4">
         {list.map((l,i)=>(
           <button key={i} onClick={()=>onCreate(l.st)}
@@ -2545,8 +2851,9 @@ function Settings({db, persist}){
   const onLogo = (file)=>{ if(!file) return; const r=new FileReader(); r.onload=e=>set('logo',e.target.result); r.readAsDataURL(file); };
   const save = ()=> persist({...db, settings:s});
   return (
-    <div className="p-8 max-w-[820px] mx-auto fade-in">
-      <header className="mb-6"><h1 className="app-title text-[27px] font-bold tracking-tight">{t.settings_title}</h1><p className="text-[var(--ink-3)] text-[14px] mt-1">{t.settings_sub}</p></header>
+    <div className="p-8 lg:p-10 max-w-[820px] mx-auto fade-in space-y-5">
+      <div className="mb-0"><CloudSettings/></div>
+      <header className="mb-6"><div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{t.settings_sub}</div><h1 className="app-title text-[30px] font-extrabold leading-none">{t.settings_title}</h1></header>
       <Card className="space-y-5">
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 rounded-xl border border-[var(--line)] bg-[var(--paper)] flex items-center justify-center overflow-hidden shrink-0">
@@ -2647,7 +2954,7 @@ function PreviewScreen({report, settings, lang, onBack, update}){
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#4A5568]">
+    <div className="flex flex-col h-full" style={{background:'#2A322C'}}>
       <div className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-[var(--line)] no-print">
         <div className="flex items-center gap-3">
           <button onClick={onBack} className="p-2 rounded-lg hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={18}/></button>
@@ -3241,60 +3548,60 @@ function SOPLibrary({db, onOpen, onNew, onDelete, onDup}){
   });
 
   return (
-    <div className="p-8 max-w-[1150px] mx-auto fade-in">
-      <header className="flex items-start justify-between mb-6 flex-wrap gap-3">
+    <div className="p-8 lg:p-10 max-w-[1150px] mx-auto fade-in">
+      <header className="flex items-end justify-between mb-6 flex-wrap gap-3">
         <div>
-          <h1 className="app-title text-[27px] font-bold tracking-tight">{t.sop_lib_title}</h1>
-          <p className="text-[var(--ink-3)] text-[14px] mt-1">{t.sop_lib_sub}</p>
+          <div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{t.sop_lib_sub}</div>
+          <h1 className="app-title text-[30px] font-extrabold leading-none">{t.sop_lib_title}</h1>
         </div>
         <div className="flex gap-2">
           <Btn variant="outline" onClick={()=>setTplOpen(true)}><Icon d={I.templates} s={17}/>{t.sop_from_tpl}</Btn>
-          <Btn variant="gold" onClick={()=>onNew()}><Icon d={I.plus} s={17} sw={2}/>{t.sop_create}</Btn>
+          <Btn variant="gold" onClick={()=>onNew()}><Icon d={I.plus} s={17} sw={2.2}/>{t.sop_create}</Btn>
         </div>
       </header>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-px mb-6 rounded-[var(--r-lg)] overflow-hidden border border-[var(--line)] bg-[var(--line)]">
         {stats.map(s=>(
-          <div key={s.k} className="bg-white rounded-xl border border-[var(--line)] p-4 card-shadow">
-            <div className="text-[30px] font-extrabold leading-none mono" style={{color:s.c}}>{s.v}</div>
-            <div className="text-[11.5px] font-semibold text-[var(--ink-3)] mt-2 uppercase tracking-wide">{t[s.k]}</div>
+          <div key={s.k} className="bg-white p-5">
+            <div className="text-[32px] font-extrabold leading-none mono tabular-nums" style={{color:s.c}}>{String(s.v).padStart(2,'0')}</div>
+            <div className="u-label mt-2.5">{t[s.k]}</div>
           </div>
         ))}
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
         <div className="relative flex-1 min-w-[220px]">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-3)]"><Icon d={I.search} s={17}/></span>
           <input value={q} onChange={e=>setQ(e.target.value)} placeholder={t.sop_search}
-            className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[14px] focus:border-[var(--gold)]"/>
+            className="w-full pl-11 pr-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px]"/>
         </div>
-        <select value={fCat} onChange={e=>setFCat(e.target.value)} className="px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
+        <select value={fCat} onChange={e=>setFCat(e.target.value)} className="px-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
           <option value="">{t.sop_all_cats}</option>
           {SOP_CATEGORIES.map(c=><option key={c.id} value={c.id}>{c.vi}</option>)}
         </select>
-        <select value={fStatus} onChange={e=>setFStatus(e.target.value)} className="px-3 py-2.5 rounded-lg border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
+        <select value={fStatus} onChange={e=>setFStatus(e.target.value)} className="px-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
           <option value="">{t.sop_all_status}</option>
           {Object.keys(SOP_STATUS).map(k=><option key={k} value={k}>{t[SOP_STATUS[k].k]}</option>)}
         </select>
       </div>
 
-      {filtered.length===0 && <div className="text-[14px] text-[var(--ink-3)] py-16 text-center border border-dashed border-[var(--line)] rounded-xl bg-white">{t.sop_no_sops}</div>}
+      {filtered.length===0 && <div className="text-[14px] text-[var(--ink-3)] py-16 text-center border border-dashed border-[var(--line-strong)] rounded-[var(--r-lg)] bg-white">{t.sop_no_sops}</div>}
 
       <div className="space-y-2.5">
         {filtered.map(s=>(
-          <div key={s.id} className="group bg-white rounded-xl border border-[var(--line)] card-shadow px-5 py-4 hover:border-[var(--gold)] transition flex items-center gap-4 cursor-pointer" onClick={()=>onOpen(s.id)}>
-            <div className="w-10 h-10 rounded-lg bg-[var(--gold-soft)] text-[var(--gold-3)] flex items-center justify-center shrink-0"><Icon d={I.sop} s={20}/></div>
+          <div key={s.id} className="hover-lift group u-card px-5 py-4 flex items-center gap-4 cursor-pointer" onClick={()=>onOpen(s.id)}>
+            <div className="w-11 h-11 rounded-[var(--r-md)] bg-[var(--gold-soft)] text-[var(--gold-3)] border border-[var(--gold-line)] flex items-center justify-center shrink-0"><Icon d={I.sop} s={20}/></div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="mono text-[12px] font-bold text-[var(--gold-3)]">{s.code||s.sopNo}</span>
                 <SopStatusBadge status={s.status}/>
               </div>
-              <div className="font-bold text-[15px] truncate mt-0.5">{s.title||t.sop_untitled}</div>
+              <div className="font-bold text-[15px] truncate mt-1">{s.title||t.sop_untitled}</div>
               <div className="text-[12.5px] text-[var(--ink-3)] mt-0.5">{sopCatLabel(s.category)} · {s.version}{s.doc?.equipment?` · ${s.doc.equipment}`:''}</div>
             </div>
-            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition" onClick={e=>e.stopPropagation()}>
-              <button onClick={()=>onDup(s.id)} title={t.sop_duplicate} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--gold-3)] hover:bg-[var(--gold-soft)]"><Icon d={I.copy} s={16}/></button>
-              <button onClick={()=>{if(confirm(t.delete+'?'))onDelete(s.id);}} className="p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+            <div className="flex gap-1 md:opacity-0 md:group-hover:opacity-100 transition" onClick={e=>e.stopPropagation()}>
+              <button onClick={()=>onDup(s.id)} title={t.sop_duplicate} aria-label={t.sop_duplicate} className="u-press p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--gold-3)] hover:bg-[var(--gold-soft)] min-w-[40px] min-h-[40px] flex items-center justify-center"><Icon d={I.copy} s={16}/></button>
+              <button onClick={()=>{if(confirm(t.delete+'?'))onDelete(s.id);}} aria-label={t.delete} className="u-press p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)] min-w-[40px] min-h-[40px] flex items-center justify-center"><Icon d={I.trash} s={16}/></button>
             </div>
           </div>
         ))}
@@ -3338,7 +3645,7 @@ function buildSOPFromTemplate(tpl){
 function SOPTemplateModal({onPick, onClose}){
   const t = useT();
   return (
-    <div className="fixed inset-0 bg-black/45 flex items-center justify-center z-[60] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="app-title font-bold text-[17px]">{t.sop_from_tpl}</h3>
@@ -3844,7 +4151,7 @@ function SOPPreview({sop, settings, lang, onBack, update}){
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#4A5568]">
+    <div className="flex flex-col h-full" style={{background:'#2A322C'}}>
       <div className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-[var(--line)] no-print">
         <div className="flex items-center gap-3">
           <button onClick={onBack} className="p-2 rounded-lg hover:bg-[var(--ice)] text-[var(--ink-2)]"><Icon d={I.chevL} s={18}/></button>
@@ -4246,6 +4553,484 @@ function SOPSectionPDF({sec, both, primary, T, tokens, RichOut, hasRich, SubH, s
 
     default: return null;
   }
+}
+
+
+/* ============================================================
+   WORK SCHEDULE VIEW (Lịch làm việc kỹ thuật)
+   Month grid (T2→CN, dark like reference), day panel, week view.
+   ============================================================ */
+function ScheduleView({db, persist}){
+  const t = useT();
+  const sched = db.schedule || [];
+  const techs = db.technicians || [];
+  const [mode, setMode] = useState('month');            // month | week
+  const [cursor, setCursor] = useState(()=>{ const d=new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); });
+  const [selDate, setSelDate] = useState(todayISO());
+  const [fTech, setFTech] = useState('');
+  const [edit, setEdit] = useState(null);               // schedule object being edited/created
+  const [techOpen, setTechOpen] = useState(false);
+
+  const todayStr = todayISO();
+  const monthNames = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+  const dowLabels = ['T2','T3','T4','T5','T6','T7','CN'];
+
+  const filtered = fTech ? sched.filter(s=>s.techId===fTech) : sched;
+  const jobsOn = (iso)=> filtered.filter(s=>s.date===iso).sort((a,b)=>(a.start||'').localeCompare(b.start||''));
+  const techById = (id)=> techs.find(x=>x.id===id);
+
+  // ---- persistence helpers ----
+  const saveJob = (job)=>{
+    let list = sched;
+    if(sched.some(s=>s.id===job.id)) list = sched.map(s=>s.id===job.id?job:s);
+    else list = [job, ...sched];
+    persist({...db, schedule:list}); setEdit(null);
+  };
+  const delJob = (id)=> persist({...db, schedule: sched.filter(s=>s.id!==id)});
+  const saveTechs = (list)=> persist({...db, technicians:list});
+
+  // ---- month grid (Monday-first) ----
+  const y = cursor.getFullYear(), m = cursor.getMonth();
+  const first = new Date(y, m, 1);
+  const startPad = (first.getDay()+6)%7;               // Mon=0 … Sun=6
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const cells = [];
+  for(let i=0;i<startPad;i++) cells.push(null);
+  for(let d=1; d<=daysInMonth; d++) cells.push(new Date(y, m, d));
+  while(cells.length % 7 !== 0) cells.push(null);
+
+  const isoOf = (dt)=> dt ? new Date(dt.getTime()-dt.getTimezoneOffset()*60000).toISOString().slice(0,10) : null;
+  const prevMonth = ()=> setCursor(new Date(y, m-1, 1));
+  const nextMonth = ()=> setCursor(new Date(y, m+1, 1));
+  const goToday = ()=>{ const d=new Date(); setCursor(new Date(d.getFullYear(),d.getMonth(),1)); setSelDate(todayStr); };
+
+  // ---- week grid ----
+  const weekAnchor = new Date(selDate+'T00:00:00');
+  const weekStart = new Date(weekAnchor); weekStart.setDate(weekAnchor.getDate() - ((weekAnchor.getDay()+6)%7));
+  const weekDays = Array.from({length:7}, (_,i)=>{ const d=new Date(weekStart); d.setDate(weekStart.getDate()+i); return d; });
+  const prevWeek = ()=>{ const d=new Date(weekStart); d.setDate(d.getDate()-7); setSelDate(isoOf(d)); };
+  const nextWeek = ()=>{ const d=new Date(weekStart); d.setDate(d.getDate()+7); setSelDate(isoOf(d)); };
+
+  // ---- stats ----
+  const inMonth = (iso)=>{ const d=new Date(iso+'T00:00:00'); return d.getFullYear()===y && d.getMonth()===m; };
+  const monthCount = filtered.filter(s=>inMonth(s.date)).length;
+  const weekIsos = weekDays.map(isoOf);
+  const weekCount = filtered.filter(s=>weekIsos.includes(s.date)).length;
+  const todayCount = filtered.filter(s=>s.date===todayStr).length;
+  const urgentCount = filtered.filter(s=>s.status==='urgent').length;
+  const stats = [
+    {label:t.sc_stat_month, v:monthCount, c:'var(--gold-3)'},
+    {label:t.sc_stat_week,  v:weekCount,  c:'var(--blue)'},
+    {label:t.sc_stat_today, v:todayCount, c:'var(--green)'},
+    {label:t.sc_stat_urgent,v:urgentCount,c:'var(--red)'},
+  ];
+
+  const selJobs = jobsOn(selDate);
+  const selNice = (()=>{ const d=new Date(selDate+'T00:00:00'); return `${dowLabels[(d.getDay()+6)%7]}, ${d.getDate()} ${monthNames[d.getMonth()].toLowerCase()} ${d.getFullYear()}`; })();
+
+  return (
+    <div className="p-6 lg:p-10 max-w-[1280px] mx-auto fade-in">
+      <header className="flex items-end justify-between mb-6 flex-wrap gap-3">
+        <div>
+          <div className="u-label mb-2" style={{color:'var(--gold-3)'}}>{t.sched_sub}</div>
+          <h1 className="app-title text-[30px] font-extrabold leading-none">{t.sched_title}</h1>
+        </div>
+        <div className="flex items-center gap-2 flex-wrap">
+          <select value={fTech} onChange={e=>setFTech(e.target.value)}
+            className="px-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[13.5px] text-[var(--ink-2)]">
+            <option value="">{t.sc_all_tech}</option>
+            {techs.map(tt=><option key={tt.id} value={tt.id}>{tt.name}</option>)}
+          </select>
+          <Btn variant="outline" onClick={()=>setTechOpen(true)}><Icon d={I.userTech} s={16}/>{t.sc_manage_tech}</Btn>
+          <Btn variant="gold" onClick={()=>setEdit(blankSchedule(selDate))}><Icon d={I.plus} s={17} sw={2.2}/>{t.sc_add}</Btn>
+        </div>
+      </header>
+
+      {/* stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px mb-6 rounded-[var(--r-lg)] overflow-hidden border border-[var(--line)] bg-[var(--line)]">
+        {stats.map(s=>(
+          <div key={s.label} className="bg-white p-4">
+            <div className="text-[30px] font-extrabold leading-none mono tabular-nums" style={{color:s.c}}>{String(s.v).padStart(2,'0')}</div>
+            <div className="u-label mt-2">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid lg:grid-cols-[1fr_360px] gap-5 items-start">
+        {/* calendar panel (dark, like reference) */}
+        <div className="rounded-[var(--r-xl)] p-4 sm:p-5 text-white shadow-[var(--sh-3)]" style={{background:'var(--navy)'}}>
+          {/* toolbar */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <button onClick={mode==='month'?prevMonth:prevWeek} aria-label="Prev" className="u-press w-9 h-9 rounded-[var(--r-md)] flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10"><Icon d={I.chevL} s={18}/></button>
+              <div className="app-title text-[17px] font-extrabold min-w-[150px] text-center">
+                {mode==='month' ? `${monthNames[m]} ${y}` : `${weekDays[0].getDate()}–${weekDays[6].getDate()} ${monthNames[weekDays[6].getMonth()]}`}
+              </div>
+              <button onClick={mode==='month'?nextMonth:nextWeek} aria-label="Next" className="u-press w-9 h-9 rounded-[var(--r-md)] flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10"><Icon d={I.chevR} s={18}/></button>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={goToday} className="u-press text-[12.5px] font-semibold px-3 py-1.5 rounded-[var(--r-md)] text-white/80 hover:text-white bg-white/10 hover:bg-white/15">{t.sc_today}</button>
+              <div className="flex bg-white/10 rounded-[var(--r-md)] p-0.5">
+                {[['month',t.sc_month],['week',t.sc_week]].map(([mk,label])=>(
+                  <button key={mk} onClick={()=>setMode(mk)}
+                    className={"u-press text-[12.5px] font-semibold px-3 py-1.5 rounded-[7px] "+(mode===mk?"bg-white text-[var(--navy)]":"text-white/70 hover:text-white")}>{label}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {mode==='month' ? (
+            <>
+              {/* weekday header */}
+              <div className="grid grid-cols-7 mb-1">
+                {dowLabels.map(d=><div key={d} className="text-center text-[12px] font-bold text-white/45 py-1.5">{d}</div>)}
+              </div>
+              {/* day grid */}
+              <div className="grid grid-cols-7 gap-y-1">
+                {cells.map((dt,i)=>{
+                  if(!dt) return <div key={i}></div>;
+                  const iso = isoOf(dt);
+                  const jobs = jobsOn(iso);
+                  const isToday = iso===todayStr;
+                  const isSel = iso===selDate;
+                  const hasUrgent = jobs.some(j=>j.status==='urgent');
+                  const hasPlanned = jobs.some(j=>j.status==='planned');
+                  const dotColor = hasUrgent ? '#E23D2E' : (hasPlanned ? '#E0A100' : (jobs.length?'#0B7A47':null));
+                  return (
+                    <button key={i} onClick={()=>setSelDate(iso)}
+                      className="group relative flex flex-col items-center pt-1.5 pb-1 rounded-[var(--r-md)] hover:bg-white/[.06] transition min-h-[62px]">
+                      <span className={"flex items-center justify-center w-9 h-9 rounded-full text-[16px] font-bold transition "+
+                        (isToday?"bg-[#2F88D6] text-white":isSel?"bg-white/15 text-white ring-1 ring-white/40":"text-white/90")}>
+                        {dt.getDate()}
+                      </span>
+                      {/* badge / dot row */}
+                      <span className="h-5 mt-0.5 flex items-center justify-center">
+                        {jobs.length>0 ? (
+                          dotColor && jobs.length<=1
+                            ? <span className="w-[7px] h-[7px] rounded-full" style={{background:dotColor}}></span>
+                            : <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-full text-white/80 bg-white/10 tabular-nums">+{jobs.length}</span>
+                        ) : (
+                          <span className="opacity-0 group-hover:opacity-40 text-white text-[15px] leading-none transition">+</span>
+                        )}
+                      </span>
+                      {hasUrgent && jobs.length>1 && <span className="absolute top-1.5 right-2 w-[6px] h-[6px] rounded-full" style={{background:'#E23D2E'}}></span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            /* WEEK VIEW */
+            <div className="grid grid-cols-7 gap-2">
+              {weekDays.map((dt,i)=>{
+                const iso = isoOf(dt);
+                const jobs = jobsOn(iso);
+                const isToday = iso===todayStr;
+                const isSel = iso===selDate;
+                return (
+                  <div key={i} className={"rounded-[var(--r-md)] p-2 min-h-[220px] transition cursor-pointer "+(isSel?"bg-white/[.09] ring-1 ring-white/25":"bg-white/[.04] hover:bg-white/[.07]")} onClick={()=>setSelDate(iso)}>
+                    <div className="flex flex-col items-center mb-2">
+                      <span className="text-[11px] font-bold text-white/45">{dowLabels[i]}</span>
+                      <span className={"flex items-center justify-center w-8 h-8 rounded-full text-[15px] font-bold mt-0.5 "+(isToday?"bg-[#2F88D6] text-white":"text-white/90")}>{dt.getDate()}</span>
+                    </div>
+                    <div className="space-y-1.5">
+                      {jobs.length===0 && <div className="text-center text-white/25 text-[18px] leading-none pt-2">+</div>}
+                      {jobs.map(j=>{
+                        const st = SCHED_STATUS[j.status]||SCHED_STATUS.planned;
+                        const ty = schedType(j.type);
+                        return (
+                          <button key={j.id} onClick={(e)=>{e.stopPropagation(); setEdit(j);}}
+                            className="u-press w-full text-left rounded-md px-1.5 py-1 text-[11px] leading-tight" style={{background:'rgba(255,255,255,.08)', borderLeft:`3px solid ${st.dot}`}}>
+                            <div className="font-bold text-white/90 truncate">{j.start} {j.title||t.sc_jobs}</div>
+                            <div className="text-white/50 truncate">{j.customer||techById(j.techId)?.name||''}</div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* day detail panel */}
+        <div className="u-card overflow-hidden lg:sticky lg:top-4">
+          <div className="px-5 py-4 border-b border-[var(--line)] flex items-center justify-between">
+            <div>
+              <div className="u-label" style={{color:'var(--gold-3)'}}>{selJobs.length} {t.sc_count_day}</div>
+              <div className="app-title text-[16px] font-extrabold mt-0.5 capitalize">{selNice}</div>
+            </div>
+            <button onClick={()=>setEdit(blankSchedule(selDate))} aria-label={t.sc_add} className="u-press w-9 h-9 rounded-full flex items-center justify-center text-white shadow-[var(--sh-2)]" style={{background:'linear-gradient(135deg,#8A6608,#B8860B)'}}><Icon d={I.plus} s={18} sw={2.2}/></button>
+          </div>
+          <div className="p-3 max-h-[560px] overflow-y-auto">
+            {selJobs.length===0 && (
+              <div className="text-center py-12 px-4">
+                <div className="w-12 h-12 rounded-full bg-[var(--paper)] flex items-center justify-center mx-auto mb-3 text-[var(--ink-3)]"><Icon d={I.calendar} s={22}/></div>
+                <p className="text-[13.5px] text-[var(--ink-3)]">{t.sc_none_day}</p>
+              </div>
+            )}
+            <div className="space-y-2.5">
+              {selJobs.map(j=>{
+                const st = SCHED_STATUS[j.status]||SCHED_STATUS.planned;
+                const ty = schedType(j.type);
+                const tech = techById(j.techId);
+                return (
+                  <div key={j.id} onClick={()=>setEdit(j)}
+                    className="hover-lift group rounded-[var(--r-md)] border border-[var(--line)] bg-white p-3 cursor-pointer" style={{borderLeft:`3px solid ${st.dot}`}}>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="mono text-[12px] font-bold text-[var(--ink-2)] shrink-0">{j.start||'—'}{j.end?`–${j.end}`:''}</span>
+                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0" style={{color:st.c,background:st.bg}}>{t[st.k]}</span>
+                      </div>
+                      <button onClick={(e)=>{e.stopPropagation(); if(confirm(t.sc_delete_confirm)) delJob(j.id);}} className="opacity-0 group-hover:opacity-100 transition p-1 rounded text-[var(--ink-3)] hover:text-[var(--red)]"><Icon d={I.trash} s={15}/></button>
+                    </div>
+                    <div className="font-bold text-[14px] text-[var(--ink)] mt-1.5 leading-snug">{j.title||t.sc_jobs}</div>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[12px] text-[var(--ink-3)]">
+                      <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{background:ty.c}}></span>{ty.vi}</span>
+                      {tech && <span className="inline-flex items-center gap-1"><Icon d={I.userTech} s={13}/>{tech.name}</span>}
+                    </div>
+                    {(j.customer||j.location) && (
+                      <div className="mt-1.5 text-[12px] text-[var(--ink-2)] space-y-0.5">
+                        {j.customer && <div className="truncate">{j.customer}</div>}
+                        {j.location && <div className="inline-flex items-center gap-1 text-[var(--ink-3)]"><Icon d={I.mapPin} s={13}/>{j.location}</div>}
+                      </div>
+                    )}
+                    {j.note && <div className="mt-1.5 text-[12px] text-[var(--ink-3)] italic">“{j.note}”</div>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {edit && <ScheduleModal job={edit} techs={techs} customers={db.customers||[]} onSave={saveJob} onDelete={delJob} onClose={()=>setEdit(null)}/>}
+      {techOpen && <TechManageModal techs={techs} onSave={saveTechs} onClose={()=>setTechOpen(false)}/>}
+    </div>
+  );
+}
+
+/* ---- Add/Edit schedule modal ---- */
+function ScheduleModal({job, techs, customers, onSave, onDelete, onClose}){
+  const t = useT();
+  const [f, setF] = useState({...job});
+  const set = (k,v)=> setF(p=>({...p,[k]:v}));
+  const isNew = !job.title && !job.customer;
+  const valid = (f.title||'').trim().length>0;
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-lg card-shadow-lg fade-in max-h-[92vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--line)]">
+          <h3 className="app-title font-extrabold text-[17px]">{isNew?t.sc_new:t.sc_edit}</h3>
+          <button onClick={onClose} className="u-press p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="p-5 overflow-y-auto space-y-4">
+          <Field label={t.sc_title} value={f.title} onChange={v=>set('title',v)} full placeholder="VD: Bảo trì hệ thống quan trắc"/>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label={t.sc_start} type="time" value={f.start} onChange={v=>set('start',v)}/>
+            <Field label={t.sc_end} type="time" value={f.end} onChange={v=>set('end',v)}/>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <label className="flex flex-col gap-1.5">
+              <span className="u-label">{t.sc_type}</span>
+              <select value={f.type} onChange={e=>set('type',e.target.value)} className="w-full px-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px]">
+                {SCHED_TYPES.map(x=><option key={x.id} value={x.id}>{x.vi}</option>)}
+              </select>
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="u-label">{t.sc_status}</span>
+              <select value={f.status} onChange={e=>set('status',e.target.value)} className="w-full px-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px]">
+                {Object.keys(SCHED_STATUS).map(k=><option key={k} value={k}>{t[SCHED_STATUS[k].k]}</option>)}
+              </select>
+            </label>
+          </div>
+          <label className="flex flex-col gap-1.5">
+            <span className="u-label">{t.sc_tech}</span>
+            <select value={f.techId} onChange={e=>set('techId',e.target.value)} className="w-full px-3 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px]">
+              {techs.map(tt=><option key={tt.id} value={tt.id}>{tt.name}</option>)}
+            </select>
+          </label>
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="u-label">{t.sc_customer}</span>
+              {customers.length>0 && (
+                <select onChange={e=>{const c=customers.find(x=>x.id===e.target.value); if(c){set('customer',c.company); set('location',c.address||f.location);} e.target.value='';}}
+                  className="text-[12px] px-2 py-1 rounded-md border border-[var(--line)] bg-white text-[var(--ink-3)]">
+                  <option value="">{t.sc_from_customer}</option>
+                  {customers.map(c=><option key={c.id} value={c.id}>{c.company}</option>)}
+                </select>
+              )}
+            </div>
+            <input value={f.customer||''} onChange={e=>set('customer',e.target.value)} className="w-full px-3.5 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px]"/>
+          </div>
+          <Field label={t.sc_location} value={f.location} onChange={v=>set('location',v)} full/>
+          <label className="flex flex-col gap-1.5">
+            <span className="u-label">{t.sc_note}</span>
+            <textarea rows={2} value={f.note||''} onChange={e=>set('note',e.target.value)} className="w-full px-3.5 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[14px] resize-y"/>
+          </label>
+        </div>
+        <div className="flex items-center justify-between gap-2 px-5 py-4 border-t border-[var(--line)]">
+          {!isNew ? <Btn variant="danger" onClick={()=>{if(confirm(t.sc_delete_confirm)){onDelete(job.id); onClose();}}}><Icon d={I.trash} s={16}/>{t.delete}</Btn> : <span></span>}
+          <div className="flex gap-2">
+            <Btn variant="ghost" onClick={onClose}>{t.cancel||'Hủy'}</Btn>
+            <Btn variant="gold" onClick={()=>valid&&onSave(f)} disabled={!valid}><Icon d={I.check} s={16}/>{t.save||'Lưu'}</Btn>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Manage technicians modal ---- */
+function TechManageModal({techs, onSave, onClose}){
+  const t = useT();
+  const [list, setList] = useState(techs.map(x=>({...x})));
+  const palette = ['#0B7A47','#1F6FB2','#8A6608','#6D4AA5','#0E7490','#B45309','#B23A2E'];
+  const add = ()=> setList(p=>[...p,{id:uid(),name:'',color:palette[p.length%palette.length]}]);
+  const upd = (id,k,v)=> setList(p=>p.map(x=>x.id===id?{...x,[k]:v}:x));
+  const del = (id)=> setList(p=>p.filter(x=>x.id!==id));
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-md card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--line)]">
+          <h3 className="app-title font-extrabold text-[17px]">{t.sc_manage_tech}</h3>
+          <button onClick={onClose} className="u-press p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
+        </div>
+        <div className="p-5 overflow-y-auto space-y-2">
+          {list.map(tt=>(
+            <div key={tt.id} className="flex items-center gap-2">
+              <input type="color" value={tt.color} onChange={e=>upd(tt.id,'color',e.target.value)} className="w-9 h-9 rounded-md border border-[var(--line)] shrink-0 cursor-pointer bg-white"/>
+              <input value={tt.name} onChange={e=>upd(tt.id,'name',e.target.value)} placeholder={t.sc_tech_name} className="flex-1 px-3 py-2 rounded-[var(--r-md)] border border-[var(--line)] text-[14px]"/>
+              <button onClick={()=>del(tt.id)} className="u-press p-2 rounded-md text-[var(--ink-3)] hover:text-[var(--red)] hover:bg-[var(--red-soft)]"><Icon d={I.trash} s={16}/></button>
+            </div>
+          ))}
+          <button onClick={add} className="text-[13px] font-semibold text-[var(--gold-3)] hover:underline flex items-center gap-1 mt-2"><Icon d={I.plus} s={14} sw={2.5}/>{t.sc_add_tech}</button>
+        </div>
+        <div className="flex justify-end gap-2 px-5 py-4 border-t border-[var(--line)]">
+          <Btn variant="ghost" onClick={onClose}>{t.cancel||'Hủy'}</Btn>
+          <Btn variant="gold" onClick={()=>{onSave(list.filter(x=>x.name.trim())); onClose();}}><Icon d={I.check} s={16}/>{t.save||'Lưu'}</Btn>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+/* ============================================================
+   GATE SCREEN — shared-password lock
+   ============================================================ */
+function GateScreen({onUnlock, settings}){
+  const t = useT();
+  const [pw, setPw] = useState("");
+  const [err, setErr] = useState(false);
+  const cfg = loadCloudCfg();
+  const submit = ()=>{
+    if(pw === (cfg.gate||"")){ setErr(false); onUnlock(); }
+    else { setErr(true); }
+  };
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4" style={{background:'var(--navy)'}}>
+      <div className="absolute inset-0 u-grid-lines opacity-[0.04] pointer-events-none"></div>
+      <div className="relative w-full max-w-[380px] bg-white rounded-[var(--r-xl)] shadow-[var(--sh-4)] p-7 fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 rounded-[var(--r-md)] bg-white border border-[var(--line)] flex items-center justify-center overflow-hidden shadow-[var(--sh-1)]">
+            <img src={settings.logo||LOGO_MARK} className="w-9 h-9 object-contain" alt=""/>
+          </div>
+          <div>
+            <div className="app-title font-extrabold text-[15px] leading-tight">Documentation System</div>
+            <div className="text-[11px] font-bold tracking-[.12em]" style={{color:'var(--gold-3)'}}>{(settings.brand||'').toUpperCase()}</div>
+          </div>
+        </div>
+        <div className="w-11 h-11 rounded-full bg-[var(--gold-soft)] text-[var(--gold-3)] flex items-center justify-center mb-3"><Icon d={I.lock} s={20}/></div>
+        <h1 className="app-title text-[20px] font-extrabold">{t.gate_title}</h1>
+        <p className="text-[13px] text-[var(--ink-3)] mt-1 mb-5">{t.gate_sub}</p>
+        <input type="password" value={pw} autoFocus
+          onChange={e=>{setPw(e.target.value); setErr(false);}}
+          onKeyDown={e=>{ if(e.key==='Enter') submit(); }}
+          placeholder={t.gate_ph}
+          className={"w-full px-3.5 py-3 rounded-[var(--r-md)] border text-[15px] mb-2 "+(err?"border-[var(--red)] bg-[var(--red-soft)]":"border-[var(--line)] bg-white")}/>
+        {err && <div className="text-[12.5px] text-[var(--red)] mb-2 font-medium">{t.gate_wrong}</div>}
+        <Btn variant="gold" className="w-full mt-2" size="lg" onClick={submit}><Icon d={I.lock} s={17}/>{t.gate_enter}</Btn>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   CLOUD SETTINGS — configure shared Supabase sync
+   ============================================================ */
+function CloudSettings(){
+  const t = useT();
+  const cfg = loadCloudCfg();
+  const [url, setUrl] = useState(cfg.url||"");
+  const [key, setKey] = useState(cfg.key||"");
+  const [gate, setGate] = useState(cfg.gate||"");
+  const [testMsg, setTestMsg] = useState(null);
+  const [testing, setTesting] = useState(false);
+  const on = cloudEnabled();
+
+  const test = async ()=>{
+    setTesting(true); setTestMsg(null);
+    try{
+      const base = `${url.replace(/\/$/,'')}/rest/v1/app_state?id=eq.main&select=id`;
+      const res = await fetch(base, { headers:{ apikey:key, Authorization:`Bearer ${key}` } });
+      if(res.ok){ setTestMsg({ok:true, text:t.cloud_ok}); }
+      else { setTestMsg({ok:false, text:t.cloud_fail+' (HTTP '+res.status+')'}); }
+    }catch(e){ setTestMsg({ok:false, text:t.cloud_fail}); }
+    setTesting(false);
+  };
+  const saveReload = ()=>{
+    saveCloudCfg({ url:url.trim(), key:key.trim(), gate:gate });
+    sessionStorage.setItem('kt_gate_ok','1');
+    setTimeout(()=>location.reload(), 150);
+  };
+  const disable = ()=>{
+    saveCloudCfg({}); sessionStorage.removeItem('kt_gate_ok');
+    setTimeout(()=>location.reload(), 150);
+  };
+
+  return (
+    <Card>
+      <div className="flex items-start justify-between mb-4 flex-wrap gap-2">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-[var(--r-md)] bg-[var(--blue-soft)] text-[var(--blue)] flex items-center justify-center"><Icon d={I.cloud} s={21}/></div>
+          <div>
+            <h3 className="text-[15px] font-extrabold text-[var(--ink)]">{t.cloud_title}</h3>
+            <p className="text-[12.5px] text-[var(--ink-3)]">{t.cloud_sub}</p>
+          </div>
+        </div>
+        <span className={"text-[12px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 "+(on?"text-[var(--green-3)] bg-[var(--green-soft)]":"text-[var(--ink-3)] bg-[var(--ice)]")}>
+          <span className={"w-1.5 h-1.5 rounded-full "+(on?"bg-[var(--green)]":"bg-[var(--ink-3)]")}></span>{on?t.cloud_on:t.cloud_off}
+        </span>
+      </div>
+
+      <p className="text-[12.5px] text-[var(--ink-3)] leading-relaxed mb-4 bg-[var(--paper)] rounded-[var(--r-md)] p-3 border border-[var(--line)]">{t.cloud_help}</p>
+
+      <div className="space-y-4">
+        <Field label={t.cloud_url} value={url} onChange={setUrl} full placeholder="https://xxxx.supabase.co" mono/>
+        <label className="flex flex-col gap-1.5">
+          <span className="u-label">{t.cloud_key}</span>
+          <textarea rows={2} value={key} onChange={e=>setKey(e.target.value)} placeholder="eyJhbGciOi..."
+            className="w-full px-3.5 py-2.5 rounded-[var(--r-md)] border border-[var(--line)] bg-white text-[13px] mono resize-y"/>
+        </label>
+        <Field label={t.cloud_gate} value={gate} onChange={setGate} full placeholder="VD: kienthinh2026"/>
+      </div>
+
+      {testMsg && (
+        <div className={"mt-4 text-[13px] font-medium px-3 py-2 rounded-[var(--r-md)] "+(testMsg.ok?"text-[var(--green-3)] bg-[var(--green-soft)]":"text-[var(--red)] bg-[var(--red-soft)]")}>{testMsg.text}</div>
+      )}
+
+      <div className="flex items-center gap-2 mt-5 flex-wrap">
+        <Btn variant="outline" onClick={test} disabled={!url||!key||testing}>
+          {testing ? <span className="w-4 h-4 border-2 border-[var(--ink-3)]/40 border-t-[var(--ink-2)] rounded-full spin"></span> : <Icon d={I.refresh} s={16}/>}
+          {t.cloud_test}
+        </Btn>
+        <Btn variant="gold" onClick={saveReload} disabled={!url||!key}><Icon d={I.check} s={16}/>{t.cloud_save_reload}</Btn>
+        {on && <Btn variant="danger" onClick={disable}>{t.cloud_disable}</Btn>}
+      </div>
+    </Card>
+  );
 }
 
 
