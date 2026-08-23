@@ -208,6 +208,9 @@ const DICT = {
     cloud_enable:"Bật đồng bộ", cloud_disable:"Tắt đồng bộ", cloud_test:"Kiểm tra kết nối", cloud_save_reload:"Lưu & tải lại",
     cloud_on:"Đang đồng bộ", cloud_off:"Chưa bật (lưu cục bộ)", cloud_help:"Dán 2 thông tin từ Supabase (Project URL và anon public key). Đặt thêm mật khẩu chung để bảo vệ. Sau khi lưu, app sẽ tải lại.",
     cloud_ok:"Kết nối thành công!", cloud_fail:"Kết nối thất bại. Kiểm tra lại URL/Key và bảng app_state.",
+    cloud_fail_404:"Không tìm thấy bảng \"app_state\". Kiểm tra: (1) Supabase URL chỉ gồm phần gốc, KHÔNG có /rest/v1/ ở cuối; (2) đã chạy đoạn SQL tạo bảng app_state trong Supabase chưa.",
+    cloud_fail_401:"Sai Khóa công khai (anon key), hoặc bảng chưa bật quyền đọc/ghi (RLS policy). Kiểm tra lại đã copy đúng \"anon public\" key và đã chạy đủ 3 dòng policy trong hướng dẫn.",
+    cloud_fail_net:"Không kết nối được. Kiểm tra lại Supabase URL có đúng định dạng https://xxxx.supabase.co và mạng đang hoạt động.",
     cloud_pending:"Chờ lưu…", cloud_saving:"Đang lưu…", cloud_saved:"Đã đồng bộ", cloud_error:"Lỗi đồng bộ", cloud_local:"Cục bộ",
     gate_title:"Nhập mật khẩu", gate_sub:"Phần mềm được bảo vệ bằng mật khẩu chung của đội.", gate_ph:"Mật khẩu", gate_enter:"Vào phần mềm", gate_wrong:"Sai mật khẩu, thử lại.",
     sec_results:"Kết quả & Khuyến nghị", sec_photos:"Hình ảnh hiện trường",
@@ -347,6 +350,9 @@ const DICT = {
     cloud_enable:"Enable sync", cloud_disable:"Disable sync", cloud_test:"Test connection", cloud_save_reload:"Save & reload",
     cloud_on:"Syncing", cloud_off:"Off (local only)", cloud_help:"Paste your Supabase Project URL and anon public key. Add a shared password to protect access. The app reloads after saving.",
     cloud_ok:"Connected successfully!", cloud_fail:"Connection failed. Check URL/Key and the app_state table.",
+    cloud_fail_404:"Table \"app_state\" not found. Check: (1) Supabase URL is only the root, WITHOUT /rest/v1/ at the end; (2) you ran the SQL to create the app_state table in Supabase.",
+    cloud_fail_401:"Wrong anon key, or the table hasn't got read/write policies (RLS) yet. Check you copied the \"anon public\" key and ran all 3 policy lines from the guide.",
+    cloud_fail_net:"Could not connect. Check the Supabase URL format (https://xxxx.supabase.co) and your network connection.",
     cloud_pending:"Pending…", cloud_saving:"Saving…", cloud_saved:"Synced", cloud_error:"Sync error", cloud_local:"Local",
     gate_title:"Enter password", gate_sub:"This app is protected by a shared team password.", gate_ph:"Password", gate_enter:"Open app", gate_wrong:"Wrong password, try again.",
     sec_results:"Results & Recommendation", sec_photos:"Site photos",
@@ -459,7 +465,11 @@ let __pushing = false;
 const cloudEmit = (type, detail)=>{ try{ cloudBus && cloudBus.dispatchEvent(new CustomEvent(type,{detail})); }catch{} };
 
 const cloudHeaders = (cfg)=>({ 'apikey': cfg.key, 'Authorization': `Bearer ${cfg.key}`, 'Content-Type': 'application/json' });
-const cloudBase = (cfg)=> `${(cfg.url||'').replace(/\/$/,'')}/rest/v1/app_state`;
+// Normalizes whatever the user pastes into "Supabase URL": strips trailing slashes
+// and a trailing /rest/v1 (a very common paste mistake), so the app always builds
+// a correct REST endpoint regardless of what was pasted.
+const normalizeSupabaseUrl = (u)=> (u||'').trim().replace(/\/+$/,'').replace(/\/rest\/v1$/i,'');
+const cloudBase = (cfg)=> `${normalizeSupabaseUrl(cfg.url)}/rest/v1/app_state`;
 
 async function cloudPull(){
   const cfg = loadCloudCfg(); if(!cfg.url || !cfg.key) return null;
@@ -1073,14 +1083,15 @@ function RichField({label, value, onChange, placeholder, minH=80, ai, apiKey, ai
 /* ---- Lightbox (view large) ---- */
 function Lightbox({src, caption, onClose}){
   useEffect(()=>{ const h=(e)=>{if(e.key==='Escape')onClose();}; window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h); },[]);
-  return (
+  return ReactDOM.createPortal(
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[70] p-6" onClick={onClose}>
       <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center"><Icon d={I.x} s={22}/></button>
       <div className="max-w-[90vw] max-h-[90vh] flex flex-col items-center" onClick={e=>e.stopPropagation()}>
         <img src={src} className="max-w-full max-h-[82vh] object-contain rounded-lg shadow-2xl"/>
         {caption && <div className="text-white/85 text-[14px] mt-3 text-center max-w-2xl">{caption}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -1194,9 +1205,10 @@ function AIModal({apiKey, mode, sourceText, onApply, onClose}){
     catch(e){ setErr(e.message); }
     setBusy(false);
   };
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="font-bold text-[16px] flex items-center gap-2"><span className="text-[var(--accent)]"><Icon d={I.spark} s={18} sw={2}/></span>{t.ai_title}</h3>
           <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
@@ -1233,7 +1245,9 @@ function AIModal({apiKey, mode, sourceText, onApply, onClose}){
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -1308,9 +1322,10 @@ function PhotoAnnotator({photo, onSave, onClose}){
   };
   const tools = [{id:'arrow',k:'ann_arrow'},{id:'circle',k:'ann_circle'},{id:'rect',k:'ann_rect'},{id:'number',k:'ann_number'}];
 
-  return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-3xl card-shadow-lg fade-in flex flex-col max-h-[92vh]" onClick={e=>e.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/70 overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-3xl card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--line)]">
           <h3 className="font-bold text-[15px]">{t.annotate}</h3>
           <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
@@ -1343,7 +1358,9 @@ function PhotoAnnotator({photo, onSave, onClose}){
           <Btn variant="accent" onClick={save}><Icon d={I.check} s={16}/>{t.ann_done}</Btn>
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -1372,14 +1389,15 @@ function SignatureModal({sig, roleLabel, onSave, onClose}){
   const clear = ()=>{ const cv=canvasRef.current; cv.getContext('2d').clearRect(0,0,cv.width,cv.height); };
   const save = ()=>{ onSave({name, pos, img: canvasRef.current.toDataURL('image/png')}); };
 
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl w-full max-w-md card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="font-bold text-[16px]">{roleLabel}</h3>
           <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
         </div>
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-4 overflow-y-auto">
           <div className="grid grid-cols-2 gap-3">
             <Field label={t.sig_name} value={name} onChange={setName}/>
             <Field label={t.sig_pos} value={pos} onChange={setPos}/>
@@ -1400,7 +1418,9 @@ function SignatureModal({sig, roleLabel, onSave, onClose}){
           <Btn variant="accent" onClick={save}><Icon d={I.check} s={16}/>{t.save}</Btn>
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -2599,14 +2619,15 @@ function CustomerModal({customer, onSave, onClose}){
   const t = useT();
   const [c, setC] = useState(customer);
   const s = (k,v)=>setC({...c,[k]:v});
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-50 p-4" onClick={onClose}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-50" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl w-full max-w-lg card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="font-bold text-[16px]">{t.addCustomer}</h3>
           <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
         </div>
-        <div className="p-6 grid grid-cols-2 gap-4">
+        <div className="p-6 grid grid-cols-2 gap-4 overflow-y-auto">
           <Field label={t.c_company} value={c.company} onChange={v=>s('company',v)} full/>
           <Field label={t.c_address} value={c.address} onChange={v=>s('address',v)} full/>
           <Field label={t.f_contact} value={c.contact} onChange={v=>s('contact',v)}/>
@@ -2619,7 +2640,9 @@ function CustomerModal({customer, onSave, onClose}){
           <Btn variant="primary" onClick={()=>onSave(c)}>{t.save}</Btn>
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -2729,9 +2752,10 @@ function EquipmentModal({equip, onSave, onClose}){
     onSave({...e, name:(e.name||"").trim()||e.model, customChecklist: (Array.isArray(clean)&&clean.length)?clean:(useCustom?[]:null)});
   };
 
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[92vh] flex flex-col" onClick={ev=>ev.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in" onClick={ev=>ev.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="app-title font-bold text-[17px]">{equip.id ? t.editEquip : t.addEquipLib}</h3>
           <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
@@ -2806,7 +2830,9 @@ function EquipmentModal({equip, onSave, onClose}){
           <Btn variant="primary" onClick={doSave} disabled={!canSave}><Icon d={I.check} s={16}/>{t.save}</Btn>
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -3644,9 +3670,10 @@ function buildSOPFromTemplate(tpl){
 
 function SOPTemplateModal({onPick, onClose}){
   const t = useT();
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-2xl card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
           <h3 className="app-title font-bold text-[17px]">{t.sop_from_tpl}</h3>
           <button onClick={onClose} className="p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
@@ -3664,7 +3691,9 @@ function SOPTemplateModal({onPick, onClose}){
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -4818,9 +4847,10 @@ function ScheduleModal({job, techs, customers, onSave, onDelete, onClose}){
   const set = (k,v)=> setF(p=>({...p,[k]:v}));
   const isNew = !job.title && !job.customer;
   const valid = (f.title||'').trim().length>0;
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-lg card-shadow-lg fade-in max-h-[92vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-lg card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--line)]">
           <h3 className="app-title font-extrabold text-[17px]">{isNew?t.sc_new:t.sc_edit}</h3>
           <button onClick={onClose} className="u-press p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
@@ -4878,7 +4908,9 @@ function ScheduleModal({job, techs, customers, onSave, onDelete, onClose}){
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -4890,9 +4922,10 @@ function TechManageModal({techs, onSave, onClose}){
   const add = ()=> setList(p=>[...p,{id:uid(),name:'',color:palette[p.length%palette.length]}]);
   const upd = (id,k,v)=> setList(p=>p.map(x=>x.id===id?{...x,[k]:v}:x));
   const del = (id)=> setList(p=>p.filter(x=>x.id!==id));
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-[60] p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-md card-shadow-lg fade-in max-h-[90vh] flex flex-col" onClick={e=>e.stopPropagation()}>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[2px] overflow-y-auto z-[60]" onClick={onClose}>
+      <div className="min-h-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-md card-shadow-lg fade-in" onClick={e=>e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--line)]">
           <h3 className="app-title font-extrabold text-[17px]">{t.sc_manage_tech}</h3>
           <button onClick={onClose} className="u-press p-1.5 rounded-md hover:bg-[var(--ice)]"><Icon d={I.x} s={18}/></button>
@@ -4912,7 +4945,9 @@ function TechManageModal({techs, onSave, onClose}){
           <Btn variant="gold" onClick={()=>{onSave(list.filter(x=>x.name.trim())); onClose();}}><Icon d={I.check} s={16}/>{t.save||'Lưu'}</Btn>
         </div>
       </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -4973,11 +5008,13 @@ function CloudSettings(){
   const test = async ()=>{
     setTesting(true); setTestMsg(null);
     try{
-      const base = `${url.replace(/\/$/,'')}/rest/v1/app_state?id=eq.main&select=id`;
+      const base = `${normalizeSupabaseUrl(url)}/rest/v1/app_state?id=eq.main&select=id`;
       const res = await fetch(base, { headers:{ apikey:key, Authorization:`Bearer ${key}` } });
       if(res.ok){ setTestMsg({ok:true, text:t.cloud_ok}); }
+      else if(res.status===404){ setTestMsg({ok:false, text:t.cloud_fail_404}); }
+      else if(res.status===401||res.status===403){ setTestMsg({ok:false, text:t.cloud_fail_401}); }
       else { setTestMsg({ok:false, text:t.cloud_fail+' (HTTP '+res.status+')'}); }
-    }catch(e){ setTestMsg({ok:false, text:t.cloud_fail}); }
+    }catch(e){ setTestMsg({ok:false, text:t.cloud_fail_net}); }
     setTesting(false);
   };
   const saveReload = ()=>{
@@ -5008,7 +5045,7 @@ function CloudSettings(){
       <p className="text-[12.5px] text-[var(--ink-3)] leading-relaxed mb-4 bg-[var(--paper)] rounded-[var(--r-md)] p-3 border border-[var(--line)]">{t.cloud_help}</p>
 
       <div className="space-y-4">
-        <Field label={t.cloud_url} value={url} onChange={setUrl} full placeholder="https://xxxx.supabase.co" mono/>
+        <Field label={t.cloud_url} value={url} onChange={v=>setUrl(v.replace(/\/rest\/v1\/?$/i,''))} full placeholder="https://xxxx.supabase.co" mono/>
         <label className="flex flex-col gap-1.5">
           <span className="u-label">{t.cloud_key}</span>
           <textarea rows={2} value={key} onChange={e=>setKey(e.target.value)} placeholder="eyJhbGciOi..."
